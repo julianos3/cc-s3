@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: CentralCondo
+        psr4_prefix: CentralCondo
+        src_path: app

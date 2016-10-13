@@ -1,0 +1,40 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Lista de Integrantes</h3>
+        <a href="<?php echo e(route('portal.condominium.group.index')); ?>" class="btn btn-primary">Voltar</a>
+        <br /><br />
+        <a href="<?php echo e(route('portal.condominium.group.user.create', ['id' => $groupId])); ?>" class="btn btn-default">Cadastrar</a>
+        <br/>
+        <br/>
+        <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuário</th>
+                <th>Grupo</th>
+                <th class="col-sm-3">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach($dados as $row): ?>
+                <tr>
+                    <td><?php echo e($row->id); ?></td>
+                    <td><?php echo e($row->usersCondominium->user->name); ?></td>
+                    <td><?php echo e($row->group->name); ?></td>
+                    <td>
+                        <a href="<?php echo e(route('portal.condominium.group.user.edit',['group_id'=>$groupId,'id'=>$row->id])); ?>"
+                           title="" class="btn btn-default btn-sm">Editar</a>
+                        <a href="<?php echo e(route('portal.condominium.group.user.destroy',['group_id'=>$groupId,'id'=>$row->id])); ?>"
+                           title="" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

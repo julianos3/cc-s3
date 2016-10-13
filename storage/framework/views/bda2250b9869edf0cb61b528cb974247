@@ -1,0 +1,30 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Novo Integrante</h3>
+        <a href="<?php echo e(route('portal.condominium.group.user.index',['id' => $groupId])); ?>" class="btn btn-default">Voltar</a>
+        <br />
+        <br />
+        <?php
+        $idUser = 0;
+        ?>
+
+        <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <?php echo Form::open(['route'=>'portal.condominium.group.user.store']); ?>
+
+
+        <?php echo $__env->make('portal.condominium.group.user._form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <div class="form-group">
+            <?php echo Form::submit('Cadastrar', ['class'=>'btn btn-primary']); ?>
+
+        </div>
+
+        <?php echo Form::close(); ?>
+
+
+    </div>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

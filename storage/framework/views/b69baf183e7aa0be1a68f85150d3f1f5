@@ -1,0 +1,94 @@
+
+
+<?php $__env->startSection('content'); ?>
+
+    <div class="page animsition page-profile">
+        <div class="page-header">
+            <h1 class="page-title"><?php echo e($config['title']); ?></h1>
+            <ol class="breadcrumb" data-plugin="breadcrumb">
+                <li><a href="<?php echo e(route('portal.home.index')); ?>">Home</a></li>
+                <li><a href="<?php echo e(route('portal.condominium.index')); ?>">Condomínio</a></li>
+                <li><a href="<?php echo e(route('portal.condominium.user.index')); ?>">Integrantes</a></li>
+                <li class="active">Perfil</li>
+            </ol>
+            <div class="page-header-actions">
+                <a href="<?php echo e(route('portal.condominium.user.index')); ?>"
+                   class="btn btn-sm btn-icon btn-dark waves-effect waves-light waves-round" data-toggle="tooltip"
+                   data-original-title="Voltar">
+                    <i class="icon wb-arrow-left" aria-hidden="true"></i>
+                    Voltar
+                </a>
+            </div>
+        </div>
+        <div class="page-content container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="widget widget-shadow text-center">
+                        <div class="widget-header">
+                            <div class="widget-header-content">
+                                <?php if($dados->user->imagem): ?>
+                                    <a class="avatar avatar-lg" href="javascript:void(0)">
+                                        <img src="<?php echo e(route('portal.condominium.user.image', ['id' => $dados->user->id, 'image' => $dados->user->imagem])); ?>"
+                                             alt="...">
+                                    </a>
+                                <?php else: ?>
+                                    <a class="avatar avatar-lg" href="javascript:void(0)">
+                                        <img src="../../../global/portraits/5.jpg" alt="...">
+                                    </a>
+                                <?php endif; ?>
+                                <h4 class="profile-user"><?php echo e($dados->user->name); ?></h4>
+                                <p class="profile-job"><?php echo e($dados->userRoleCondominium->name); ?></p>
+                                <p>
+                                    E-mail: <?php echo e($dados->user->email); ?><br/>
+                                    <?php if($dados->user->phone): ?>
+                                        Telefone: <?php echo e($dados->user->phone); ?><br/>
+                                    <?php endif; ?>
+                                    <?php if($dados->user->cell_phone): ?>
+                                        Celular: <?php echo e($dados->user->cell_phone); ?><br/>
+                                    <?php endif; ?>
+                                </p>
+                                <div class="profile-social">
+                                    <a class="icon bd-twitter" href="javascript:void(0)"></a>
+                                    <a class="icon bd-facebook" href="javascript:void(0)"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="panel">
+                        <div class="panel-body container-fluid">
+                            <div class="article-content">
+                                <?php if($dados->user->description): ?>;
+                                <section>
+                                    <h4 id="section-1">Sobre mim:</h4>
+                                    <p><?php echo e($dados->user->description); ?></p>
+                                </section>
+                                <?php endif; ?>
+                                <?php if($usersUnit->toArray()): ?>
+                                <section>
+                                    <h4 id="section-2">Unidades:</h4>
+                                    <p>
+                                        <?php
+                                        $cont = 0;
+                                        foreach ($usersUnit as $unit) {
+                                            $cont++;
+                                            if ($cont > 1) {
+                                                echo '<br />';
+                                            }
+                                            echo $unit->unit->name . ' - ' . $unit->unit->block->name;
+                                        }
+                                        ?>
+                                    </p>
+                                </section>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

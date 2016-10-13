@@ -1,0 +1,35 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Bloco</h3>
+        <a href="<?php echo e(route('portal.block.create')); ?>" class="btn btn-default">Cadastrar</a>
+        <br />
+        <br />
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Condominio</th>
+                <th class="col-sm-2">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dados as $row): ?>
+                    <tr>
+                        <td><?php echo e($row->id); ?></td>
+                        <td><?php echo e($row->name); ?></td>
+                        <td><?php echo e($row->condominium->name); ?></td>
+                        <td>
+                            <a href="<?php echo e(route('portal.block.edit',['id'=>$row->id])); ?>" title="" class="btn btn-default btn-sm">Editar</a>
+                            <a href="<?php echo e(route('portal.block.destroy',['id'=>$row->id])); ?>" title="" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

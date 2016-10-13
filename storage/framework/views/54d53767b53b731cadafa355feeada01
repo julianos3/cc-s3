@@ -1,0 +1,35 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Chamado Histórico</h3>
+        <a href="<?php echo e(route('portal.called.index')); ?>" class="btn btn-default">Voltar</a>
+        <br />
+        <br />
+        <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Chamado</th>
+                <th>Usuário</th>
+                <th>Status</th>
+                <th>Descrição</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dados as $row): ?>
+                    <tr>
+                        <td><?php echo e($row->id); ?></td>
+                        <td><?php echo e($row->called->subject); ?></td>
+                        <td><?php echo e($row->usersCondominium->user->name); ?></td>
+                        <td><?php echo e($row->calledStatus->name); ?></td>
+                        <td><?php echo e($row->description); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

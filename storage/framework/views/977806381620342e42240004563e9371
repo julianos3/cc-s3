@@ -1,0 +1,24 @@
+<div class="form-group">
+    <?php echo Form::label('Name', 'Nome:'); ?>
+
+    <?php echo Form::text('name', null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Block', 'Block:'); ?>
+
+    <?php echo Form::select('block_id', $block, null, ['class'=>'form-control']); ?>
+
+</div>
+
+
+<div class="form-group">
+    <?php echo Form::label('Tipo', 'Tipo:'); ?>
+
+    <?php echo Form::select('unit_type_id', $type, null, ['class'=>'form-control']); ?>
+
+</div>
+
+
+

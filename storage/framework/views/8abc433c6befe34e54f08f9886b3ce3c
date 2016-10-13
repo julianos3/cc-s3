@@ -1,0 +1,60 @@
+<div class="form-group">
+    <?php echo Form::label('reason', 'Motivo/Razão:'); ?>
+
+    <?php echo Form::text('reason', null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Data Inicio', 'Data Inicio:'); ?>
+
+    <?php echo Form::input('datetime', 'start_date',  null, ['class'=>'form-control', 'placeholder'=>'99/99/99 99:99:99']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Data Fim', 'Data Fim:'); ?>
+
+    <?php echo Form::input('datetime', 'end_date', null, ['class'=>'form-control', 'placeholder'=>'99/99/99 99:99:99']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Dia inteiro?', 'Dia inteiro?'); ?>
+
+    <?php echo Form::select('all_day', ['y' => 'Sim','n' => 'Não'], null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Condomínio', 'Condomínio:'); ?>
+
+    <?php echo Form::select('condominium_id', $condominium, null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <label for="Block">Usuarios Condominio:</label>
+    <select class="form-control" name="user_condominium_id">
+        <?php foreach($userCondominium as $row): ?>
+            <option value="<?php echo e($row->id); ?>" <?php if($row->id === $userCondominiumId): ?> selected <?php endif; ?>><?php echo e($row->user->name .' - '.$row->condominium->name); ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="Block">Área de Reserva:</label>
+    <select class="form-control" name="reserve_area_id">
+        <?php foreach($reserveAreas as $row): ?>
+            <option value="<?php echo e($row->id); ?>" <?php if($row->id === $userCondominiumId): ?> selected <?php endif; ?>><?php echo e($row->name .' - '.$row->condominium->name); ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+
+<div class="form-group">
+    <?php echo Form::label('Descrição', 'Descrição'); ?>
+
+    <?php echo Form::textarea('description', null, ['class'=>'form-control']); ?>
+
+</div>

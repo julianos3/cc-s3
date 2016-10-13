@@ -1,0 +1,34 @@
+<div class="form-group">
+    <?php echo Form::label('Name', 'Nome:'); ?>
+
+    <?php echo Form::text('name', null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Email', 'E-mail:'); ?>
+
+    <?php echo Form::text('email', null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Sexo', 'Sexo:'); ?>
+
+    <?php echo Form::select('sex', ['m' => 'Masculino','f' => 'Feminino'], null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Nível', 'Nível:'); ?>
+
+    <?php echo Form::select('user_role_id', $role, null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Senha', 'senha:'); ?>
+
+    <?php echo Form::password('password', ['class' => 'form-control']); ?>
+
+</div>

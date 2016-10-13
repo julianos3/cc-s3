@@ -1,0 +1,52 @@
+<div class="form-group">
+    <?php echo Form::label('Assunto', 'Assunto:'); ?>
+
+    <?php echo Form::text('subject', null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Condominio', 'Condominio:'); ?>
+
+    <?php echo Form::select('condominium_id', $condominium, null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <label for="Block">Usuarios Condominio Que vai enviar a mensagem:</label>
+    <select class="form-control" name="user_condominium_id">
+        <?php foreach($usersCondominium as $row): ?>
+            <option value="<?php echo e($row->id); ?>" <?php if($row->id === $userCondominiumId): ?> selected <?php endif; ?>><?php echo e($row->user->name .' - '.$row->condominium->name); ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="Block">Usuarios Condominio Que vai receber a mensagem:</label>
+    <select class="form-control" name="users[]">
+        <?php foreach($usersCondominium as $row): ?>
+            <option value="<?php echo e($row->id); ?>"><?php echo e($row->user->name .' - '.$row->condominium->name); ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Mensagem', 'Mensagem:'); ?>
+
+    <?php echo Form::textarea('message', null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Publica', 'Pública:'); ?>
+
+    <?php echo Form::select('public', ['y' => 'Sim','n' => 'Não'], null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Tipo', 'Tipo:'); ?>
+
+    <?php echo Form::select('type', ['s' => 'Enviar','r' => 'Receber'], null, ['class'=>'form-control']); ?>
+
+</div>

@@ -1,0 +1,31 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Comunicados Grupos</h3>
+        <a href="<?php echo e(route('portal.communication.index')); ?>" class="btn btn-default">Voltar</a>
+        <br />
+        <br />
+        <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Comunicado</th>
+                <th>Grupo</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dados as $row): ?>
+                    <tr>
+                        <td><?php echo e($row->id); ?></td>
+                        <td><?php echo e($row->communication->name); ?></td>
+                        <td><?php echo e($row->groupCondominium->name); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

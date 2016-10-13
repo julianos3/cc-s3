@@ -1,0 +1,10 @@
+<div class="form-group">
+    <label for="Block">Usuarios Condominio:</label>
+    <select class="form-control" name="user_condominium_id">
+        <?php foreach($usersCondominium as $row): ?>
+            <option value="<?php echo e($row->id); ?>" <?php if(isset($idUser) && $row->id === $idUser): ?> selected <?php endif; ?>><?php echo e($row->user->name); ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<input type="hidden" name="group_id" value="<?php echo $groupId; ?>" />

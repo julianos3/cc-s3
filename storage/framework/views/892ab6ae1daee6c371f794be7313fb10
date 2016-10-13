@@ -1,0 +1,44 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Finalizar Achados e Perdidos</h3>
+        <a href="<?php echo e(route('portal.lost-and-found.index')); ?>" class="btn btn-default">Voltar</a>
+        <br />
+        <br />
+
+        <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <?php $userCondominiumId = 0; ?>
+
+        <?php echo Form::open(['route'=>'portal.lost-and-found.completed.store']); ?>
+
+
+
+        <div class="form-group">
+            <label for="Block">Usuarios Condominio:</label>
+            <select class="form-control" name="user_condominium_id">
+                <?php foreach($usersCondominium as $row): ?>
+                    <option value="<?php echo e($row->id); ?>"><?php echo e($row->user->name .' - '.$row->condominium->name); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <?php echo Form::label('descrição', 'Descrição:'); ?>
+
+            <?php echo Form::textarea('description', null, ['class'=>'form-control']); ?>
+
+        </div>
+        <input type="hidden" name="lost_and_found_id" value="<?php echo $lostAndFoundId; ?>" />
+        <div class="form-group">
+            <?php echo Form::submit('Cadastrar', ['class'=>'btn btn-primary']); ?>
+
+        </div>
+
+
+        <?php echo Form::close(); ?>
+
+
+    </div>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

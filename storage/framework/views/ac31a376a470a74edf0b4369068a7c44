@@ -1,0 +1,43 @@
+
+
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Achados e Perdidos</h3>
+        <a href="<?php echo e(route('portal.lost-and-found.create')); ?>" class="btn btn-default">Cadastrar</a>
+        <br />
+        <br />
+        <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Condomínio</th>
+                <th>Usuário</th>
+                <th>Entrado?</th>
+                <th class="col-sm-3">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dados as $row): ?>
+                    <tr>
+                        <td><?php echo e($row->id); ?></td>
+                        <td><?php echo e($row->name); ?></td>
+                        <td><?php echo e($row->condominium->name); ?></td>
+                        <td><?php echo e($row->usersCondominium->user->name); ?></td>
+                        <td><?php if($row->found === 'y'): ?> Sim <?php else: ?> Não <?php endif; ?></td>
+                        <td>
+                            <a href="<?php echo e(route('portal.lost-and-found.completed',['id'=>$row->id])); ?>" title="" class="btn btn-primary btn-sm">Resolver</a>
+                            <a href="<?php echo e(route('portal.lost-and-found.edit',['id'=>$row->id])); ?>" title="" class="btn btn-default btn-sm">Editar</a>
+                            <a href="<?php echo e(route('portal.lost-and-found.destroy',['id'=>$row->id])); ?>" title="" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

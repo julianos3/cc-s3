@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo Form::label('Name', 'Nome:'); ?>
+
+            <?php echo Form::text('name', null, ['class'=>'form-control', 'required' => 'required']); ?>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label" for="unit_id">Unidade vinculada a garagem</label>
+            <select class="form-control" name="unit_id" id="unit_id">
+                <option value="">Selecione</option>
+                <?php foreach($unit as $row): ?>
+                    <option value="<?php echo e($row->id); ?>" <?php if($row->id == $unitId): ?> selected <?php endif; ?>><?php echo e($row->name); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <?php echo Form::label('description', 'Descrição:'); ?>
+
+            <?php echo Form::textarea('description', null, ['class'=>'form-control', 'rows' => '5']); ?>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Condominio</h3>
+        <a href="<?php echo e(route('portal.condominium.create')); ?>" class="btn btn-default">Cadastrar</a>
+        <br />
+        <br />
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Finalidade</th>
+                <th>Ativo</th>
+                <th class="col-sm-2">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dados as $row): ?>
+                    <tr>
+                        <td><?php echo e($row->id); ?></td>
+                        <td><?php echo e($row->name); ?></td>
+                        <td><?php echo e($row->finality->name); ?></td>
+                        <td><?php if($row->active === 'y'): ?> Sim <?php else: ?> Não <?php endif; ?></td>
+                        <td>
+                            <a href="<?php echo e(route('portal.condominium.edit',['id'=>$row->id])); ?>" title="" class="btn btn-default btn-sm">Editar</a>
+                            <a href="<?php echo e(route('portal.condominium.destroy',['id'=>$row->id])); ?>" title="" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

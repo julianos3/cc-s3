@@ -1,0 +1,41 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Comunicados</h3>
+        <a href="<?php echo e(route('portal.communication.create')); ?>" class="btn btn-default">Cadastrar</a>
+        <br />
+        <br />
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titulo</th>
+                <th>Condominio</th>
+                <th>Usuário</th>
+                <th>Data de Exibição</th>
+                <th>Enviado por E-mail?</th>
+                <th class="col-sm-3">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dados as $row): ?>
+                    <tr>
+                        <td><?php echo e($row->id); ?></td>
+                        <td><?php echo e($row->name); ?></td>
+                        <td><?php echo e($row->condominium->name); ?></td>
+                        <td><?php echo e($row->usersCondominium->user->name); ?></td>
+                        <td><?php echo e($row->date_display); ?></td>
+                        <td><?php if($row->send_mail === 'y'): ?> Sim <?php else: ?> Não <?php endif; ?></td>
+                        <td>
+                            <a href="<?php echo e(route('portal.communication.edit',['id'=>$row->id])); ?>" title="" class="btn btn-default btn-sm">Editar</a>
+                            <a href="<?php echo e(route('portal.communication.destroy',['id'=>$row->id])); ?>" title="" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

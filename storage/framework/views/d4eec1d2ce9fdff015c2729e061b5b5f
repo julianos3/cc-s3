@@ -1,0 +1,116 @@
+<?php $__env->startSection('content'); ?>
+
+    <div class="page animsition">
+        <div class="page-header">
+            <h1 class="page-title"><?php echo e($config['title']); ?></h1>
+            <ol class="breadcrumb" data-plugin="breadcrumb">
+                <li><a href="<?php echo e(route('portal.home.index')); ?>">Home</a></li>
+                <li><a href="<?php echo e(route('portal.condominium.index')); ?>">Condomínio</a></li>
+                <li class="active">Blocos</li>
+            </ol>
+        </div>
+        <div class="page-content">
+            <div class="panel">
+                <div class="panel-body">
+                    <?php echo $__env->make('success._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <?php echo $__env->make('portal.delete', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+                    <a href="<?php echo e(route('portal.condominium.unit.create')); ?>"
+                       data-toggle="tooltip"
+                       data-original-title="Cadastrar"
+                       class="btn btn-primary waves-effect waves-light">
+                        <i class="icon wb-plus" aria-hidden="true"></i>
+                        Cadastrar
+                    </a>
+
+                    <?php if(!$dados->isEmpty()): ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="tablesaw table-striped table-bordered table-hover"
+                                       data-tablesaw-mode="swipe"
+                                       data-tablesaw-sortable data-tablesaw-minimap>
+                                    <thead>
+                                    <tr>
+                                        <th data-tablesaw-sortable-col data-tablesaw-sortable-default-col
+                                            data-tablesaw-priority="persist">Nome
+                                        </th>
+                                        <th class="text-center col-md-2">
+                                            Ação
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach($dados  as $row): ?>
+                                        <tr>
+                                            <td><?php echo e($row->name); ?></td>
+                                            <td class="text-center">
+                                                <a href="<?php echo e(route('portal.condominium.unit.edit', ['id' => $row->id])); ?>"
+                                                   title="Editar"
+                                                   class="btn btn-icon bg-warning waves-effect waves-light">
+                                                    <i class="icon wb-edit" aria-hidden="true"></i>
+                                                </a>
+                                                <button title="Excluir"
+                                                        class="btn btn-icon bg-danger waves-effect waves-light btnDelete"
+                                                        data-target="#modalDelete" data-toggle="modal"
+                                                        data-route="<?php echo e(route('portal.condominium.unit.destroy', ['id' => $row->id])); ?>">
+                                                    <i class="icon wb-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="<?php echo e(route('portal.condominium.unit.create')); ?>" title="Cadastrar"
+       data-toggle="tooltip"
+       data-original-title="Cadastrar"
+       class="site-action site-floataction btn-raised btn btn-success btn-floating">
+        <i class="icon md-plus" aria-hidden="true"></i>
+    </a>
+
+<?php $__env->stopSection(); ?>
+<!--
+    <div class="container">
+        <h3>Unidade</h3>
+        <a href="<?php echo e(route('portal.unit.create')); ?>" class="btn btn-default">Cadastrar</a>
+        <br />
+        <br />
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Bloco</th>
+                <th>Tipo</th>
+                <th>Condominio</th>
+                <th class="col-sm-2">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dados as $row): ?>
+                    <tr>
+                        <td><?php echo e($row->id); ?></td>
+                        <td><?php echo e($row->name); ?></td>
+                        <td><?php echo e($row->block->name); ?></td>
+                        <td><?php echo e($row->unitType->name); ?></td>
+                        <td><?php echo e($row->block->condominium->name); ?></td>
+                        <td>
+                            <a href="<?php echo e(route('portal.unit.edit',['id'=>$row->id])); ?>" title="" class="btn btn-default btn-sm">Editar</a>
+                            <a href="<?php echo e(route('portal.unit.destroy',['id'=>$row->id])); ?>" title="" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+-->
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

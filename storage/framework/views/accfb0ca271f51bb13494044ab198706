@@ -1,0 +1,36 @@
+<div class="form-group">
+    <?php echo Form::label('Name', 'Nome:'); ?>
+
+    <?php echo Form::text('name', null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Condominio', 'Condominio:'); ?>
+
+    <?php echo Form::select('condominium_id', $condominium, null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <label for="Block">Usuarios Condominio:</label>
+    <select class="form-control" name="user_condominium_id">
+        <?php foreach($usersCondominium as $row): ?>
+            <option value="<?php echo e($row->id); ?>" <?php if($row->id === $userCondominiumId): ?> selected <?php endif; ?>><?php echo e($row->user->name .' - '.$row->condominium->name); ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Descrição', 'Descrição:'); ?>
+
+    <?php echo Form::textarea('description', null, ['class'=>'form-control']); ?>
+
+</div>
+
+<div class="form-group">
+    <?php echo Form::label('Notificação', 'Notificação:'); ?>
+
+    <?php echo Form::select('notification', ['y' => 'Sim','n' => 'Não'], null, ['class'=>'form-control']); ?>
+
+</div>

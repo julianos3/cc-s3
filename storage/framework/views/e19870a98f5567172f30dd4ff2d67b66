@@ -1,0 +1,27 @@
+<div class="form-group form-material floating">
+    <?php echo Form::text('name', null, ['class'=>'form-control empty', 'id' => 'inputName']); ?>
+
+    <?php echo Form::label('inputName', 'Name:', ['class' => 'floating-label']); ?>
+
+</div>
+
+<div class="form-group form-material floating">
+    <?php echo Form::text('email', null, ['class'=>'form-control empty', 'id' => 'inputEmail']); ?>
+
+    <?php echo Form::label('inputEmail', 'Email:', ['class' => 'floating-label']); ?>
+
+</div>
+
+<div class="form-group form-material floating">
+    <?php echo Form::password('password', ['class'=>'form-control empty', 'id' => 'inputPassword']); ?>
+
+    <?php echo Form::label('inputPassword', 'Password:', ['class' => 'floating-label']); ?>
+
+</div>
+
+<div class="form-group form-material floating">
+    <?php echo Form::password('password_confirmation', ['class'=>'form-control empty', 'id' => 'inputPasswordCheck']); ?>
+
+    <?php echo Form::label('inputPasswordCheck', 'Retype Password:', ['class' => 'floating-label']); ?>
+
+</div>

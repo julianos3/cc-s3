@@ -1,0 +1,38 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Resposta de Mensagem</h3>
+        <a href="<?php echo e(route('portal.message.index')); ?>" class="btn btn-info">Voltar</a>
+        <br /><br />
+        <a href="<?php echo e(route('portal.message.reply.create', ['messageId' => $messageId])); ?>" class="btn btn-default">Cadastrar</a>
+        <br />
+        <br />
+        <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Resposta</th>
+                <th>Usuário</th>
+                <th class="col-sm-2">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dados as $row): ?>
+                    <tr>
+                        <td><?php echo e($row->id); ?></td>
+                        <td><?php echo e($row->message); ?></td>
+                        <td><?php echo e($row->usersCondominium->user->name); ?></td>
+                        <td>
+                            <a href="<?php echo e(route('portal.message.reply.edit',['messageId' => $messageId, 'id'=>$row->id])); ?>" title="" class="btn btn-default btn-sm">Editar</a>
+                            <a href="<?php echo e(route('portal.message.reply.destroy',['messageId' => $messageId, 'id'=>$row->id])); ?>" title="" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

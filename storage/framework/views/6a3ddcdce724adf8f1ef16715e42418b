@@ -1,0 +1,29 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container">
+        <h3>Novo Comunicado</h3>
+        <a href="<?php echo e(route('portal.communication.index')); ?>" class="btn btn-default">Voltar</a>
+        <br />
+        <br />
+
+        <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <?php $userCondominiumId = 0; ?>
+
+        <?php echo Form::open(['route'=>'portal.communication.store']); ?>
+
+
+        <?php echo $__env->make('portal.communication._form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        <div class="form-group">
+            <?php echo Form::submit('Salvar', ['class'=>'btn btn-primary']); ?>
+
+        </div>
+
+        <?php echo Form::close(); ?>
+
+
+    </div>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
