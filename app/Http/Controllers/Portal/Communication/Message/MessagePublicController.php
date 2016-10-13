@@ -7,6 +7,7 @@ use CentralCondo\Http\Requests;
 use CentralCondo\Http\Requests\Portal\Communication\Message\MessageRequest;
 use CentralCondo\Repositories\Portal\Communication\Message\MessageRepository;
 use CentralCondo\Services\Portal\Communication\Message\MessagePublicService;
+use CentralCondo\Services\Util\UtilObjeto;
 
 
 class MessagePublicController extends Controller
@@ -22,15 +23,23 @@ class MessagePublicController extends Controller
     private $service;
 
     /**
+     * @var UtilObjeto
+     */
+    private $utilObjeto;
+
+    /**
      * MessagePublicController constructor.
      * @param MessageRepository $repository
      * @param MessagePublicService $service
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(MessageRepository $repository,
-                                MessagePublicService $service)
+                                MessagePublicService $service,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
+        $this->utilObjeto = $utilObjeto;
         $this->condominium_id = session()->get('condominium_id');
     }
 
@@ -38,6 +47,8 @@ class MessagePublicController extends Controller
     {
         $config['title'] = 'Mensagens Públicas';
         $dados = $this->repository->with(['usersCondominium', 'messageReply'])->findWhere(['condominium_id' => $this->condominium_id]);
+        $dados = $this->utilObjeto->paginate($dados);
+
         return view('portal.communication.message.public.index', compact('config', 'dados'));
     }
 

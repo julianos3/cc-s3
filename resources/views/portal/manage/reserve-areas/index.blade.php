@@ -69,6 +69,11 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                {!! $dados->setPath('')->appends(Request::except('page'))->render() !!}
+                            </div>
+                        </div>
                     @else
                         <div class="row">
                             <div class="col-md-12">

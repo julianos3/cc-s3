@@ -32,9 +32,14 @@
                                     <div class="media media-lg">
                                         <div class="media-left">
                                             <a class="avatar" href="javascript:void(0)">
-                                                <img class="img-responsive"
-                                                     src="{{ route('portal.condominium.user.image', ['id' => $row->usersCondominium->user->id, 'image' => $row->usersCondominium->user->imagem]) }}"
-                                                     alt="...">
+                                                <?php
+                                                if($row->usersCondominium->user->imagem){
+                                                    $imgAvatar = route('portal.condominium.user.image', ['id' => $row->usersCondominium->user->id, 'image' => $row->usersCondominium->user->imagem]);
+                                                }else{
+                                                    $imgAvatar = asset('portal/global/portraits/1.jpg');
+                                                }
+                                                ?>
+                                                <div class="avatar" style="height: 40px; background: url('{{ $imgAvatar }}') top center; background-size: cover;"></div>
                                             </a>
                                         </div>
                                         <div class="media-body">
@@ -63,13 +68,16 @@
                                                     <div class="profile-brief margin-top-10">
                                                         <div class="media">
                                                             <div class="media-left">
-                                                                <a class="avatar" href="javascript:void(0)">
-                                                                    <img class="img-responsive"
-                                                                         src="{{ route('portal.condominium.user.image', ['id' => $reply->usersCondominium->user->id, 'image' => $reply->usersCondominium->user->imagem]) }}"
-                                                                         alt="...">
-                                                                </a>
+                                                                <?php
+                                                                if($reply->usersCondominium->user->imagem){
+                                                                    $imgAvatar = route('portal.condominium.user.image', ['id' => $reply->usersCondominium->user->id, 'image' => $reply->usersCondominium->user->imagem]);
+                                                                }else{
+                                                                    $imgAvatar = asset('portal/global/portraits/1.jpg');
+                                                                }
+                                                                ?>
+                                                                <a class="avatar" href="javascript:void(0)" style="height: 40px; background: url('{{ $imgAvatar }}') top center; background-size: cover;"></a>
                                                             </div>
-                                                            <div class="media-body padding-left-20">
+                                                            <div class="media-body">
                                                                 <h4 class="media-heading">{{ $reply->usersCondominium->user->name }}</h4>
                                                                 <small>{{ $reply->created_at }}</small>
                                                                 <p>
@@ -90,57 +98,12 @@
                                     </div>
                                 </li>
                         @endforeach
-                        <!--
-                        <li class="list-group-item">
-                            <div class="media">
-                                <div class="media-left">
-                                    <a class="avatar" href="javascript:void(0)">
-                                        <img class="img-responsive" src="../../../global/portraits/2.jpg" alt="...">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Ida Fleming
-                                        <span>posted an updated</span>
-                                    </h4>
-                                    <small>active 14 minutes ago</small>
-                                    <div class="profile-brief">“Check if it can be corrected with overflow : hidden”</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="media media-lg">
-                                <div class="media-left">
-                                    <a class="avatar" href="javascript:void(0)">
-                                        <img class="img-responsive" src="../../../global/portraits/5.jpg" alt="...">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">Terrance Arnold
-                                        <span>posted a new blog</span>
-                                    </h4>
-                                    <small>active 14 minutes ago</small>
-                                    <div class="profile-brief">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a class="avatar" href="javascript:void(0)">
-                                                    <img class="img-responsive" src="../../../global/portraits/5.jpg" alt="...">
-                                                </a>
-                                            </div>
-                                            <div class="media-body padding-left-20">
-                                                <h4 class="media-heading">Getting Started</h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                    elit. Integer nec odio. Praesent libero. Sed
-                                                    cursus ante dapibus diam. Sed nisi. Nulla quis
-                                                    sem at nibh elementum imperdiet. Duis sagittis
-                                                    ipsum. Praesent mauris.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        -->
                         </ul>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                {!! $dados->setPath('')->appends(Request::except('page'))->render() !!}
+                            </div>
+                        </div>
                     @else
                         <div class="row">
                             <div class="col-md-12">

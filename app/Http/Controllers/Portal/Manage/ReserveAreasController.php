@@ -8,7 +8,7 @@ use CentralCondo\Http\Requests;
 use CentralCondo\Http\Requests\Portal\Manage\ReserveAreasRequest;
 use CentralCondo\Repositories\Portal\Manage\ReserveAreasRepository;
 use CentralCondo\Http\Controllers\Controller;
-
+use CentralCondo\Services\Util\UtilObjeto;
 
 class ReserveAreasController extends Controller
 {
@@ -23,15 +23,23 @@ class ReserveAreasController extends Controller
     private $service;
 
     /**
+     * @var UtilObjeto
+     */
+    private $utilObjeto;
+
+    /**
      * ReserveAreasController constructor.
      * @param ReserveAreasRepository $repository
      * @param ReserveAreasService $service
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(ReserveAreasRepository $repository,
-                                ReserveAreasService $service)
+                                ReserveAreasService $service,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
+        $this->utilObjeto = $utilObjeto;
         $this->condominium_id = session()->get('condominium_id');
     }
 
@@ -41,6 +49,7 @@ class ReserveAreasController extends Controller
         $dados = $this->repository->findWhere([
             'condominium_id' => $this->condominium_id
         ]);
+        $dados = $this->utilObjeto->paginate($dados);
 
         return view('portal.manage.reserve-areas.index', compact('config', 'dados'));
     }

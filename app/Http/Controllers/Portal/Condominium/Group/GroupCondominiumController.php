@@ -9,10 +9,9 @@ use CentralCondo\Services\Portal\Condominium\Group\GroupCondominiumService;
 use CentralCondo\Http\Requests;
 use CentralCondo\Http\Requests\Portal\Condominium\Group\GroupCondominiumRequest;
 use CentralCondo\Repositories\Portal\Condominium\Group\GroupCondominiumRepository;
+use CentralCondo\Services\Util\UtilObjeto;
 use CentralCondo\Validators\Portal\Condominium\Group\GroupCondominiumValidator;
 use CentralCondo\Http\Controllers\Controller;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class GroupCondominiumController extends Controller
 {
@@ -42,24 +41,33 @@ class GroupCondominiumController extends Controller
     private $usersGroupCondominiumRepository;
 
     /**
+     * @var UtilObjeto
+     *
+     */
+    private $utilObjeto;
+
+    /**
      * GroupCondominiumController constructor.
      * @param GroupCondominiumRepository $repository
      * @param GroupCondominiumValidator $validator
      * @param GroupCondominiumService $service
      * @param CondominiumRepository $condominiumRepository
      * @param UsersGroupCondominiumRepository $usersGroupCondominiumRepository
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(GroupCondominiumRepository $repository,
                                 GroupCondominiumValidator $validator,
                                 GroupCondominiumService $service,
                                 CondominiumRepository $condominiumRepository,
-                                UsersGroupCondominiumRepository $usersGroupCondominiumRepository)
+                                UsersGroupCondominiumRepository $usersGroupCondominiumRepository,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->validator = $validator;
         $this->service = $service;
         $this->condominiumRepository = $condominiumRepository;
         $this->usersGroupCondominiumRepository = $usersGroupCondominiumRepository;
+        $this->utilObjeto = $utilObjeto;
         $this->condominium_id = session()->get('condominium_id');
     }
 
@@ -67,11 +75,7 @@ class GroupCondominiumController extends Controller
     {
         $config['title'] = 'Grupos';
         $dados = $this->repository->findWhere(['condominium_id' => $this->condominium_id]);
-
-        $currentPage = Paginator::resolveCurrentPage() - 1;
-        $perPage = 15;
-        $currentPageSearchResults = $dados->slice($currentPage * $perPage, $perPage)->all();
-        $dados  = new LengthAwarePaginator($currentPageSearchResults, count($dados), $perPage);
+        $dados = $this->utilObjeto->paginate($dados);
 
         return view('portal.condominium.group.index', compact('config', 'dados'));
     }

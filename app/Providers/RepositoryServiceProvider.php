@@ -159,20 +159,20 @@ class RepositoryServiceProvider extends ServiceProvider
 
         //called
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\CalledRepository::class,
-            \CentralCondo\Repositories\Portal\CalledRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Communication\Called\CalledRepository::class,
+            \CentralCondo\Repositories\Portal\Communication\Called\CalledRepositoryEloquent::class
         );
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\CalledCategoryRepository::class,
-            \CentralCondo\Repositories\Portal\CalledCategoryRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Communication\Called\CalledCategoryRepository::class,
+            \CentralCondo\Repositories\Portal\Communication\Called\CalledCategoryRepositoryEloquent::class
         );
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\CalledStatusRepository::class,
-            \CentralCondo\Repositories\Portal\CalledStatusRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Communication\Called\CalledStatusRepository::class,
+            \CentralCondo\Repositories\Portal\Communication\Called\CalledStatusRepositoryEloquent::class
         );
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\CalledHistoricRepository::class,
-            \CentralCondo\Repositories\Portal\CalledHistoricRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Communication\Called\CalledHistoricRepository::class,
+            \CentralCondo\Repositories\Portal\Communication\Called\CalledHistoricRepositoryEloquent::class
         );
 
         //forum
