@@ -322,34 +322,35 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.'], function () {
         Route::post('message/{messageId}/reply/update/{id}', ['as' => 'message.reply.update', 'uses' => 'Portal\MessageReplyController@update']);
         Route::get('message/{messageId}/reply/destroy/{id}', ['as' => 'message.reply.destroy', 'uses' => 'Portal\MessageReplyController@destroy']);
 
+        //CALLED
+        Route::get('called', ['as' => 'called.index', 'uses' => 'Portal\Communication\Called\CalledController@index']);
+        Route::get('called/create', ['as' => 'called.create', 'uses' => 'Portal\Communication\Called\CalledController@create']);
+        Route::post('called/store', ['as' => 'called.store', 'uses' => 'Portal\Communication\Called\CalledController@store']);
+        Route::get('called/edit/{id}', ['as' => 'called.edit', 'uses' => 'Portal\Communication\Called\CalledController@edit']);
+        Route::post('called/update/{id}', ['as' => 'called.update', 'uses' => 'Portal\Communication\Called\CalledController@update']);
+        Route::get('called/destroy/{id}', ['as' => 'called.destroy', 'uses' => 'Portal\Communication\Called\CalledController@destroy']);
+
+        //CALLED HISTORIC
+        Route::get('called/{calledId}/historic/', ['as' => 'called.historic.index', 'uses' => 'Portal\Communication\Called\CalledHistoricController@index']);
+
+        //CALLED CATEGORY
+        Route::get('called/category', ['as' => 'called.category.index', 'uses' => 'Portal\Communication\Called\CalledCategoryController@index']);
+        Route::get('called/category/create', ['as' => 'called.category.create', 'uses' => 'Portal\Communication\Called\CalledCategoryController@create']);
+        Route::post('called/category/store', ['as' => 'called.category.store', 'uses' => 'Portal\Communication\Called\CalledCategoryController@store']);
+        Route::get('called/category/edit/{id}', ['as' => 'called.category.edit', 'uses' => 'Portal\Communication\Called\CalledCategoryController@edit']);
+        Route::post('called/category/update/{id}', ['as' => 'called.category.update', 'uses' => 'Portal\Communication\Called\CalledCategoryController@update']);
+        Route::get('called/category/destroy/{id}', ['as' => 'called.category.destroy', 'uses' => 'Portal\Communication\Called\CalledCategoryController@destroy']);
+
+        //CALLED STATUS
+        Route::get('called/status', ['as' => 'called.status.index', 'uses' => 'Portal\Communication\Called\CalledStatusController@index']);
+        Route::get('called/status/create', ['as' => 'called.status.create', 'uses' => 'Portal\Communication\Called\CalledStatusController@create']);
+        Route::post('called/status/store', ['as' => 'called.status.store', 'uses' => 'Portal\Communication\Called\CalledStatusController@store']);
+        Route::get('called/status/edit/{id}', ['as' => 'called.status.edit', 'uses' => 'Portal\Communication\Called\CalledStatusController@edit']);
+        Route::post('called/status/update/{id}', ['as' => 'called.status.update', 'uses' => 'Portal\Communication\Called\CalledStatusController@update']);
+        Route::get('called/status/destroy/{id}', ['as' => 'called.status.destroy', 'uses' => 'Portal\Communication\Called\CalledStatusController@destroy']);
+
+
     });
-
-    //CALLED
-    Route::get('called', ['as' => 'called.index', 'uses' => 'Portal\CalledController@index']);
-    Route::get('called/create', ['as' => 'called.create', 'uses' => 'Portal\CalledController@create']);
-    Route::post('called/store', ['as' => 'called.store', 'uses' => 'Portal\CalledController@store']);
-    Route::get('called/edit/{id}', ['as' => 'called.edit', 'uses' => 'Portal\CalledController@edit']);
-    Route::post('called/update/{id}', ['as' => 'called.update', 'uses' => 'Portal\CalledController@update']);
-    Route::get('called/destroy/{id}', ['as' => 'called.destroy', 'uses' => 'Portal\CalledController@destroy']);
-
-    //CALLED HISTORIC
-    Route::get('called/{calledId}/historic/', ['as' => 'called.historic.index', 'uses' => 'Portal\CalledHistoricController@index']);
-
-    //CALLED CATEGORY
-    Route::get('called/category', ['as' => 'called.category.index', 'uses' => 'Portal\CalledCategoryController@index']);
-    Route::get('called/category/create', ['as' => 'called.category.create', 'uses' => 'Portal\CalledCategoryController@create']);
-    Route::post('called/category/store', ['as' => 'called.category.store', 'uses' => 'Portal\CalledCategoryController@store']);
-    Route::get('called/category/edit/{id}', ['as' => 'called.category.edit', 'uses' => 'Portal\CalledCategoryController@edit']);
-    Route::post('called/category/update/{id}', ['as' => 'called.category.update', 'uses' => 'Portal\CalledCategoryController@update']);
-    Route::get('called/category/destroy/{id}', ['as' => 'called.category.destroy', 'uses' => 'Portal\CalledCategoryController@destroy']);
-
-    //CALLED STATUS
-    Route::get('called/status', ['as' => 'called.status.index', 'uses' => 'Portal\CalledStatusController@index']);
-    Route::get('called/status/create', ['as' => 'called.status.create', 'uses' => 'Portal\CalledStatusController@create']);
-    Route::post('called/status/store', ['as' => 'called.status.store', 'uses' => 'Portal\CalledStatusController@store']);
-    Route::get('called/status/edit/{id}', ['as' => 'called.status.edit', 'uses' => 'Portal\CalledStatusController@edit']);
-    Route::post('called/status/update/{id}', ['as' => 'called.status.update', 'uses' => 'Portal\CalledStatusController@update']);
-    Route::get('called/status/destroy/{id}', ['as' => 'called.status.destroy', 'uses' => 'Portal\CalledStatusController@destroy']);
 
     //FORUM
     Route::get('forum', ['as' => 'forum.index', 'uses' => 'Portal\ForumController@index']);

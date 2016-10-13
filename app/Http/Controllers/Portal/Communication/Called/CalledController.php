@@ -5,11 +5,11 @@ namespace CentralCondo\Http\Controllers\Portal\Communication\Called;
 use CentralCondo\Entities\Portal\Communication\Called\CalledCategory;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledCategoryRepository;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledStatusRepository;
-use CentralCondo\Repositories\Portal\CondominiumRepository;
-use CentralCondo\Repositories\Portal\UsersCondominiumRepository;
+use CentralCondo\Repositories\Portal\Condominium\CondominiumRepository;
+use CentralCondo\Repositories\Portal\Condominium\UsersCondominiumRepository;
 use CentralCondo\Services\Portal\Communication\Called\CalledService;
 use CentralCondo\Http\Requests;
-use CentralCondo\Http\Requests\Portal\CalledRequest;
+use CentralCondo\Http\Requests\Portal\Communication\Called\CalledRequest;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledRepository;
 use CentralCondo\Validators\Portal\Communication\Called\CalledValidator;
 use CentralCondo\Http\Controllers\Controller;
@@ -81,8 +81,10 @@ class CalledController extends Controller
 
     public function index()
     {
-        $dados = $this->repository->all();
-        return view('portal.called.index', compact('dados'));
+        $config['title'] = 'Chamados';
+        $dados = $this->repository->findWhere(['condominium_id' => $this->condominium_id]);
+
+        return view('portal.communication.called.index', compact('config','dados'));
     }
 
     public function create()
@@ -92,7 +94,7 @@ class CalledController extends Controller
         $calledStatus = $this->calledStatusCategory->listCalledStatus();
         $usersCondominium = $this->usersCondominiumRepository->all();
 
-        return view('portal.called.create', compact('condominium', 'calledCategory', 'calledStatus', 'usersCondominium'));
+        return view('portal.communication.called.create', compact('condominium', 'calledCategory', 'calledStatus', 'usersCondominium'));
     }
 
     public function store(CalledRequest $request)

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h3>Chamado</h3>
-        <a href="{{ route('portal.called.create') }}" class="btn btn-default">Cadastrar</a>
+        <a href="{{ route('portal.communication.called.create') }}" class="btn btn-default">Cadastrar</a>
         <br />
         <br />
         @include('errors._check')
@@ -30,9 +30,9 @@
                         <td>{{ $row->calledStatus->name }}</td>
                         <td>@if ($row->visible === 'y') Sim @else Não @endif</td>
                         <td>
-                            <a href="{{route('portal.called.historic.index',['id'=>$row->id])}}" title="" class="btn btn-info btn-sm">Histórico</a>
-                            <a href="{{route('portal.called.edit',['id'=>$row->id])}}" title="" class="btn btn-default btn-sm">Editar</a>
-                            <a href="{{route('portal.called.destroy',['id'=>$row->id])}}" title="" class="btn btn-danger btn-sm">Excluir</a>
+                            <a href="{{route('portal.communication.called.historic.index',['id'=>$row->id])}}" title="" class="btn btn-info btn-sm">Histórico</a>
+                            <a href="{{route('portal.communication.called.edit',['id'=>$row->id])}}" title="" class="btn btn-default btn-sm">Editar</a>
+                            <a href="{{route('portal.communication.called.destroy',['id'=>$row->id])}}" title="" class="btn btn-danger btn-sm">Excluir</a>
                         </td>
                     </tr>
                 @endforeach
