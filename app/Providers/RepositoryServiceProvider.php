@@ -201,12 +201,12 @@ class RepositoryServiceProvider extends ServiceProvider
 
         //communication
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\CommunicationRepository::class,
-            \CentralCondo\Repositories\Portal\CommunicationRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Communication\Communication\CommunicationRepository::class,
+            \CentralCondo\Repositories\Portal\Communication\Communication\CommunicationRepositoryEloquent::class
         );
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\CommunicationGroupRepository::class,
-            \CentralCondo\Repositories\Portal\CommunicationGroupRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Communication\Communication\CommunicationGroupRepository::class,
+            \CentralCondo\Repositories\Portal\Communication\Communication\CommunicationGroupRepositoryEloquent::class
         );
 
         //achados e perdidos

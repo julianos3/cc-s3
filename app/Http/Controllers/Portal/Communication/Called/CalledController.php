@@ -58,15 +58,13 @@ class CalledController extends Controller
         $this->calledStatusCategory = $calledStatusRepository;
         $this->utilObjeto = $utilObjeto;
         $this->condominium_id = session()->get('condominium_id');
+        $this->user_role_condominium = session()->get('user_role_condominium');
     }
 
     public function index()
     {
         $config['title'] = 'Chamados';
-        $dados = $this->repository
-            ->orderBy('created_at', 'desc')
-            ->with(['usersCondominium', 'calledCategory', 'calledStatus'])
-            ->findWhere(['condominium_id' => $this->condominium_id]);
+        $dados = $this->service->getList();
         $dados = $this->utilObjeto->paginate($dados);
 
         return view('portal.communication.called.index', compact('config', 'dados'));

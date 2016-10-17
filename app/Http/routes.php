@@ -299,6 +299,8 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.', 'middleware' => 'auth'], 
 
     //COMUNICATION
     Route::group(['prefix' => 'communication', 'as' => 'communication.'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'Portal\Communication\Communication\CommunicationController@index']);
+
         //MESSAGE
         Route::group(['prefix' => 'message', 'as' => 'message.'], function () {
             //PUBLIC
@@ -324,6 +326,7 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.', 'middleware' => 'auth'], 
 
         //CALLED
         Route::group(['prefix' => 'called', 'as' => 'called.'], function () {
+
             Route::get('', ['as' => 'index', 'uses' => 'Portal\Communication\Called\CalledController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'Portal\Communication\Called\CalledController@create']);
             Route::post('store', ['as' => 'store', 'uses' => 'Portal\Communication\Called\CalledController@store']);
@@ -353,6 +356,19 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.', 'middleware' => 'auth'], 
 
         });
 
+        //COMUNICADOS
+        Route::group(['prefix' => 'communication', 'as' => 'communication.'], function () {
+            Route::get('', ['as' => 'index', 'uses' => 'Portal\Communication\Communication\CommunicationController@index']);
+            Route::get('create', ['as' => 'create', 'uses' => 'Portal\Communication\Communication\CommunicationController@create']);
+            Route::get('store', ['as' => 'store', 'uses' => 'Portal\Communication\Communication\CommunicationController@store']);
+            Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Portal\Communication\Communication\CommunicationController@edit']);
+            Route::post('update/{id}', ['as' => 'update', 'uses' => 'Portal\Communication\Communication\CommunicationController@update']);
+            Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Portal\Communication\Communication\CommunicationController@destroy']);
+
+            //COMUNICADOS GROUP
+            Route::get('/{communicationId}/group/', ['as' => 'group.index', 'uses' => 'Portal\Communication\Communication\CommunicationGroupController@index']);
+        });
+
 
     });
 
@@ -371,18 +387,6 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.', 'middleware' => 'auth'], 
     Route::get('forum/{forumId}/response/edit/{id}', ['as' => 'forum.response.edit', 'uses' => 'Portal\ForumResponseController@edit']);
     Route::post('forum/{forumId}/response/update/{id}', ['as' => 'forum.response.update', 'uses' => 'Portal\ForumResponseController@update']);
     Route::get('forum/{forumId}/response/destroy/{id}', ['as' => 'forum.response.destroy', 'uses' => 'Portal\ForumResponseController@destroy']);
-
-
-    //COMUNICADOS
-    Route::get('communication', ['as' => 'communication.index', 'uses' => 'Portal\CommunicationController@index']);
-    Route::get('communication/create', ['as' => 'communication.create', 'uses' => 'Portal\CommunicationController@create']);
-    Route::post('communication/store', ['as' => 'communication.store', 'uses' => 'Portal\CommunicationController@store']);
-    Route::get('communication/edit/{id}', ['as' => 'communication.edit', 'uses' => 'Portal\CommunicationController@edit']);
-    Route::post('communication/update/{id}', ['as' => 'communication.update', 'uses' => 'Portal\CommunicationController@update']);
-    Route::get('communication/destroy/{id}', ['as' => 'communication.destroy', 'uses' => 'Portal\CommunicationController@destroy']);
-
-    //COMUNICADOS GROUP
-    Route::get('communication/{communicationId}/group/', ['as' => 'communication.group.index', 'uses' => 'Portal\CommunicationGroupController@index']);
 
     //ACHADOS E PERDIDOS
     Route::get('lost-and-found', ['as' => 'lost-and-found.index', 'uses' => 'Portal\LostAndFoundController@index']);

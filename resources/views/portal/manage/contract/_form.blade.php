@@ -6,13 +6,13 @@
     <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('start_date', 'Data início:') !!}
-            {!! Form::text('start_date', null, ['class'=>'form-control', 'required' => 'required']) !!}
+            {!! Form::text('start_date', null, ['class'=>'form-control', 'required' => 'required', 'data-plugin' => 'formatter', 'data-pattern' => '[[99]]/[[99]]/[[9999]]', 'data-plugin' => 'datepicker', 'placeholder' => '00/00/0000']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('end_date', 'Data Fim:') !!}
-            {!! Form::text('end_date', null, ['class'=>'form-control', 'required' => 'required']) !!}
+            {!! Form::text('end_date', null, ['class'=>'form-control', 'required' => 'required', 'data-plugin' => 'formatter', 'data-pattern' => '[[99]]/[[99]]/[[9999]]', 'data-plugin' => 'datepicker', 'placeholder' => '00/00/0000']) !!}
         </div>
     </div>
 </div>

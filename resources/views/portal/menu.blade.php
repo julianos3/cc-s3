@@ -164,7 +164,7 @@
                                     <span class="site-menu-title">Assembleias</span>
                                 </a>
                             </li>
-                            <li class="site-menu-item none">
+                            <li class="site-menu-item">
                                 <a class="animsition-link" href="">
                                     <span class="site-menu-title">Comunicados</span>
                                 </a>

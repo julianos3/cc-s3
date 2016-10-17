@@ -19,7 +19,11 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
+        <label for="assunto"><strong>Público?</strong></label>
+        <p class="form-control-static">@if($dados['visible'] == 'y') Sim @else Não @endif</p>
+    </div>
+    <div class="col-md-4">
         <label for="assunto"><strong>Data de Abertura</strong></label>
         <p class="form-control-static">{{ date('d/m/Y h:i', strtotime($dados['created_at'])) }}</p>
     </div>
@@ -31,7 +35,7 @@
         $createdAt = $date->created_at;
     }
     ?>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <label for="assunto"><strong>Data de Encerramento</strong></label>
         <p class="form-control-static">{{ date('d/m/Y h:i', strtotime($createdAt)) }}</p>
     </div>

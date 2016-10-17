@@ -5,6 +5,7 @@ namespace CentralCondo\Services\Portal\Communication\Called;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledHistoricRepository;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledRepository;
 use CentralCondo\Validators\Portal\Communication\Called\CalledValidator;
+use Illuminate\Support\Facades\Auth;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -45,6 +46,30 @@ class CalledService //regras de negocios
         $this->calledHistoricRepository = $calledHistoricRepository;
         $this->condominium_id = session()->get('condominium_id');
         $this->user_condominium_id = session()->get('user_condominium_id');
+        $this->user_role_condominium = session()->get('user_role_condominium');
+    }
+
+    public function getList()
+    {
+        if($this->user_role_condominium == 1 || $this->user_role_condominium == 2 ||
+            $this->user_role_condominium == 3  || $this->user_role_condominium == 7 ||
+            $this->user_role_condominium == 9){
+            $dados = $this->repository
+                ->orderBy('created_at', 'desc')
+                ->with(['usersCondominium', 'calledCategory', 'calledStatus'])
+                ->findWhere(['condominium_id' => $this->condominium_id]);
+        }else{
+            $dados = $this->repository
+                ->orderBy('created_at', 'desc')
+                ->with(['usersCondominium', 'calledCategory', 'calledStatus'])
+                ->findWhere([
+                    'condominium_id' => $this->condominium_id,
+                    'user_condominium_id' => Auth::user()->id,
+                    'visible' => 'y'
+                ]);
+        }
+
+        return $dados;
     }
 
     public function create(array $data)

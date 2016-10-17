@@ -2,7 +2,7 @@
 
 namespace CentralCondo\Entities\Portal\Condominium\Group;
 
-use CentralCondo\Entities\Portal\CommunicationGroup;
+use CentralCondo\Entities\Portal\Communication\Communication\CommunicationGroup;
 use CentralCondo\Entities\Portal\Condominium\Condominium;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
