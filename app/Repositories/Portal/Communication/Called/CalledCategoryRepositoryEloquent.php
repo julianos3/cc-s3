@@ -15,8 +15,23 @@ use CentralCondo\Validators\Portal\Communication\Called\CalledCategoryValidator;
 class CalledCategoryRepositoryEloquent extends BaseRepository implements CalledCategoryRepository
 {
 
-    public function listCalledCategory(){
-        return $this->model->lists('name', 'id');
+    public function listCondominium($condominiumId)
+    {
+        $dados = $this->findWhere([
+            'condominium_id' => $condominiumId,
+            'active' => 'y'
+        ]);
+
+        return $dados;
+    }
+
+    public function listCondominiumAll($condominiumId)
+    {
+        $dados = $this->findWhere([
+            'condominium_id' => $condominiumId
+        ]);
+
+        return $dados;
     }
 
     /**

@@ -32,7 +32,7 @@ class CalledHistoric extends Model implements Transformable
 
     public function calledStatus()
     {
-        return $this->belongsTo(CalledStatus::class);
+        return $this->belongsTo(CalledStatus::class, 'called_id');
     }
 
 }

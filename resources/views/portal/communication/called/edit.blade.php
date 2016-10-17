@@ -1,28 +1,42 @@
 @extends('portal')
 
 @section('content')
-    <div class="container">
-        <h3>Editando Chamado {{$dados->name}}</h3>
-        <a href="{{ route('portal.called.index') }}" class="btn btn-default">Voltar</a>
-        <br />
-        <br />
-        <?php
-        $userCondominiumId = $dados->user_condominium_id;
-        ?>
-
-        @include('errors._check')
-
-        {!! Form::model($dados, ['route'=>['portal.called.update', $dados->id]]) !!}
-
-        @include('portal.called._form')
-
-        <div class="form-group">
-            {!! Form::submit('Salvar', ['class'=>'btn btn-primary']) !!}
+    <div class="page animsition">
+        <div class="page-header">
+            <h1 class="page-title">{{ $config['title'] }}</h1>
+            <ol class="breadcrumb" data-plugin="breadcrumb">
+                <li><a href="{{ route('portal.home.index') }}">Home</a></li>
+                <li><a href="{{ route('portal.communication.index') }}">Comunicação</a></li>
+                <li><a href="{{ route('portal.communication.called.index') }}">Chamados</a></li>
+                <li class="active">Alterar</li>
+            </ol>
+            <div class="page-header-actions">
+                <a href="{{ route('portal.communication.called.index') }}"
+                   class="btn btn-sm btn-icon btn-dark waves-effect waves-light waves-round" data-toggle="tooltip"
+                   data-original-title="Voltar">
+                    <i class="icon wb-arrow-left" aria-hidden="true"></i>
+                    Voltar
+                </a>
+            </div>
         </div>
+        <div class="page-content">
+            <div class="panel">
+                <div class="panel-body">
+                    @include('success._check')
+                    @include('errors._check')
 
-        {!! Form::close() !!}
+                    {!! Form::model($dados, ['route'=>['portal.communication.called.update', $dados->id]]) !!}
 
+                    @include('portal.communication.called._form_edit')
+
+                    <div class="form-group text-right">
+                        {!! Form::button('Salvar', ['type' => 'submit', 'class'=>'btn btn-raised btn-primary waves-effect waves-light']) !!}
+                    </div>
+
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
     </div>
-
-
 @endsection

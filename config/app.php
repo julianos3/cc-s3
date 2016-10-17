@@ -139,7 +139,6 @@ return [
         Illuminate\Html\HtmlServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        Potelo\GuPayment\GuPaymentServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -15,14 +15,8 @@ class CalledStatus extends Model implements Transformable
 
     protected $fillable = [
         'name',
-        'condominium_id',
         'active'
     ];
-
-    public function condominium()
-    {
-        return $this->belongsTo(Condominium::class);
-    }
 
     public function called()
     {

@@ -155,6 +155,7 @@ class UserService
             session([
                 'user_id' => $usersCondominium->user->id,
                 'user_condominium_id' => $usersCondominium->id,
+                'user_role_condominium' => $usersCondominium->user_role_condominium,
                 'condominium_id' => $usersCondominium->condominium_id,
                 'name' => $usersCondominium->condominium->name,
                 'image' => route('portal.condominium.user.image', [

@@ -14,8 +14,6 @@ class CalledStatus extends Migration
     {
         Schema::create('called_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('condominium_id')->unsigned();
-            $table->foreign('condominium_id')->references('id')->on('condominium');
             $table->string('name');
             $table->enum('active', ['y','n'])->default('n');
             $table->timestamps();

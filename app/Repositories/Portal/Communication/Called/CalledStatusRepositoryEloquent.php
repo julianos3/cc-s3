@@ -15,8 +15,13 @@ use CentralCondo\Validators\Portal\Communication\Called\CalledStatusValidator;
 class CalledStatusRepositoryEloquent extends BaseRepository implements CalledStatusRepository
 {
 
-    public function listCalledStatus(){
-        return $this->model->lists('name', 'id');
+    public function listAll()
+    {
+        $dados = $this->findWhere([
+            'active' => 'y'
+        ]);
+
+        return $dados;
     }
 
     /**

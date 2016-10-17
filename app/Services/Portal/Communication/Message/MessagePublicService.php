@@ -89,7 +89,7 @@ class MessagePublicService
                     'data' => $dados->toArray(),
                 ];
 
-                return redirect()->back()->with('message', $response['message']);
+                return redirect()->back()->with('status', $response['message']);
             }
         } catch (ValidatorException $e) {
 

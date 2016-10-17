@@ -139,42 +139,47 @@
                                     <span class="site-menu-title">Mensagens Privadas</span>
                                 </a>
                             </li>
-                            <li class="site-menu-item">
+                            <li class="site-menu-item none">
                                 <a class="animsition-link" href="">
                                     <span class="site-menu-title">Eventos</span>
                                 </a>
                             </li>
                             <li class="site-menu-item">
-                                <a class="animsition-link" href="">
+                                <a class="animsition-link" href="{{ route('portal.communication.called.index') }}">
                                     <span class="site-menu-title">Meus Chamados</span>
                                 </a>
                             </li>
                             <li class="site-menu-item">
+                                <a class="animsition-link" href="{{ route('portal.communication.called.category.index') }}">
+                                    <span class="site-menu-title">Categoria Chamados</span>
+                                </a>
+                            </li>
+                            <li class="site-menu-item none">
                                 <a class="animsition-link" href="">
                                     <span class="site-menu-title">Fórum</span>
                                 </a>
                             </li>
-                            <li class="site-menu-item">
+                            <li class="site-menu-item none">
                                 <a class="animsition-link" href="">
                                     <span class="site-menu-title">Assembleias</span>
                                 </a>
                             </li>
-                            <li class="site-menu-item">
+                            <li class="site-menu-item none">
                                 <a class="animsition-link" href="">
                                     <span class="site-menu-title">Comunicados</span>
                                 </a>
                             </li>
-                            <li class="site-menu-item">
+                            <li class="site-menu-item none">
                                 <a class="animsition-link" href="">
                                     <span class="site-menu-title">Achados e Perdidos</span>
                                 </a>
                             </li>
-                            <li class="site-menu-item">
+                            <li class="site-menu-item none">
                                 <a class="animsition-link" href="">
                                     <span class="site-menu-title">Enquetes</span>
                                 </a>
                             </li>
-                            <li class="site-menu-item">
+                            <li class="site-menu-item none">
                                 <a class="animsition-link" href="">
                                     <span class="site-menu-title">Álbum de Fotos</span>
                                 </a>

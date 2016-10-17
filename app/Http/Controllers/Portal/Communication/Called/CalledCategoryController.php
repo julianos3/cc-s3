@@ -2,14 +2,11 @@
 
 namespace CentralCondo\Http\Controllers\Portal\Communication\Called;
 
-use CentralCondo\Repositories\Portal\Condominium\CondominiumRepository;
-use CentralCondo\Services\Portal\Communication\Called\CalledCategoryService;
-use CentralCondo\Http\Requests;
-use CentralCondo\Http\Requests\Portal\CalledCategoryRequest;
-use CentralCondo\Repositories\Portal\Communication\Called\CalledCategoryRepository;
-use CentralCondo\Validators\Portal\Communication\Called\CalledCategoryValidator;
 use CentralCondo\Http\Controllers\Controller;
-
+use CentralCondo\Http\Requests\Portal\Communication\Called\CalledCategoryRequest;
+use CentralCondo\Repositories\Portal\Communication\Called\CalledCategoryRepository;
+use CentralCondo\Services\Portal\Communication\Called\CalledCategoryService;
+use CentralCondo\Services\Util\UtilObjeto;
 
 class CalledCategoryController extends Controller
 {
@@ -19,48 +16,43 @@ class CalledCategoryController extends Controller
     protected $repository;
 
     /**
-     * @var CalledCategoryValidator
-     */
-    protected $validator;
-
-    /**
      * @var CalledCategoryService
      */
     private $service;
 
     /**
-     * @var CondominiumRepository
+     * @var UtilObjeto
      */
-    private $condominiumRepository;
+    private $utilObjeto;
 
     /**
      * CalledCategoryController constructor.
      * @param CalledCategoryRepository $repository
-     * @param CalledCategoryValidator $validator
      * @param CalledCategoryService $service
-     * @param CondominiumRepository $condominiumRepository
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(CalledCategoryRepository $repository,
-                                CalledCategoryValidator $validator,
-                                CalledCategoryService $service,
-                                CondominiumRepository $condominiumRepository)
+                                CalledCategoryService $service, UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
-        $this->validator = $validator;
         $this->service = $service;
-        $this->condominiumRepository = $condominiumRepository;
+        $this->utilObjeto = $utilObjeto;
+        $this->condominium_id = session()->get('condominium_id');
     }
 
     public function index()
     {
-        $dados = $this->repository->all();
-        return view('portal.called.category.index', compact('dados'));
+        $config['title'] = 'Categoria Chamado';
+        $dados = $this->repository->findWhere(['condominium_id' => $this->condominium_id]);
+        $dados = $this->utilObjeto->paginate($dados);
+
+        return view('portal.communication.called.category.index', compact('config', 'dados'));
     }
 
     public function create()
     {
-        $condominium = $this->condominiumRepository->listCondominium();
-        return view('portal.called.category.create', compact('condominium'));
+        $config['title'] = 'Cadastrar Categoria';
+        return view('portal.communication.called.category.create', compact('config'));
     }
 
     public function store(CalledCategoryRequest $request)
@@ -70,10 +62,11 @@ class CalledCategoryController extends Controller
 
     public function edit($id)
     {
-        $dados = $this->repository->find($id);
-        $condominium = $this->condominiumRepository->listCondominium();
-
-        return view('portal.called.category.edit', compact('dados', 'condominium'));
+        $config['title'] = 'Alterar Categoria';
+        $dados = $this->repository->findWhere(['id' => $id, 'condominium_id' => $this->condominium_id]);
+        $dados = $dados['0'];
+        
+        return view('portal.communication.called.category.edit', compact('dados', 'config'));
     }
 
     public function update(CalledCategoryRequest $request, $id)
@@ -83,16 +76,6 @@ class CalledCategoryController extends Controller
 
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'UsersRole deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'UsersRole deleted.');
+        return $this->service->destroy($id);
     }
 }

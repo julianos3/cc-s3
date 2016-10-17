@@ -14,10 +14,7 @@ use CentralCondo\Validators\Portal\Communication\Called\CalledValidator;
  */
 class CalledRepositoryEloquent extends BaseRepository implements CalledRepository
 {
-
-    public function listCalled(){
-        return $this->model->lists('name', 'id');
-    }
+    
 
     /**
      * Specify Model class name

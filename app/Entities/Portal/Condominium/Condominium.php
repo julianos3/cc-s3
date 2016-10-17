@@ -4,9 +4,8 @@ namespace CentralCondo\Entities\Portal\Condominium;
 
 use CentralCondo\Entities\Portal\City;
 use CentralCondo\Entities\Portal\Condominium\Block\Block;
-use CentralCondo\Entities\Portal\Called;
-use CentralCondo\Entities\Portal\CalledCategory;
-use CentralCondo\Entities\Portal\CalledStatus;
+use CentralCondo\Entities\Portal\Communication\Called\Called;
+use CentralCondo\Entities\Portal\Communication\Called\CalledCategory;
 use CentralCondo\Entities\Portal\Communication;
 use CentralCondo\Entities\Portal\Condominium\Unit\Unit;
 use CentralCondo\Entities\Portal\Diary;
@@ -14,9 +13,9 @@ use CentralCondo\Entities\Portal\Condominium\Finality;
 use CentralCondo\Entities\Portal\Forum;
 use CentralCondo\Entities\Portal\Condominium\Group\GroupCondominium;
 use CentralCondo\Entities\Portal\LostAndFound;
-use CentralCondo\Entities\Portal\Message;
-use CentralCondo\Entities\Portal\ProviderCategory;
-use CentralCondo\Entities\Portal\Providers;
+use CentralCondo\Entities\Portal\Communication\Message\Message;
+use CentralCondo\Entities\Portal\Condominium\Provider\ProviderCategory;
+use CentralCondo\Entities\Portal\Condominium\Provider\Providers;
 use CentralCondo\Entities\Portal\Manage\ReserveAreas;
 use CentralCondo\Entities\Portal\Condominium\SecurityCam;
 use CentralCondo\Entities\Portal\State;
@@ -88,7 +87,7 @@ class Condominium extends Model implements Transformable
 
     public function securityCam()
     {
-        return $this->belongsTo(SecuritCam::class);
+        return $this->belongsTo(SecurityCam::class);
     }
 
     public function providerCategory()
@@ -104,11 +103,6 @@ class Condominium extends Model implements Transformable
     public function calledCategory()
     {
         return $this->belongsTo(CalledCategory::class);
-    }
-
-    public function calledStatus()
-    {
-        return $this->belongsTo(CalledStatus::class);
     }
 
     public function called()

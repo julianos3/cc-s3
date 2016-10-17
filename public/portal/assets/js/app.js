@@ -307,4 +307,11 @@
         });
     });
 
+    $('.btnShowCalled').bind('click', function (){
+        var id = $(this).attr('data-id');
+        $.get('/portal/communication/called/show/' + id, function (result) {
+            $('.showCalled').html(result);
+        });
+    });
+
 })(document, window, jQuery);

@@ -2,10 +2,11 @@
 
 namespace CentralCondo\Services\Portal\Communication\Called;
 
+use CentralCondo\Repositories\Portal\Communication\Called\CalledHistoricRepository;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledRepository;
 use CentralCondo\Validators\Portal\Communication\Called\CalledValidator;
-use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class CalledService //regras de negocios
 {
@@ -25,6 +26,8 @@ class CalledService //regras de negocios
      */
     protected $calledHistoricService;
 
+    protected $calledHistoricRepository;
+
     /**
      * CalledService constructor.
      * @param CalledRepository $repository
@@ -33,41 +36,48 @@ class CalledService //regras de negocios
      */
     public function __construct(CalledRepository $repository,
                                 CalledValidator $validator,
-                                CalledHistoricService $calledHistoricService)
+                                CalledHistoricService $calledHistoricService,
+                                CalledHistoricRepository $calledHistoricRepository)
     {
         $this->repository = $repository;
         $this->validator = $validator;
         $this->calledHistoricService = $calledHistoricService;
+        $this->calledHistoricRepository = $calledHistoricRepository;
+        $this->condominium_id = session()->get('condominium_id');
+        $this->user_condominium_id = session()->get('user_condominium_id');
     }
 
     public function create(array $data)
     {
         try {
+            $data['called_status_id'] = 1;
+            $data['condominium_id'] = $this->condominium_id;
+            $data['user_condominium_id'] = $this->user_condominium_id;
+
             $this->validator->with($data)->passesOrFail();
             $dados = $this->repository->create($data);
-            if($dados) {
+            if ($dados) {
 
                 //historic register
                 $historic['called_id'] = $dados['id'];
+                $historic['user_condominium_id'] = $dados['user_condominium_id'];
                 $historic['called_status_id'] = $dados['called_status_id'];
                 $historic['description'] = $dados['description'];
-                $historic['user_condominium_id'] = $dados['user_condominium_id'];
 
                 $this->calledHistoricService->create($historic);
 
                 $response = [
-                    'message' => 'UsersRole add.',
+                    'message' => 'Chamado enviado com sucesso!',
                     'data' => $dados->toArray(),
                 ];
 
-                return redirect()->back()->with('message', $response['message']);
+                return redirect()->back()->with('status', $response['message']);
             }
         } catch (ValidatorException $e) {
             $response = [
                 'error' => true,
                 'message' => $e->getMessageBag()
             ];
-
 
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
@@ -76,30 +86,35 @@ class CalledService //regras de negocios
     public function update(array $data, $id)
     {
         try {
-            $called = $this->repository->find($id);
-            $description = $data['description'];
-            $data['description'] = $called['description'];
-
             //DEVE ALTERAR APENAS O STATUS
-            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
-            $dados = $this->repository->update($data, $id);
+            $arrayChamado = $this->repository->find($id);
+            $chamado['condominium_id'] = $arrayChamado->condominium_id;
+            $chamado['user_condominium_id'] = $arrayChamado->user_condominium_id;
+            $chamado['called_category_id'] = $data['called_category_id'];
+            $chamado['called_status_id'] = $data['called_status_id'];
+            $chamado['subject'] = $arrayChamado->subject;
+            $chamado['description'] = $arrayChamado->description;
+            $chamado['visible'] = $arrayChamado->visible;
 
-            if($dados) {
+            $this->validator->with($chamado)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            $dados = $this->repository->update($chamado, $id);
+
+            if ($dados) {
 
                 //historic register
                 $historic['called_id'] = $dados['id'];
+                $historic['user_condominium_id'] = $this->user_condominium_id;
                 $historic['called_status_id'] = $dados['called_status_id'];
-                $historic['description'] = $description;
-                $historic['user_condominium_id'] = $dados['user_condominium_id'];
+                $historic['description'] = $data['description_historic'];
 
                 $this->calledHistoricService->create($historic);
 
                 $response = [
-                    'message' => 'UsersRole updated.',
+                    'message' => 'Chamado alterado com sucesso!',
                     'data' => $dados->toArray(),
                 ];
 
-                return redirect()->back()->with('message', $response['message']);
+                return redirect()->to('portal/communication/called')->with('status', $response['message']);
             }
         } catch (ValidatorException $e) {
 
@@ -109,6 +124,26 @@ class CalledService //regras de negocios
             ]);
 
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        }
+    }
+
+    public function destroy($id)
+    {
+        //excluir historic
+        $historic = $this->calledHistoricRepository->findWhere(['called_id' => $id]);
+        if ($historic[0]->toArray()) {
+            foreach ($historic as $row) {
+                $this->calledHistoricService->destroy($row->id);
+            }
+        }
+
+        $deleted = $this->repository->delete($id);
+        if ($deleted) {
+            $response = trans("Chamado removido com sucesso!");
+            return redirect()->back()->with('status', trans($response));
+        } else {
+            $response = trans("Erro ao remover Chamado!");
+            return redirect()->back()->withErrors($response)->withInput();
         }
     }
 

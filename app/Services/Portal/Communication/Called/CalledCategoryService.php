@@ -3,9 +3,10 @@
 namespace CentralCondo\Services\Portal\Communication\Called;
 
 use CentralCondo\Repositories\Portal\Communication\Called\CalledCategoryRepository;
+use CentralCondo\Repositories\Portal\Communication\Called\CalledRepository;
 use CentralCondo\Validators\Portal\Communication\Called\CalledCategoryValidator;
-use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class CalledCategoryService //regras de negocios
 {
@@ -20,59 +21,67 @@ class CalledCategoryService //regras de negocios
      */
     protected $validator;
 
-    public function __construct(CalledCategoryRepository $repository, CalledCategoryValidator $validator)
+    protected $calledRepository;
+
+    public function __construct(CalledCategoryRepository $repository,
+                                CalledCategoryValidator $validator,
+                                CalledRepository $calledRepository)
     {
         $this->repository = $repository;
         $this->validator = $validator;
+        $this->calledRepository = $calledRepository;
+        $this->condominium_id = session()->get('condominium_id');
     }
 
     public function create(array $data)
     {
 
         try {
+            $data['condominium_id'] = $this->condominium_id;
             $this->validator->with($data)->passesOrFail();
             $dados = $this->repository->create($data);
-            if($dados) {
-                $response = [
-                    'message' => 'UsersRole add.',
-                    'data' => $dados->toArray(),
-                ];
-
-                return redirect()->back()->with('message', $response['message']);
+            if ($dados) {
+                $response = trans("Categoria cadastrada com sucesso!");
+                return redirect()->back()->with('status', trans($response));
             }
         } catch (ValidatorException $e) {
-            $response = [
-                'error' => true,
-                'message' => $e->getMessageBag()
-            ];
-
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            $response = trans("Erro ao cadastrar a Categoria");
+            return redirect()->back()->withErrors($response)->withInput();
         }
     }
 
     public function update(array $data, $id)
     {
         try {
+            $data['condominium_id'] = $this->condominium_id;
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
             $dados = $this->repository->update($data, $id);
 
-            if($dados) {
-                $response = [
-                    'message' => 'UsersRole updated.',
-                    'data' => $dados->toArray(),
-                ];
-
-                return redirect()->back()->with('message', $response['message']);
+            if ($dados) {
+                $response = trans("Categoria alterada com sucesso!");
+                return redirect()->back()->with('status', trans($response));
             }
         } catch (ValidatorException $e) {
+            $response = trans("Erro ao alterar a Categoria");
+            return redirect()->back()->withErrors($response)->withInput();
+        }
+    }
 
-            $response = response()->json([
-                'error' => true,
-                'message' => $e->getMessageBag()
-            ]);
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+    public function destroy($id)
+    {
+        $called = $this->calledRepository->find($id);
+        if ($called->toArray()) {
+            $response = trans('Categoria vinculado à chamados.');
+            return redirect()->back()->withErrors($response)->withInput();
+        } else {
+            $deleted = $this->repository->delete($id);
+            if ($deleted) {
+                $response = trans("Categroia excluida com sucesso!");
+                return redirect()->back()->with('status', trans($response));
+            } else {
+                $response = trans("Erro ao excluir a Categoria");
+                return redirect()->back()->withErrors($response)->withInput();
+            }
         }
     }
 

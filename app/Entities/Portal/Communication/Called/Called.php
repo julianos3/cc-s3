@@ -46,7 +46,7 @@ class Called extends Model implements Transformable
 
     public function calledHistoric()
     {
-        return $this->belongsTo(CalledHistoric::class);
+        return $this->hasMany(CalledHistoric::class);
     }
 
 }
