@@ -45,7 +45,7 @@ class UtilObjeto
     public function paginate($dados)
     {
         $currentPage = Paginator::resolveCurrentPage() - 1;
-        $perPage = 1;
+        $perPage = 15;
         $currentPageSearchResults = $dados->slice($currentPage * $perPage, $perPage)->all();
         $dados  = new LengthAwarePaginator($currentPageSearchResults, count($dados), $perPage);
 

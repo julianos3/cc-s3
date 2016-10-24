@@ -25,7 +25,7 @@ class UsersGroupCondominium extends Model implements Transformable
 
     public function usersCondominium()
     {
-        return $this->hasMany(UsersCondominium::class, 'user_condominium_id');
+        return $this->belongsTo(UsersCondominium::class, 'user_condominium_id');
     }
 
 }

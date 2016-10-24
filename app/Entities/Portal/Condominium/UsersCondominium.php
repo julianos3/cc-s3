@@ -16,6 +16,7 @@ use CentralCondo\Entities\Portal\ForumResponse;
 use CentralCondo\Entities\Portal\LostAndFound;
 use CentralCondo\Entities\Portal\LostAndFoundCompleted;
 use CentralCondo\Entities\Portal\Manage\Maintenance\Maintenance;
+use CentralCondo\Entities\Portal\Notification;
 use CentralCondo\Entities\Portal\User;
 use CentralCondo\Entities\Portal\UsersDiary;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +34,11 @@ class UsersCondominium extends Model implements Transformable
         'user_role_condominium',
         'condominium_id'
     ];
+
+    public function notification()
+    {
+        return $this->belongsTo(Notification::class);
+    }
 
     public function user()
     {

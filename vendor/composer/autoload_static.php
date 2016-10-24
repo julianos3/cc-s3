@@ -546,6 +546,7 @@ class ComposerStaticInitc392807eedc45238241a4b4c4f994700
         'LostAndFoundCompleted' => __DIR__ . '/../..' . '/database/migrations/2016_08_12_175654_lost_and_found_completed.php',
         'Message' => __DIR__ . '/../..' . '/database/migrations/2016_08_10_132651_message.php',
         'MessageReply' => __DIR__ . '/../..' . '/database/migrations/2016_08_10_204942_message_reply.php',
+        'Notification' => __DIR__ . '/../..' . '/database/migrations/2016_10_24_153208_notification.php',
         'Null_Frame_Decorator' => __DIR__ . '/..' . '/dompdf/dompdf/include/null_frame_decorator.cls.php',
         'Null_Frame_Reflower' => __DIR__ . '/..' . '/dompdf/dompdf/include/null_frame_reflower.cls.php',
         'Null_Positioner' => __DIR__ . '/..' . '/dompdf/dompdf/include/null_positioner.cls.php',

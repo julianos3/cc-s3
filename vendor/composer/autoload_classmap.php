@@ -219,6 +219,7 @@ return array(
     'LostAndFoundCompleted' => $baseDir . '/database/migrations/2016_08_12_175654_lost_and_found_completed.php',
     'Message' => $baseDir . '/database/migrations/2016_08_10_132651_message.php',
     'MessageReply' => $baseDir . '/database/migrations/2016_08_10_204942_message_reply.php',
+    'Notification' => $baseDir . '/database/migrations/2016_10_24_153208_notification.php',
     'Null_Frame_Decorator' => $vendorDir . '/dompdf/dompdf/include/null_frame_decorator.cls.php',
     'Null_Frame_Reflower' => $vendorDir . '/dompdf/dompdf/include/null_frame_reflower.cls.php',
     'Null_Positioner' => $vendorDir . '/dompdf/dompdf/include/null_positioner.cls.php',

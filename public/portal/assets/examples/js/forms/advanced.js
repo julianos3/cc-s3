@@ -19,18 +19,6 @@
     });
   })();
 
-  // Example inline datepicker
-  // ---------------------
-  (function() {
-    // Reset Current
-    $('#inlineDatepicker').datepicker();
-    $("#inlineDatepicker").on("changeDate", function(event) {
-      $("#inputHiddenInline").val(
-        $("#inlineDatepicker").datepicker('getFormattedDate')
-      );
-    });
-  })();
-
   // Example Tokenfield With Typeahead
   // ---------------------------------
   (function() {

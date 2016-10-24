@@ -24,6 +24,7 @@
                 <div class="panel-body">
                     @include('success._check')
                     @include('errors._check')
+                    <?php $paginaAlterar = false; ?>
 
                     {!! Form::open(['route'=>'portal.communication.communication.store']) !!}
 

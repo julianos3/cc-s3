@@ -76,4 +76,16 @@ class CommunicationGroupService
         }
     }
 
+    public function destroy($id)
+    {
+        $deleted = $this->repository->delete($id);
+        if ($deleted) {
+            $response = trans("Grupo do Comunicado removido com sucesso!");
+            return redirect()->back()->with('status', trans($response));
+        } else {
+            $response = trans("Erro ao remover Grupo do Comunicado!");
+            return redirect()->back()->withErrors($response)->withInput();
+        }
+    }
+
 }

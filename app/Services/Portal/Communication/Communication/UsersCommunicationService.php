@@ -81,4 +81,16 @@ class UsersCommunicationService
         }
     }
 
+    public function destroy($id)
+    {
+        $deleted = $this->repository->delete($id);
+        if ($deleted) {
+            $response = trans("Usuário do Comunicado removido com sucesso!");
+            return redirect()->back()->with('status', trans($response));
+        } else {
+            $response = trans("Erro ao remover Usuário do Comunicado!");
+            return redirect()->back()->withErrors($response)->withInput();
+        }
+    }
+
 }

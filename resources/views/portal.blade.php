@@ -124,7 +124,6 @@
 <script src="{{ asset('portal/assets/js/app.js') }}"></script>
 <script src="{{ asset('portal/global/js/components/tabs.js') }}"></script>
 <script src="{{ asset('portal/global/js/components/select2.js') }}"></script>
-<script src="{{ asset('portal/assets/examples/js/forms/advanced.js') }}"></script>
 <script src="{{ asset('portal/global/js/components/bootstrap-select.js') }}"></script>
 
 <script src="{{ asset('portal/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>

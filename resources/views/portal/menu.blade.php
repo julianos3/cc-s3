@@ -12,7 +12,7 @@
                     </li>
                     <li class="site-menu-item has-sub">
                         <a href="javascript:void(0)">
-                            <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
+                            <i class="site-menu-icon icon wb-grid-9" aria-hidden="true"></i>
                             <span class="site-menu-title">Condomínio</span>
                             <span class="site-menu-arrow"></span>
                         </a>
@@ -100,6 +100,7 @@
                     </li>
                     <li class="site-menu-item has-sub">
                         <a href="javascript:void(0)">
+                            <i class="site-menu-icon icon wb-users" aria-hidden="true"></i>
                             <span class="site-menu-title">Administrar</span>
                             <span class="site-menu-arrow"></span>
                         </a>
@@ -124,7 +125,7 @@
                     <!-- active open -->
                     <li class="site-menu-item has-sub">
                         <a href="javascript:void(0)">
-                            <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
+                            <i class="site-menu-icon icon wb-chat-group" aria-hidden="true"></i>
                             <span class="site-menu-title">Comunicação</span>
                             <span class="site-menu-arrow"></span>
                         </a>

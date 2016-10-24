@@ -233,6 +233,12 @@ class RepositoryServiceProvider extends ServiceProvider
             \CentralCondo\Repositories\Portal\CityRepositoryEloquent::class
         );
 
+        $this->app->bind(
+            \CentralCondo\Repositories\Portal\NotificationRepository::class,
+            \CentralCondo\Repositories\Portal\NotificationRepositoryEloquent::class
+        );
+        
+
         //:end-bindings:
     }
 }

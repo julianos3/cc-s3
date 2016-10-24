@@ -4,9 +4,11 @@ namespace CentralCondo\Http\Controllers\Portal\Communication\Communication;
 
 use CentralCondo\Http\Controllers\Controller;
 use CentralCondo\Http\Requests\Portal\Communication\Communication\CommunicationRequest;
+use CentralCondo\Repositories\Portal\Communication\Communication\CommunicationGroupRepository;
 use CentralCondo\Repositories\Portal\Communication\Communication\CommunicationRepository;
-use CentralCondo\Services\Portal\Communication\Communication\CommunicationService;
+use CentralCondo\Repositories\Portal\Communication\Communication\UsersCommunicationRepository;
 use CentralCondo\Repositories\Portal\Condominium\Group\GroupCondominiumRepository;
+use CentralCondo\Services\Portal\Communication\Communication\CommunicationService;
 use CentralCondo\Services\Util\UtilObjeto;
 
 
@@ -28,6 +30,16 @@ class CommunicationController extends Controller
     private $groupCondominiumRepository;
 
     /**
+     * @var CommunicationGroupRepository
+     */
+    private $communicationGroupRepository;
+
+    /**
+     * @var UsersCommunicationRepository
+     */
+    private $usersCommunicationRepository;
+
+    /**
      * @var UtilObjeto
      */
     private $utilObjeto;
@@ -37,16 +49,22 @@ class CommunicationController extends Controller
      * @param CommunicationRepository $repository
      * @param CommunicationService $service
      * @param GroupCondominiumRepository $groupCondominiumRepository
+     * @param CommunicationGroupRepository $communicationGroupRepository
+     * @param UsersCommunicationRepository $usersCommunicationRepository
      * @param UtilObjeto $utilObjeto
      */
     public function __construct(CommunicationRepository $repository,
                                 CommunicationService $service,
                                 GroupCondominiumRepository $groupCondominiumRepository,
+                                CommunicationGroupRepository $communicationGroupRepository,
+                                UsersCommunicationRepository $usersCommunicationRepository,
                                 UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
         $this->groupCondominiumRepository = $groupCondominiumRepository;
+        $this->communicationGroupRepository = $communicationGroupRepository;
+        $this->usersCommunicationRepository = $usersCommunicationRepository;
         $this->utilObjeto = $utilObjeto;
         $this->condominium_id = session()->get('condominium_id');
     }
@@ -54,9 +72,11 @@ class CommunicationController extends Controller
     public function index()
     {
         $config['title'] = 'Comunicados';
-        $dados = $this->repository->findWhere([
-            'condominium_id' => $this->condominium_id
-        ]);
+        $dados = $this->repository->orderBy('created_at', 'desc')
+            ->with(['usersCondominium'])
+            ->findWhere([
+                'condominium_id' => $this->condominium_id
+            ]);
         $dados = $this->utilObjeto->paginate($dados);
 
         return view('portal.communication.communication.index', compact('config', 'dados'));
@@ -81,14 +101,15 @@ class CommunicationController extends Controller
 
     public function edit($id)
     {
-        $dados = $this->repository->find($id);
+        $config['title'] = 'Alterar Comunicado';
+        $dados = $this->repository->findWhere(['condominium_id' => $this->condominium_id, 'id' => $id]);
+        $dados = $dados[0];
         $dados['date_display'] = date('d/m/Y', strtotime($dados['date_display']));
-        $condominium = $this->condominiumRepository->listCondominium();
-        $groupCondominium = $this->groupCondominiumRepository->listGroupCondominium();
+        $groupCommunication = $this->communicationGroupRepository
+            ->with(['groupCondominium'])
+            ->findWhere(['communication_id' => $dados['id']]);
 
-        //$usersCondominium = $this->usersCondominiumRepository->all();
-
-        return view('portal.communication.communication.edit', compact('dados', 'condominium', 'usersCondominium', 'groupCondominium'));
+        return view('portal.communication.communication.edit', compact('config', 'dados', 'groupCommunication'));
     }
 
     public function update(CommunicationRequest $request, $id)
@@ -98,16 +119,25 @@ class CommunicationController extends Controller
 
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        return $this->service->destroy($id);
+    }
 
-        if (request()->wantsJson()) {
+    public function show($id)
+    {
+        $config['title'] = 'Visualizar Chamado';
+        $dados = $this->repository
+            ->with(['communicationGroup', 'usersCommunication'])
+            ->findWhere(['id' => $id, 'condominium_id' => $this->condominium_id]);
+        $dados = $dados[0];
 
-            return response()->json([
-                'Communication' => 'UsersRole deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
+        $communicationGroup = $this->communicationGroupRepository
+            ->with(['groupCondominium'])
+            ->findWhere(['communication_id' => $id]);
 
-        return redirect()->back()->with('Communication', 'UsersRole deleted.');
+        $usersCommunication = $this->usersCommunicationRepository
+            ->with(['usersCondominium'])
+            ->findWhere(['communication_id' => $id]);
+
+        return view('portal.communication.communication.show', compact('config', 'dados', 'communicationGroup', 'usersCommunication'));
     }
 }

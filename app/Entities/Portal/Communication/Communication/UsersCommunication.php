@@ -27,7 +27,7 @@ class UsersCommunication extends Model implements Transformable
 
     public function usersCondominium()
     {
-        return $this->belongsTo(UsersCondominium::class);
+        return $this->belongsTo(UsersCondominium::class, 'user_condominium_id');
     }
 
 }

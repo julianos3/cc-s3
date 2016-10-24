@@ -18,6 +18,7 @@ use CentralCondo\Entities\Portal\Condominium\Provider\ProviderCategory;
 use CentralCondo\Entities\Portal\Condominium\Provider\Providers;
 use CentralCondo\Entities\Portal\Manage\ReserveAreas;
 use CentralCondo\Entities\Portal\Condominium\SecurityCam;
+use CentralCondo\Entities\Portal\Notification;
 use CentralCondo\Entities\Portal\State;
 use CentralCondo\Entities\Portal\UsefulPhones;
 use CentralCondo\Entities\Portal\Condominium\UsersCondominium;
@@ -44,6 +45,11 @@ class Condominium extends Model implements Transformable
         'address_site',
         'active'
     ];
+
+    public function notification()
+    {
+        return $this->belongsTo(Notification::class);
+    }
 
     public function finality()
     {
