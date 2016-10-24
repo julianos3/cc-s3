@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            {!! Form::label('title', 'Título:') !!}
-            {!! Form::text('title', null, ['class'=>'form-control', 'required' => 'required']) !!}
+            {!! Form::label('name', 'Título:') !!}
+            {!! Form::text('name', null, ['class'=>'form-control', 'required' => 'required']) !!}
         </div>
     </div>
 </div>
@@ -19,17 +19,30 @@
     <div class="col-md-12">
         <div class="form-group form-material">
             <div class="radio-custom radio-default radio-inline">
-                <input type="radio" id="condominiumAll" name="destination" checked="" required="required">
+                <input type="radio" id="condominiumAll" name="destination" value="all_user" checked="" required="required">
                 <label for="condominiumAll">Enviar comunicado para TODOS os integrantes do condomínio</label>
             </div>
-            <br />
+            <br/>
             <div class="radio-custom radio-default radio-inline">
-                <input type="radio" id="group" name="destination"  required="required">
+                <input type="radio" id="group" name="destination" value="group" required="required">
                 <label for="group">Enviar comunicado para GRUPOS</label>
             </div>
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="groups">Grupos:</label>
+            <select data-plugin="selectpicker" class="form-control" name="groups[]" multiple data-selected-text-format="count > 3">
+                @foreach($groupCondominium as $row)
+                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
@@ -38,9 +51,9 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="checkbox-custom checkbox-primary"><br />
-            <input type="checkbox" id="inputUnchecked" checked="">
-            <label for="inputUnchecked">Enviar o comunicado por e-mail para os destinatários.</label>
+        <div class="checkbox-custom checkbox-primary"><br/>
+            <input type="checkbox" id="send_mail" name="send_mail" value="y" checked="">
+            <label for="send_mail">Enviar o comunicado por e-mail para os destinatários.</label>
         </div>
     </div>
 </div>

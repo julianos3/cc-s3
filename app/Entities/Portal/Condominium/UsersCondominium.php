@@ -2,9 +2,9 @@
 
 namespace CentralCondo\Entities\Portal\Condominium;
 
-use CentralCondo\Entities\Portal\Called;
-use CentralCondo\Entities\Portal\CalledHistoric;
-use CentralCondo\Entities\Portal\Communication;
+use CentralCondo\Entities\Portal\Communication\Called\Called;
+use CentralCondo\Entities\Portal\Communication\Called\CalledHistoric;
+use CentralCondo\Entities\Portal\Communication\Communication\Communication;
 use CentralCondo\Entities\Portal\Communication\Message\Message;
 use CentralCondo\Entities\Portal\Communication\Message\MessageReply;
 use CentralCondo\Entities\Portal\Communication\Message\UsersMessage;

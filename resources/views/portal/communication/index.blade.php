@@ -25,8 +25,6 @@
                     <tr>
                         <td>{{ $row->id }}</td>
                         <td>{{ $row->name }}</td>
-                        <td>{{ $row->condominium->name }}</td>
-                        <td>{{ $row->usersCondominium->user->name }}</td>
                         <td>{{ $row->date_display}}</td>
                         <td>@if ($row->send_mail === 'y') Sim @else Não @endif</td>
                         <td>@if ($row->all_user === 'y') Sim @else Não @endif</td>
@@ -41,7 +39,6 @@
                 @endforeach
             </tbody>
         </table>
-
     </div>
 
 @endsection

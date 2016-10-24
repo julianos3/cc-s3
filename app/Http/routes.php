@@ -33,7 +33,7 @@ Route::controllers([
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('email', ['as' => 'email', 'uses' => 'EmailController@sendEmailReminder']);
 
 Route::controllers([
     'auth' => 'Auth\AuthController',
@@ -360,7 +360,7 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.', 'middleware' => 'auth'], 
         Route::group(['prefix' => 'communication', 'as' => 'communication.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Portal\Communication\Communication\CommunicationController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'Portal\Communication\Communication\CommunicationController@create']);
-            Route::get('store', ['as' => 'store', 'uses' => 'Portal\Communication\Communication\CommunicationController@store']);
+            Route::post('store', ['as' => 'store', 'uses' => 'Portal\Communication\Communication\CommunicationController@store']);
             Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Portal\Communication\Communication\CommunicationController@edit']);
             Route::post('update/{id}', ['as' => 'update', 'uses' => 'Portal\Communication\Communication\CommunicationController@update']);
             Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Portal\Communication\Communication\CommunicationController@destroy']);

@@ -2,13 +2,11 @@
 
 namespace CentralCondo\Http\Controllers\Portal\Communication\Communication;
 
-use CentralCondo\Entities\Portal\Condominium\Group\GroupCondominium;
 use CentralCondo\Http\Controllers\Controller;
-use CentralCondo\Http\Requests;
-use CentralCondo\Http\Requests\Portal\CommunicationRequest;
+use CentralCondo\Http\Requests\Portal\Communication\Communication\CommunicationRequest;
 use CentralCondo\Repositories\Portal\Communication\Communication\CommunicationRepository;
-use CentralCondo\Repositories\Portal\Condominium\Group\GroupCondominiumRepository;
 use CentralCondo\Services\Portal\Communication\Communication\CommunicationService;
+use CentralCondo\Repositories\Portal\Condominium\Group\GroupCondominiumRepository;
 use CentralCondo\Services\Util\UtilObjeto;
 
 
@@ -25,7 +23,7 @@ class CommunicationController extends Controller
     private $service;
 
     /**
-     * @var GroupCondominium
+     * @var GroupCondominiumRepository
      */
     private $groupCondominiumRepository;
 
@@ -38,7 +36,7 @@ class CommunicationController extends Controller
      * CommunicationController constructor.
      * @param CommunicationRepository $repository
      * @param CommunicationService $service
-     * @param GroupCondominium $groupCondominiumRepository
+     * @param GroupCondominiumRepository $groupCondominiumRepository
      * @param UtilObjeto $utilObjeto
      */
     public function __construct(CommunicationRepository $repository,
@@ -88,7 +86,7 @@ class CommunicationController extends Controller
         $condominium = $this->condominiumRepository->listCondominium();
         $groupCondominium = $this->groupCondominiumRepository->listGroupCondominium();
 
-        $usersCondominium = $this->usersCondominiumRepository->all();
+        //$usersCondominium = $this->usersCondominiumRepository->all();
 
         return view('portal.communication.communication.edit', compact('dados', 'condominium', 'usersCondominium', 'groupCondominium'));
     }

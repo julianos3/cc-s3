@@ -208,6 +208,10 @@ class RepositoryServiceProvider extends ServiceProvider
             \CentralCondo\Repositories\Portal\Communication\Communication\CommunicationGroupRepository::class,
             \CentralCondo\Repositories\Portal\Communication\Communication\CommunicationGroupRepositoryEloquent::class
         );
+        $this->app->bind(
+            \CentralCondo\Repositories\Portal\Communication\Communication\UsersCommunicationRepository::class,
+            \CentralCondo\Repositories\Portal\Communication\Communication\UsersCommunicationRepositoryEloquent::class
+        );
 
         //achados e perdidos
         $this->app->bind(

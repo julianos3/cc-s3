@@ -30,10 +30,11 @@
     <link rel="stylesheet" href="{{ asset('portal/assets/examples/css/uikit/modals.css') }}">
     <link rel="stylesheet" href="{{ asset('portal/assets/examples/css/pages/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('portal/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('portal/global/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('portal/global/vendor/bootstrap-select/bootstrap-select.css') }}">
 
     <!--PAGES-->
     <link rel="stylesheet" href="{{ asset('portal/assets/examples/css/pages/user.css') }}">
-
 
     <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('portal/global/fonts/material-design/material-design.min.css') }}">
@@ -88,6 +89,7 @@
 <script src="{{ asset('portal/global/vendor/intro-js/intro.js') }}"></script>
 <script src="{{ asset('portal/global/vendor/screenfull/screenfull.js') }}"></script>
 <script src="{{ asset('portal/global/vendor/slidepanel/jquery-slidePanel.js') }}"></script>
+<script src="{{ asset('portal/global/vendor/select2/select2.full.min.js') }}"></script>
 <script src="{{ asset('portal/global/vendor/formvalidation/formValidation.js') }}"></script>
 <script src="{{ asset('portal/global/vendor/formvalidation/framework/bootstrap.js') }}"></script>
 <script src="{{ asset('portal/global/vendor/jquery-placeholder/jquery.placeholder.js') }}"></script>
@@ -97,6 +99,7 @@
 <script src="{{ asset('portal/global/vendor/formatter-js/jquery.formatter.js') }}"></script>
 <script src="{{ asset('portal/global/vendor/filament-tablesaw/tablesaw.js') }}"></script>
 <script src="{{ asset('portal/global/vendor/filament-tablesaw/tablesaw-init.js') }}"></script>
+<script src="{{ asset('portal/global/vendor/bootstrap-select/bootstrap-select.js') }}"></script>
 <!-- Scripts -->
 <script src="{{ asset('portal/global/js/core.js') }}"></script>
 <script src="{{ asset('portal/assets/js/site.js') }}"></script>
@@ -120,6 +123,9 @@
 <script src="{{ asset('portal/global/js/components/formatter-js.js') }}"></script>
 <script src="{{ asset('portal/assets/js/app.js') }}"></script>
 <script src="{{ asset('portal/global/js/components/tabs.js') }}"></script>
+<script src="{{ asset('portal/global/js/components/select2.js') }}"></script>
+<script src="{{ asset('portal/assets/examples/js/forms/advanced.js') }}"></script>
+<script src="{{ asset('portal/global/js/components/bootstrap-select.js') }}"></script>
 
 <script src="{{ asset('portal/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('portal/global/js/components/bootstrap-datepicker.js') }}"></script>

@@ -165,7 +165,7 @@
                                 </a>
                             </li>
                             <li class="site-menu-item">
-                                <a class="animsition-link" href="">
+                                <a class="animsition-link" href="{{ route('portal.communication.communication.index') }}">
                                     <span class="site-menu-title">Comunicados</span>
                                 </a>
                             </li>

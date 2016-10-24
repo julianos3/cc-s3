@@ -684,6 +684,7 @@ return array(
     'Text_Renderer' => $vendorDir . '/dompdf/dompdf/include/text_renderer.cls.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UnitTypeTableSeeder' => $baseDir . '/database/seeds/UnitTypeTableSeeder.php',
+    'UsersCommunication' => $baseDir . '/database/migrations/2016_10_23_220542_users_communication.php',
     'UsersMessage' => $baseDir . '/database/migrations/2016_08_10_201636_users_message.php',
     'UsersRoleCondominiumTableSeeder' => $baseDir . '/database/seeds/UsersRoleCondominiumTableSeeder.php',
     'UsersRoleTableSeeder' => $baseDir . '/database/seeds/UsersRoleTableSeeder.php',

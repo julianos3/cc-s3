@@ -1011,6 +1011,7 @@ class ComposerStaticInitc392807eedc45238241a4b4c4f994700
         'Text_Renderer' => __DIR__ . '/..' . '/dompdf/dompdf/include/text_renderer.cls.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'UnitTypeTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UnitTypeTableSeeder.php',
+        'UsersCommunication' => __DIR__ . '/../..' . '/database/migrations/2016_10_23_220542_users_communication.php',
         'UsersMessage' => __DIR__ . '/../..' . '/database/migrations/2016_08_10_201636_users_message.php',
         'UsersRoleCondominiumTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersRoleCondominiumTableSeeder.php',
         'UsersRoleTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersRoleTableSeeder.php',

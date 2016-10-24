@@ -38,10 +38,10 @@
                                         <th data-tablesaw-sortable-col data-tablesaw-sortable-default-col
                                             data-tablesaw-priority="persist">Código
                                         </th>
-                                        <th data-tablesaw-sortable-col data-tablesaw-priority="1">Assunto</th>
-                                        <th data-tablesaw-sortable-col data-tablesaw-priority="2">Status</th>
-                                        <th data-tablesaw-sortable-col data-tablesaw-priority="3">Tipo</th>
-                                        <th data-tablesaw-sortable-col data-tablesaw-priority="5">Data de Abertura</th>
+                                        <th data-tablesaw-sortable-col data-tablesaw-priority="1">Título</th>
+                                        <th data-tablesaw-sortable-col data-tablesaw-priority="2">Usuário</th>
+                                        <th data-tablesaw-sortable-col data-tablesaw-priority="3">Data Final exibição</th>
+                                        <th data-tablesaw-sortable-col data-tablesaw-priority="4">Data Criação</th>
                                         <th class="text-center col-md-2">
                                             Detalhes
                                         </th>
@@ -51,9 +51,9 @@
                                     @foreach($dados  as $row)
                                         <tr>
                                             <td>{{ $row->id }}</td>
-                                            <td>{{ $row->subject }}</td>
-                                            <td>{{ $row->calledStatus->name }}</td>
-                                            <td>{{ $row->calledCategory->name }}</td>
+                                            <td>{{ $row->name }}</td>
+                                            <td>{{ $row->user_condominium_id }}</td>
+                                            <td>{{ date('d/m/Y', strtotime($row->date_display)) }}</td>
                                             <td>{{ date('d/m/Y h:i', strtotime($row->created_at)) }}</td>
                                             <td class="text-center">
                                                 <button title="Excluir"
@@ -64,7 +64,7 @@
                                                 </button>
                                                 @if($row->called_status_id == 1)
                                                     @if($row->user_condominium_id == Auth::user()->id)
-                                                        <a href="{{ route('portal.communication.called.edit', ['id' => $row->id]) }}"
+                                                        <a href="{{ route('portal.communication.communication.edit', ['id' => $row->id]) }}"
                                                            title="Editar"
                                                            class="btn btn-icon bg-warning waves-effect waves-light">
                                                             <i class="icon wb-edit" aria-hidden="true"></i>
@@ -75,7 +75,7 @@
                                                 <button title="Excluir"
                                                         class="btn btn-icon bg-danger waves-effect waves-light btnDelete"
                                                         data-target="#modalDelete" data-toggle="modal"
-                                                        data-route="{{ route('portal.communication.called.destroy', ['id' => $row->id]) }}">
+                                                        data-route="{{ route('portal.communication.communication.destroy', ['id' => $row->id]) }}">
                                                     <i class="icon wb-trash" aria-hidden="true"></i>
                                                 </button>
                                                 -->
