@@ -2,7 +2,8 @@
 
 namespace CentralCondo\Entities\Portal\Communication\Message;
 
-use CentralCondo\Entities\Portal\Condominium;
+use CentralCondo\Entities\Portal\Condominium\Condominium;
+use CentralCondo\Entities\Portal\Condominium\UsersCondominium;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
@@ -29,7 +30,7 @@ class Message extends Model implements Transformable
 
     public function usersCondominium()
     {
-        return $this->belongsTo(Condominium\UsersCondominium::class, 'user_condominium_id');
+        return $this->belongsTo(UsersCondominium::class, 'user_condominium_id');
     }
 
     public function usersMessage()
@@ -40,6 +41,11 @@ class Message extends Model implements Transformable
     public function messageReply()
     {
         return $this->hasMany(MessageReply::class, 'message_id');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(MessageGroup::class);
     }
 
 }

@@ -1,0 +1,198 @@
+form#fNewsletter{width: 603px;height: 53px;margin-left: -300px;background: #074924;}
+form#fNewsletter fieldset{width: calc(100% - 3px);height: 50px;background: #0c522a;}
+form#fNewsletter input{height: 50px;line-height: 50px;color: #7fb691;}
+form#fNewsletter input#send-newsletter{background: url(../images/icons/send-newsletter.png) no-repeat;background-position: center center;}
+
+.list-group-social ul{width: 130px;margin-left: -65px;}
+.list-group-social ul li{width: 50px;}
+.list-group-social ul li:first-of-type{margin-right: 30px;}
+
+
+.nuvem-1{
+	margin-left: -94px;
+}
+
+.nuvem-2{margin-left: 10px;}
+
+@keyframes movdireita {
+1%  {margin-left:-94px;}
+2%  {margin-left:-94.6px;}
+3%  {margin-left:-95.2px;}
+4%  {margin-left:-95.8px;}
+5%  {margin-left:-96.4px;}
+6%  {margin-left:-97px;}
+7%  {margin-left:-97.6px;}
+8%  {margin-left:-98.2px;}
+9%  {margin-left:-98.8px;}
+10% {margin-left:-98.8px;}
+11% {margin-left:-99.4px;}
+12% {margin-left:-100px;}
+13% {margin-left:-100.6px;}
+14% {margin-left:-101.2px;}
+15% {margin-left:-101.8px;}
+16% {margin-left:-102.4px;}
+17% {margin-left:-103px;}
+18% {margin-left:-103.6px;}
+19% {margin-left:-104.2px;}
+20% {margin-left:-104.8px;}
+21% {margin-left:-105.4px;}
+22% {margin-left:-106px;}
+23% {margin-left:-106.6px;}
+24% {margin-left:-107.2px;}
+25% {margin-left:-107.8px;}
+26% {margin-left:-108.4px;}
+27% {margin-left:-109px;}
+28% {margin-left:-109.6px;}
+29% {margin-left:-110.2px;}
+30% {margin-left:-110.8px;}
+31% {margin-left:-111.4px;}
+32% {margin-left:-112px;}
+33% {margin-left:-112.6px;}
+34% {margin-left:-113.2px;}
+35% {margin-left:-113.8px;}
+36% {margin-left:-114.4px;}
+37% {margin-left:-115px;}
+38% {margin-left:-115.6px;}
+39% {margin-left:-116.2px;}
+40% {margin-left:-116.8px;}
+41% {margin-left:-117.4px;}
+42% {margin-left:-118px;}
+43% {margin-left:-118.6px;}
+44% {margin-left:-119.2px;}
+45% {margin-left:-119.8px;}
+46% {margin-left:-120.4px;}
+47% {margin-left:-121px;}
+48% {margin-left:-121.6px;}
+49% {margin-left:-122.2px;}
+50% {margin-left:-124px;}
+51% {margin-left:-124px;}
+52% {margin-left:-123.4px;}
+53% {margin-left:-122.8px;}
+54% {margin-left:-122.2px;}
+55% {margin-left:-121.6px;}
+56% {margin-left:-121px;}
+57% {margin-left:-120.4px;}
+58% {margin-left:-119.8px;}
+59% {margin-left:-119.2px;}
+60% {margin-left:-118.6px;}
+61% {margin-left:-118px;}
+62% {margin-left:-117.4px;}
+63% {margin-left:-116.8px;}
+64% {margin-left:-116.2px;}
+65% {margin-left:-115.6px;}
+66% {margin-left:-115px;}
+67% {margin-left:-114.4px;}
+68% {margin-left:-113.8px;}
+69% {margin-left:-113.2px;}
+70% {margin-left:-112.6px;}
+71% {margin-left:-112px;}
+72% {margin-left:-111.4px;}
+73% {margin-left:-110.8px;}
+74% {margin-left:-110.2px;}
+75% {margin-left:-109.6px;}
+76% {margin-left:-109px;}
+77% {margin-left:-108.4px;}
+78% {margin-left:-107.8px;}
+79% {margin-left:-107.2px;}
+80% {margin-left:-106.6px;}
+81% {margin-left:-106px;}
+82% {margin-left:-105.4px;}
+83% {margin-left:-104.8px;}
+84% {margin-left:-104.2px;}
+85% {margin-left:-103.6px;}
+86% {margin-left:-103px;}
+87% {margin-left:-102.4px;}
+88% {margin-left:-101.8px;}
+89% {margin-left:-101.2px;}
+90% {margin-left:-100.6px;}
+91% {margin-left:-100px;}
+92% {margin-left:-99.4px;}
+93% {margin-left:-98.8px;}
+94% {margin-left:-98.2px;}
+95% {margin-left:-97.6px;}
+96% {margin-left:-97px;}
+97% {margin-left:-96.4px;}
+98% {margin-left:-95.8px;}
+99% {margin-left:-95px;}
+100%{margin-left:-94px;}
+}
+
+@keyframes movesquerda{
+
+1% {margin-left: 10px;}
+2% {margin-left: 10.6px;}
+3% {margin-left: 11.2px;}
+4% {margin-left: 11.8px;}
+5% {margin-left: 12.4px;}
+6% {margin-left: 13px;}
+7% {margin-left: 13.6px;}
+8% {margin-left: 14.2px;}
+9% {margin-left: 14.8px;}
+10% {margin-left: 15.4px;}
+11% {margin-left: 16px;}
+12% {margin-left: 16.6px;}
+13% {margin-left: 17.2px;}
+14% {margin-left: 17.8px;}
+15% {margin-left: 18.4px;}
+16% {margin-left: 19px;}
+17% {margin-left: 19.6px;}
+18% {margin-left: 20.2px;}
+19% {margin-left: 20.8px;}
+20% {margin-left: 21.4px;}
+21% {margin-left: 22px;}
+22% {margin-left: 22.6px;}
+23% {margin-left: 23.2px;}
+24% {margin-left: 23.8px;}
+25% {margin-left: 24.4px;}
+26% {margin-left: 25px;}
+27% {margin-left: 25.6px;}
+28% {margin-left: 26.2px;}
+29% {margin-left: 26.8px;}
+30% {margin-left: 27.4px;}
+31% {margin-left: 28px;}
+32% {margin-left: 28.6px;}
+33% {margin-left: 29.2px;}
+34% {margin-left: 29.8px;}
+35% {margin-left: 30.4px;}
+36% {margin-left: 31px;}
+37% {margin-left: 31.6px;}
+38% {margin-left: 32.2px;}
+39% {margin-left: 32.8px;}
+40% {margin-left: 33.4px;}
+41% {margin-left: 34px;}
+42% {margin-left: 34.6px;}
+43% {margin-left: 35.2px;}
+44% {margin-left: 35.8px;}
+45% {margin-left: 36.4px;}
+46% {margin-left: 37px;}
+47% {margin-left: 37.6px;}
+48% {margin-left: 38.2px;}
+49% {margin-left: 38.8px;}
+50% {margin-left: 39.4px;}
+
+
+}
+
+.nuvem-1{
+	animation-name: movdireita;
+	animation-duration:5s;
+	animation-iteration-count: infinite;
+
+}
+.nuvem-2{
+	animation-name: movesquerda;
+	animation-duration:5s;
+	animation-iteration-count: infinite;
+
+}
+#msg {
+	margin-top: 20px;
+	text-align:center;
+	font-size:1.8em;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+.red-email {
+color: rgba(255, 0, 0, 0.9);
+}

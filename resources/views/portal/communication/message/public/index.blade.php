@@ -47,7 +47,7 @@
                                                 {{ $row->subject }}
                                                 <span>{{ $row->usersCondominium->user->name }}</span>
                                             </h4>
-                                            <small>{{ $row->created_at }}</small>
+                                            <small>{{ date('d/m/Y H:i:s', strtotime($row->created_at)) }}</small>
                                             <div class="media-body">
                                                 <p>{{ $row->message }}</p>
                                                 <button title="Comentar"
@@ -79,7 +79,7 @@
                                                             </div>
                                                             <div class="media-body">
                                                                 <h4 class="media-heading">{{ $reply->usersCondominium->user->name }}</h4>
-                                                                <small>{{ $reply->created_at }}</small>
+                                                                <small>{{ date('d/m/Y H:i:s', strtotime($reply->created_at)) }}</small>
                                                                 <p>
                                                                     {{ $reply->message }}
                                                                     <a class="btnDelete"

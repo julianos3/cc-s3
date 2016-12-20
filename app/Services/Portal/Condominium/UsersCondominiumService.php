@@ -2,18 +2,20 @@
 
 namespace CentralCondo\Services\Portal\Condominium;
 
+use CentralCondo\Events\Portal\Auth\SendMailNewUser;
+use CentralCondo\Events\Portal\Condominium\User\SendMail;
 use CentralCondo\Repositories\Portal\Condominium\Unit\UsersUnitRepository;
 use CentralCondo\Repositories\Portal\Condominium\UsersCondominiumRepository;
 use CentralCondo\Repositories\Portal\UserRepository;
 use CentralCondo\Services\Portal\Condominium\Unit\UsersUnitService;
 use CentralCondo\Services\Portal\UserService;
 use CentralCondo\Validators\Portal\Condominium\UsersCondominiumValidator;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Prettus\Validator\Exceptions\ValidatorException;
+use Illuminate\Support\Facades\Mail;
 use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
+use Event;
 
-class UsersCondominiumService //regras de negocios
+class UsersCondominiumService
 {
 
     protected $repository;
@@ -46,7 +48,6 @@ class UsersCondominiumService //regras de negocios
 
     public function create(array $data)
     {
-
         $verifica = $this->repository->findWhere([
             'user_id' => $data['user_id'],
             'condominium_id' => $data['condominium_id']
@@ -76,36 +77,32 @@ class UsersCondominiumService //regras de negocios
     public function update(array $data, $id)
     {
         $usersCondominium = $this->repository->findWhere(['user_id' => $id]);
-        if($usersCondominium->toArray()){
-            return $this->userService->update($data, $usersCondominium[0]->user_id);
-        }else{
-
+        if ($usersCondominium->toArray()) {
+            if ($this->updateRoleCondominium($usersCondominium[0]->id, $usersCondominium[0]->user_id, $data['user_role_condominium'])) {
+                return $this->userService->update($data, $usersCondominium[0]->user_id);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
-        /*
-        dd($usersCondominium);
+    }
+
+    public function updateRoleCondominium($id, $userId, $roleCondominiumId)
+    {
+        $data['user_id'] = $userId;
+        $data['user_role_condominium'] = $roleCondominiumId;
+        $data['condominium_id'] = $this->condominium_id;
         try {
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
             $dados = $this->repository->update($data, $id);
 
             if ($dados) {
-                $response = [
-                    'message' => 'User updated.',
-                    'data' => $dados->toArray(),
-                ];
-
-                return redirect()->back()->with('message', $response['message']);
+                return true;
             }
         } catch (ValidatorException $e) {
-
-            $response = response()->json([
-                'error' => true,
-                'message' => $e->getMessageBag()
-            ]);
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return false;
         }
-        */
-
     }
 
     public function destroy($id)
@@ -116,10 +113,10 @@ class UsersCondominiumService //regras de negocios
             'user_condominium_id' => $id
         ]);
 
-        if($usersUnit->toArray()){
+        if ($usersUnit->toArray()) {
             $response = trans("Erro ao excluir o integrante do condomínio, existem unidades vinculadas.");
             return redirect()->back()->withErrors($response)->withInput();
-        }else {
+        } else {
             $deleted = $this->repository->delete($id);
             if ($deleted) {
                 $response = trans("Integrante do condomínio excluido com sucesso!");
@@ -133,54 +130,47 @@ class UsersCondominiumService //regras de negocios
 
     public function createUserCondominium($data)
     {
-        $user = '';
-        if (isset($data['email'])) {
-            $user = $this->userRepository->findWhere([
-                //Default Condition =
-                'email' => $data['email']
-            ]);
-        }
+        //verifica se usuário já existe no central condo
+        $verificaCondominium = '';
+        $verificaUser = $this->userRepository->findWhere(['email' => $data['email'], 'user_role_id' => 1]);
+        if ($verificaUser->toArray()) {
+            $user = $verificaUser[0];
 
-        //verifica se usuario encontrado já esta vinculado a este condominio
-        $verificaCondominium = array();
-        if (!isset($user)) {
+            //verifica se usuario encontrado já esta vinculado a este condominio
             $verificaCondominium = $this->repository->findWhere([
-                'user_id' => $user[0]->id,
-                'user_condominium_id' => $this->condominium_id
+                'user_id' => $user->id,
+                'condominium_id' => $this->condominium_id
             ]);
         }
-
         if (!isset($verificaCondominium)) {
             $response = trans("Usuário já cadastrado neste condominio");
             return redirect()->back()->withErrors($response)->withInput();
         } else {
             try {
-                // dd($data);
-                //cadastra usuario e envia e-mail com os acessos ao sistema
-                //gerar uma senha automatica
-                $data['user_role_id'] = 1;
-                $data['password'] = $this->generatePassword();
-                $data['password_confirmed'] = $data['password'];
+                if (!$verificaUser->toArray()) {
+                    //cadastra usuario e envia e-mail com os acessos ao sistema
+                    //gerar uma senha automatica
+                    $data['user_role_id'] = 1;
+                    $password = $this->generatePassword();
+                    $data['password'] = $password;
+                    $data['password_confirmed'] = $password;
 
-                $data['password'] = bcrypt($data['password']);
-                $data['password_confirmation'] = bcrypt($data['password_confirmed']);
-                $user = $this->userRepository->createUser($data);
+                    $data['password'] = bcrypt($data['password']);
+                    $data['password_confirmation'] = bcrypt($data['password_confirmed']);
+                    $user = $this->userRepository->createUser($data);
+
+                    if($user){
+                        $this->newUserMail($user['email'], $password);
+                    }
+
+                } else {
+                    //envia email informando que o mesmo foi adicionado em outro condominio
+
+                }
 
                 //cadastra usuario no condominio
                 $data['condominium_id'] = $this->condominium_id;
-                $data['user_id'] = $user['id'];
-
-                if ($data['user_unit_role'] == 1) {
-                    $data['user_role_condominium'] = 4;
-                } elseif ($data['user_unit_role'] == 2) {
-                    $data['user_role_condominium'] = 8;
-                } elseif ($data['user_unit_role'] == 3) {
-                    $data['user_role_condominium'] = 6;
-                } elseif ($data['user_unit_role'] == 4) {
-                    $data['user_role_condominium'] = 5;
-                } elseif ($data['user_unit_role'] == 5) {
-                    $data['user_role_condominium'] = 10;
-                }
+                $data['user_id'] = $user->id;
 
                 $this->validator->with($data)->passesOrFail();
                 $dados = $this->repository->create($data);
@@ -188,7 +178,7 @@ class UsersCondominiumService //regras de negocios
                 if ($dados) {
 
                     //cadastra users_unit
-                    if (isset($dados['id']) && isset($data['unit_id']) && isset($data['user_unit_role'])) {
+                    if (!empty($data['unit_id']) && !empty($data['user_unit_role'])) {
                         $usersUnit['user_condominium_id'] = $dados['id'];
                         $usersUnit['unit_id'] = $data['unit_id'];
                         $usersUnit['user_unit_role'] = $data['user_unit_role'];
@@ -196,6 +186,11 @@ class UsersCondominiumService //regras de negocios
                         $this->usersUnitRepository->create($usersUnit);
                     }
 
+                    if ($verificaUser->toArray()) {
+                        $this->newCondominiumUserMail($dados['id']);
+                    }else{
+                        $this->newUserMail($dados['id'], $password);
+                    }
 
                     $response = trans("Integrante cadastrado com sucesso!");
                     return redirect()->back()->with('status', trans($response));
@@ -207,7 +202,6 @@ class UsersCondominiumService //regras de negocios
             }
         }
     }
-
 
     public function generatePassword($tamanho = 6, $maiusculas = true, $numeros = true, $simbolos = false)
     {
@@ -233,7 +227,6 @@ class UsersCondominiumService //regras de negocios
     public function userUnitCreate(array $data)
     {
         //verifica se unidade já esta vinculada a este usuario do condominio
-        $verifica = '';                      
         $verifica = $this->usersUnitRepository->findWhere([
             'user_condominium_id' => $data['user_condominium_id'],
             'unit_id' => $data['unit_id']
@@ -245,6 +238,16 @@ class UsersCondominiumService //regras de negocios
         } else {
             return $this->usersUnitService->create($data);
         }
+    }
+
+    public function newUserMail($userCondominiumId, $password)
+    {
+        Event::fire(new SendMailNewUser($userCondominiumId, $password));
+    }
+
+    public function newCondominiumUserMail($userCondominiumId)
+    {
+        Event::fire(new SendMail($userCondominiumId));
     }
 
 }

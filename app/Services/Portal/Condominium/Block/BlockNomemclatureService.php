@@ -76,6 +76,19 @@ class BlockNomemclatureService //regras de negocios
         }
     }
 
+    public function destroy($id)
+    {
+        $deleted = $this->repository->delete($id);
+        if (request()->wantsJson()) {
+            return response()->json([
+                'message' => 'Nomenclatura de Bloco removida',
+                'deleted' => $deleted,
+            ]);
+        }
+
+        return redirect()->back()->with('message', 'UsersRole deleted.');
+    }
+
     public function trataName($id, $cont)
     {
         $nomemclature = $this->repository->find($id);

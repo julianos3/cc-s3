@@ -69,7 +69,7 @@ class CalledCategoryService //regras de negocios
 
     public function destroy($id)
     {
-        $called = $this->calledRepository->find($id);
+        $called = $this->calledRepository->findWhere(['called_category_id' => $id, 'condominium_id' => $this->condominium_id]);
         if ($called->toArray()) {
             $response = trans('Categoria vinculado à chamados.');
             return redirect()->back()->withErrors($response)->withInput();

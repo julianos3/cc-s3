@@ -48,7 +48,7 @@
 
                                                 <span><?php echo e($row->usersCondominium->user->name); ?></span>
                                             </h4>
-                                            <small><?php echo e($row->created_at); ?></small>
+                                            <small><?php echo e(date('d/m/Y H:i:s', strtotime($row->created_at))); ?></small>
                                             <div class="media-body">
                                                 <p><?php echo e($row->message); ?></p>
                                                 <button title="Comentar"
@@ -80,7 +80,7 @@
                                                             </div>
                                                             <div class="media-body">
                                                                 <h4 class="media-heading"><?php echo e($reply->usersCondominium->user->name); ?></h4>
-                                                                <small><?php echo e($reply->created_at); ?></small>
+                                                                <small><?php echo e(date('d/m/Y H:i:s', strtotime($reply->created_at))); ?></small>
                                                                 <p>
                                                                     <?php echo e($reply->message); ?>
 

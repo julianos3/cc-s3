@@ -1,7 +1,5 @@
 @extends('portal')
-
 @section('content')
-
     <div class="page animsition">
         <div class="page-header">
             <h1 class="page-title">{{ $config['title'] }}</h1>
@@ -45,7 +43,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($dados  as $row)
+                                    @foreach($dados as $row)
                                         <tr>
                                             <td>{{ $row->name }}</td>
                                             <td>@if($row->active == 'y') Sim @else Não @endif</td>
@@ -92,5 +90,4 @@
        class="site-action site-floataction btn-raised btn btn-success btn-floating">
         <i class="icon md-plus" aria-hidden="true"></i>
     </a>
-
 @endsection

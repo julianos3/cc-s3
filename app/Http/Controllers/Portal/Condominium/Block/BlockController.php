@@ -28,6 +28,9 @@ class BlockController extends Controller
      */
     private $condominiumRepository;
 
+    /**
+     * @var UtilObjeto
+     */
     private $utilObjeto;
 
     /**
@@ -35,10 +38,12 @@ class BlockController extends Controller
      * @param BlockRepository $repository
      * @param BlockService $service
      * @param CondominiumRepository $condominiumRepository
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(BlockRepository $repository,
                                 BlockService $service,
-                                CondominiumRepository $condominiumRepository, UtilObjeto $utilObjeto)
+                                CondominiumRepository $condominiumRepository,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -51,7 +56,6 @@ class BlockController extends Controller
     {
         $config['title'] = "Blocos";
         $dados = $this->repository->findWhere(['condominium_id' => $this->condominium_id]);
-
         $dados = $this->utilObjeto->paginate($dados);
 
         return view('portal.condominium.block.index', compact('config', 'dados'));
@@ -60,6 +64,7 @@ class BlockController extends Controller
     public function create()
     {
         $config['title'] = "Novo Bloco";
+
         return view('portal.condominium.block.create', compact('config'));
     }
 
@@ -71,7 +76,8 @@ class BlockController extends Controller
     public function edit($id)
     {
         $config['title'] = "Alterar Bloco";
-        $dados = $this->repository->find($id);
+        $dados = $this->repository->findWhere(['id' => $id, 'condominium_id' => $this->condominium_id]);
+        $dados = $dados[0];
 
         return view('portal.condominium.block.edit', compact('config', 'dados'));
     }

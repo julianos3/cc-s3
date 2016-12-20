@@ -35,7 +35,6 @@ class MessagePublicService
 
     public function create(array $data)
     {
-
         try {
             $data['public'] = 'y';
             $data['type'] = 's';
@@ -54,13 +53,13 @@ class MessagePublicService
                 'message' => $e->getMessageBag()
             ];
 
-
             //$response = trans("Erro ao cadastrar o Recurso Comum");
             //return redirect()->back()->withErrors($response)->withInput();
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 
+    /*
     public function addUsersMessage($messageId, $users)
     {
         if (is_array($users)) {
@@ -76,6 +75,7 @@ class MessagePublicService
 
         return false;
     }
+    */
 
     public function update(array $data, $id)
     {
@@ -106,7 +106,6 @@ class MessagePublicService
     {
         //remover todas as mensagens
         $reply = $this->messageReplyRepository->findWhere(['message_id' => $id]);
-
         if ($reply->toArray()) {
             foreach ($reply as $row) {
                 $this->messageReplyRepository->delete($row->id);

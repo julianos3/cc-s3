@@ -37,45 +37,22 @@ class ContractFileController extends Controller
     public function show($id)
     {
         $dados = $this->repository->find($id);
-        $file = Storage::get($this->path.$dados['file']);
+        $file = Storage::get($this->path . $dados['file']);
 
-        $fileContents        = Storage::get($this->path.$dados['file']);
-        $fileMimeType        = Storage::getMimeType($this->path.$dados['file']); // e.g. 'application/pdf', 'text/plain' etc.
+        $fileContents = Storage::get($this->path . $dados['file']);
+        $fileMimeType = Storage::getMimeType($this->path . $dados['file']); // e.g. 'application/pdf', 'text/plain' etc.
         //$fileNameFromStorage = basename($pathToFile); // strips the path and returns filename with extension
 
         $headers = array_merge([
             //'Content-Disposition' => str_replace('%name', $fileNameFromStorage, "inline; filename=\"%name\"; filename*=utf-8''%name"),
-            'Content-Length'      => strlen($fileContents),
-            'Content-Type'        => $fileMimeType,
+            'Content-Length' => strlen($fileContents),
+            'Content-Type' => $fileMimeType,
         ], []);
 
         $response = response($file, 200);
         $response->header('Content-Type', $headers);
 
         return $response;
-
-        /*
-        return $file;
-        if($file){
-            
-            $response = response($file, 200);
-            $content_types = [
-                'application/octet-stream', // txt etc
-                'application/msword', // doc
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', //docx
-                'application/vnd.ms-excel', // xls
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // xlsx
-                'application/pdf', // pdf
-            ];
-
-            dd(Storage::getMimeType($file['extension']));
-
-            // using this will allow you to do some checks on it (if pdf/docx/doc/xls/xlsx)
-            $response->header('Content-Type', Storage::getMimeType($this->path.$file['file']));
-
-
-        }
-        */
     }
 
     public function destroy($id)

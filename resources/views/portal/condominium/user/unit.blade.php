@@ -51,7 +51,7 @@
                                     <h4>Minhas Unidades</h4>
 
                                     <div class="row lisUnit">
-                                        @if(!$units->isEmpty())
+                                        @if(!$dados->usersUnit->isEmpty())
                                             <div class="col-md-12">
                                                 <table class="tablesaw table-striped table-bordered table-hover"
                                                        data-tablesaw-mode="swipe"
@@ -70,7 +70,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($units  as $row)
+                                                    @foreach($dados->usersUnit  as $row)
                                                         <tr>
                                                             <td>{{ $row->unit->name }}</td>
                                                             <td>{{ $row->unit->floor }}</td>

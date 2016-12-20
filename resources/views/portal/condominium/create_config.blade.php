@@ -172,7 +172,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12 text-right">
-                                                        <button type="submit" class="btn btn-dark"
+                                                        <button type="submit" class="btn btn-dark margin-bottom-20"
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Adicionar">
                                                             <i class="icon wb-plus" aria-hidden="true"></i>
@@ -189,25 +189,25 @@
                                                                data-tablesaw-mode="swipe"
                                                                data-tablesaw-sortable data-tablesaw-minimap>
                                                             <thead>
-                                                            <tr>
-                                                                <th data-tablesaw-sortable-col
-                                                                    data-tablesaw-sortable-default-col
-                                                                    data-tablesaw-priority="persist">Tipo
-                                                                </th>
-                                                                <th data-tablesaw-sortable-col
-                                                                    data-tablesaw-priority="3">Bloco
-                                                                </th>
-                                                                <th data-tablesaw-sortable-col
-                                                                    data-tablesaw-priority="2">Unidade
-                                                                </th>
-                                                                <th data-tablesaw-sortable-col
-                                                                    data-tablesaw-priority="1">
-                                                                    <abbr title="Rotten Tomato Rating">Andar</abbr>
-                                                                </th>
-                                                                <th data-tablesaw-sortable-col
-                                                                    data-tablesaw-priority="4">Ação
-                                                                </th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th data-tablesaw-sortable-col
+                                                                        data-tablesaw-sortable-default-col
+                                                                        data-tablesaw-priority="persist">Tipo
+                                                                    </th>
+                                                                    <th data-tablesaw-sortable-col
+                                                                        data-tablesaw-priority="3">Bloco
+                                                                    </th>
+                                                                    <th data-tablesaw-sortable-col
+                                                                        data-tablesaw-priority="2">Unidade
+                                                                    </th>
+                                                                    <th data-tablesaw-sortable-col
+                                                                        data-tablesaw-priority="1">
+                                                                        <abbr title="Rotten Tomato Rating" class="text-center">Andar</abbr>
+                                                                    </th>
+                                                                    <th data-tablesaw-sortable-col
+                                                                        data-tablesaw-priority="4" class="text-center col-md-2">Ação
+                                                                    </th>
+                                                                </tr>
                                                             </thead>
                                                             <tbody>
                                                             @foreach($unit  as $row)
@@ -215,7 +215,7 @@
                                                                     <td>{{ $row->unitType->name }}</td>
                                                                     <td>{{ $row->block->name }}</td>
                                                                     <td>{{ $row->name }}</td>
-                                                                    <td>{{ $row->floor }}</td>
+                                                                    <td>@if($row->floor) {{$row->floor}} @else - @endif</td>
                                                                     <td>
                                                                         <a href="{{route('portal.condominium.unit.destroy',['id'=>$row->id])}}" title="Excluir" class="btn btn-icon bg-danger waves-effect waves-light btnDelete waves-effect waves-light">
                                                                             <i class="icon wb-trash" aria-hidden="true"></i>

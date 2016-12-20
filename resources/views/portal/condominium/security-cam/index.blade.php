@@ -1,7 +1,5 @@
 @extends('portal')
-
 @section('content')
-
     <div class="page animsition">
         <div class="page-header">
             <h1 class="page-title">{{ $config['title'] }}</h1>
@@ -27,15 +25,14 @@
                         Cadastrar
                     </a>
 
-                    <a href="{{ route('portal.condominium.security-cam.list') }}"
-                       data-toggle="tooltip"
-                       data-original-title="Visualizar Todas as camêras"
-                       class="btn btn-warning waves-effect waves-light">
-                        <i class="icon wb-camera" aria-hidden="true"></i>
-                        Visualizar Todas as camêras
-                    </a>
-
                     @if(!$dados->isEmpty())
+                        <a href="{{ route('portal.condominium.security-cam.list') }}"
+                           data-toggle="tooltip"
+                           data-original-title="Visualizar Todas as camêras"
+                           class="btn btn-warning waves-effect waves-light margin-left-10">
+                            <i class="icon wb-camera" aria-hidden="true"></i>
+                            Visualizar Todas as camêras
+                        </a>
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="tablesaw table-striped table-bordered table-hover"
@@ -107,5 +104,4 @@
        class="site-action site-floataction btn-raised btn btn-success btn-floating">
         <i class="icon md-plus" aria-hidden="true"></i>
     </a>
-
 @endsection

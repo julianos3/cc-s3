@@ -5,12 +5,10 @@ namespace CentralCondo\Http\Controllers\Portal\Condominium\Group;
 use CentralCondo\Entities\Portal\Condominium\UsersCondominium;
 use CentralCondo\Repositories\Portal\Condominium\UsersCondominiumRepository;
 use CentralCondo\Services\Portal\Condominium\Group\UsersGroupCondominiumService;
-
 use CentralCondo\Http\Requests;
 use CentralCondo\Http\Requests\Portal\Condominium\Group\UsersGroupCondominiumRequest;
 use CentralCondo\Repositories\Portal\Condominium\Group\UsersGroupCondominiumRepository;
 use CentralCondo\Services\Util\UtilObjeto;
-use CentralCondo\Validators\Portal\Condominium\Group\UsersGroupCondominiumValidator;
 use CentralCondo\Http\Controllers\Controller;
 
 class UsersGroupCondominiumController extends Controller
@@ -19,11 +17,6 @@ class UsersGroupCondominiumController extends Controller
      * @var UsersGroupCondominiumRepository
      */
     protected $repository;
-
-    /**
-     * @var UsersGroupCondominiumValidator
-     */
-    protected $validator;
 
     /**
      * @var UsersGroupCondominiumService
@@ -43,19 +36,16 @@ class UsersGroupCondominiumController extends Controller
     /**
      * UsersGroupCondominiumController constructor.
      * @param UsersGroupCondominiumRepository $repository
-     * @param UsersGroupCondominiumValidator $validator
      * @param UsersGroupCondominiumService $service
      * @param UsersCondominiumRepository $usersCondominium
      * @param UtilObjeto $utilObjeto
      */
     public function __construct(UsersGroupCondominiumRepository $repository,
-                                UsersGroupCondominiumValidator $validator,
                                 UsersGroupCondominiumService $service,
                                 UsersCondominiumRepository $usersCondominium,
                                 UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
-        $this->validator = $validator;
         $this->service = $service;
         $this->usersCondominiumRepository = $usersCondominium;
         $this->utilObjeto = $utilObjeto;
@@ -65,10 +55,11 @@ class UsersGroupCondominiumController extends Controller
     public function index($groupId)
     {
         $config['title'] = "Integrantes do Grupo";
-        $dados = $this->repository->with(['usersCondominium'])->findWhere([
-            'group_id' => $groupId
-        ]);
-
+        $dados = $this->repository
+            ->with(['usersCondominium'])
+            ->findWhere([
+                'group_id' => $groupId
+            ]);
         $dados = $this->utilObjeto->paginate($dados);
         $usersCondominium = $this->usersCondominiumRepository->listUsersCondominiumFind($this->condominium_id);
 
@@ -88,7 +79,7 @@ class UsersGroupCondominiumController extends Controller
         return $this->service->create($request->all());
     }
 
-    public function destroy($groupId, $id)
+    public function destroy($id)
     {
         return $this->service->destroy($id);
     }

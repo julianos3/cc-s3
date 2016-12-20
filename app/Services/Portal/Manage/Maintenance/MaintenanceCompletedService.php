@@ -9,18 +9,13 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 
 class MaintenanceCompletedService
 {
-
-    /**
-     * @var MaintenanceCompletedRepository
-     */
+    
     protected $repository;
 
-    /**
-     * @var MaintenanceCompletedValidator
-     */
     protected $validator;
 
-    public function __construct(MaintenanceCompletedRepository $repository, MaintenanceCompletedValidator $validator)
+    public function __construct(MaintenanceCompletedRepository $repository,
+                                MaintenanceCompletedValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;

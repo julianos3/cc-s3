@@ -64,6 +64,9 @@ class UsersCondominiumController extends Controller
      */
     protected $userService;
 
+    /**
+     * @var UtilObjeto
+     */
     protected $utilObjeto;
 
     /**
@@ -105,7 +108,8 @@ class UsersCondominiumController extends Controller
     {
         $config['title'] = trans('Integrantes');
 
-        $dados  = $this->repository->with(['user', 'usersUnit', 'userRoleCondominium'])
+        $dados  = $this->repository
+            ->with(['user', 'usersUnit', 'userRoleCondominium'])
             ->findWhere(['condominium_id' => $this->condominium_id]);
         $dados = $this->utilObjeto->paginate($dados);
 
@@ -115,6 +119,7 @@ class UsersCondominiumController extends Controller
     public function create()
     {
         $config['title'] = "Novo integrante";
+        $role = $this->userRoleCondominiumRepository->orderBy('name','asc')->findWhere(['active' => 'y']);
         $userRole = $this->usersUnitRoleRepository->findWhere(['active' => 'y']);
         $block = $this->blockRepository->findWhere([
             'condominium_id' => $this->condominium_id
@@ -139,26 +144,30 @@ class UsersCondominiumController extends Controller
             ]);
         $dados = $dados[0];
 
-        $usersUnit = $this->usersUnitRepository
-            ->with(['unit', 'usersUnitRole'])
-            ->findWhere([
-                'user_condominium_id' => $id
-            ]);
-
-        return view('portal.condominium.user.show', compact('config', 'dados', 'usersUnit'));
+        return view('portal.condominium.user.show', compact('config', 'dados'));
     }
 
     public function edit($id)
     {
         $config['title'] = "Alterar Integrante";
-        $userCondominium = $this->repository->findWhere([
-            'id' => $id,
-            'condominium_id' => $this->condominium_id
-        ]);
-        $dados = $this->userRepository->find($userCondominium[0]->user_id);
-        $dados['birth'] = date('d/m/Y', strtotime($dados['birth']));
+        $dados = $this->repository
+            ->with(['user'])
+            ->findWhere([
+                'id' => $id,
+                'condominium_id' => $this->condominium_id
+            ]);
 
-        return view('portal.condominium.user.edit', compact('config', 'dados', 'id'));
+        $userRoleCondominium = $dados[0]['user_role_condominium'];
+        $dados = $dados[0]['user'];
+        if($dados['birth'] == '0000-00-00'){
+            $dados['birth'] = '';
+        }else{
+            $dados['birth'] = date('d/m/Y', strtotime($dados['birth']));
+        }
+
+        $role = $this->userRoleCondominiumRepository->orderBy('name','asc')->findWhere(['active' => 'y']);
+
+        return view('portal.condominium.user.edit', compact('config', 'dados', 'id', 'role', 'userRoleCondominium'));
     }
 
     public function update(UsersCondominiumRequest $request, $id)
@@ -169,17 +178,20 @@ class UsersCondominiumController extends Controller
     public function unit($id)
     {
         $config['title'] = "Unidades Integrantes";
-        $userCondominium = $this->repository->findWhere([
-            'id' => $id,
-            'condominium_id' => $this->condominium_id
-        ]);
-        $dados = $this->userRepository->find($userCondominium[0]->user_id);
-        $block = $this->blockRepository->findWhere(['condominium_id' => $this->condominium_id]);
-        $units = $this->usersUnitRepository->findWhere(['user_condominium_id' => $userCondominium[0]->id]);
-        $userRole = $this->usersUnitRoleRepository->findWhere(['active' => 'y']);
-        $userCondominiumId = $userCondominium[0]->id;
 
-        return view('portal.condominium.user.unit', compact('config', 'dados', 'block', 'userRole', 'units', 'userCondominiumId'));
+        $dados = $this->repository
+            ->with(['usersUnit', 'user'])
+            ->findWhere([
+                'id' => $id,
+                'condominium_id' => $this->condominium_id
+            ]);
+        $dados = $dados[0];
+
+        $block = $this->blockRepository->findWhere(['condominium_id' => $this->condominium_id]);
+        $userRole = $this->usersUnitRoleRepository->findWhere(['active' => 'y']);
+        $userCondominiumId = $dados->id;
+
+        return view('portal.condominium.user.unit', compact('config', 'dados', 'block', 'userRole', 'userCondominiumId'));
     }
 
     public function userUnitCreate(UsersCondominiumRequest $request)

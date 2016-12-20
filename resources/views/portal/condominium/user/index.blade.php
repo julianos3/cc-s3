@@ -92,15 +92,6 @@
                                                                 ?>
                                                             </p>
                                                         @endif
-                                                        <div>
-                                                            <a class="text-action" href="enviar para tela de mensagem}">
-                                                                <i class="icon icon-color md-email" aria-hidden="true"></i>
-                                                            </a>
-                                                            <a class="text-action" href="{{ $row->user->phone }}">
-                                                                <i class="icon icon-color md-smartphone"
-                                                                   aria-hidden="true"></i>
-                                                            </a>
-                                                        </div>
                                                     </div>
                                                     <div class="media-right text-center col-md-3">
                                                         <a href="{{ route('portal.condominium.user.show',['id' => $row->id]) }}"

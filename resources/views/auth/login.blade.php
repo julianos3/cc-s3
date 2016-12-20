@@ -14,7 +14,7 @@
         <div class="page-content">
             <div class="page-brand-info">
                 <div class="brand">
-                    <img class="brand-img" src="{{ asset('portal/assets/images/logo@2x.png') }}" width="500" alt="Central Condo">
+                    <img class="brand-img" src="{{ asset('portal/assets/images/logo.png') }}" width="500" alt="Central Condo">
                 </div>
                 <p class="font-size-20">
                     A gestão do seu condomínio na palma da sua mão

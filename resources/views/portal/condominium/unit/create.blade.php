@@ -1,5 +1,4 @@
 @extends('portal')
-
 @section('content')
     <div class="page animsition">
         <div class="page-header">
@@ -24,8 +23,6 @@
                 <div class="panel-body">
                     @include('success._check')
                     @include('errors._check')
-
-                    <?php $block_id = 0; ?>
 
                     {!! Form::open(['route'=>'portal.condominium.unit.store']) !!}
 

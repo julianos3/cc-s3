@@ -40,22 +40,22 @@
     <div class="col-md-12">
         <div class="form-group form-material">
             <div class="radio-custom radio-default radio-inline">
-                <input type="radio" id="condominiumAll" name="destination" value="all_user" checked="" required="required">
+                <input type="radio" class="communicationDestination" id="condominiumAll" name="destination" value="all_user" checked="" required="required">
                 <label for="condominiumAll">Enviar comunicado para TODOS os integrantes do condomínio</label>
             </div>
             <br/>
             <div class="radio-custom radio-default radio-inline">
-                <input type="radio" id="group" name="destination" value="group" required="required">
+                <input type="radio" class="communicationDestination" id="group" name="destination" value="group" required="required">
                 <label for="group">Enviar comunicado para GRUPOS</label>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row groupsCommunication none">
     <div class="col-md-12">
         <div class="form-group">
             <label for="groups">Grupos:</label>
-            <select data-plugin="selectpicker" class="form-control" name="groups[]" multiple data-selected-text-format="count > 3">
+            <select data-plugin="selectpicker" class="form-control selectGroup" name="groups[]" multiple data-selected-text-format="count > 3">
                 @foreach($groupCondominium as $row)
                 <option value="{{ $row->id }}">{{ $row->name }}</option>
                 @endforeach

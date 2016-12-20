@@ -21,10 +21,21 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('email', 'E-mail: *') !!}
+            {!! Form::label('Email', 'E-mail: *') !!}
             {!! Form::text('email', null, ['class'=>'form-control', 'required' => 'required']) !!}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label" for="user_role_condominium">Tipo de relação com o condoḿinio: *</label>
+            <select class="form-control" name="user_role_condominium" id="user_role_condominium" required="required">
+                <option value="">Selecione</option>
+                @foreach($role as $row)
+                    <option value="{{ $row->id }}" @if($row->id == $userRoleCondominium && isset($userRoleCondominium)) selected @endif>{{ $row->name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 </div>

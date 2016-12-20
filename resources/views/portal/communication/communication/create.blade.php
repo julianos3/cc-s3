@@ -7,7 +7,7 @@
             <ol class="breadcrumb" data-plugin="breadcrumb">
                 <li><a href="{{ route('portal.home.index') }}">Home</a></li>
                 <li><a href="{{ route('portal.communication.index') }}">Comunicação</a></li>
-                <li><a href="{{ route('portal.communication.communication.index') }}">Chamados</a></li>
+                <li><a href="{{ route('portal.communication.communication.index') }}">Comunicados</a></li>
                 <li class="active">Cadastrar</li>
             </ol>
             <div class="page-header-actions">

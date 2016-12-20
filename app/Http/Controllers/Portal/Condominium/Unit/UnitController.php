@@ -34,6 +34,9 @@ class UnitController extends Controller
      */
     private $unitTypeRepository;
 
+    /**
+     * @var UtilObjeto
+     */
     private $utilObjeto;
 
     /**
@@ -42,11 +45,13 @@ class UnitController extends Controller
      * @param UnitService $service
      * @param BlockRepository $blockRepository
      * @param UnitTypeRepository $unitTypeRepository
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(UnitRepository $repository,
                                 UnitService $service,
                                 BlockRepository $blockRepository,
-                                UnitTypeRepository $unitTypeRepository, UtilObjeto $utilObjeto)
+                                UnitTypeRepository $unitTypeRepository,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -59,12 +64,12 @@ class UnitController extends Controller
     public function index()
     {
         $config['title'] = trans("Unidades");
-        $dados = $this->repository->with(['block', 'unitType'])
+        $dados = $this->repository
+            ->with(['block', 'unitType'])
             ->findWhere([
                 'condominium_id' => $this->condominium_id,
                 ['unit_type_id','!=','3']
             ]);
-
         $dados = $this->utilObjeto->paginate($dados);
 
         return view('portal.condominium.unit.index', compact('config', 'dados'));
@@ -74,7 +79,8 @@ class UnitController extends Controller
     {
         $config['title'] = "Nova Unidade";
         $block = $this->blockRepository->findWhere(['condominium_id' => $this->condominium_id]);
-        $type = $this->unitTypeRepository->listUnitType();
+        $type = $this->unitTypeRepository->findWhere(['active' => 'y', ['id','!=','3']]);
+
         return view('portal.condominium.unit.create', compact('config', 'block', 'type'));
     }
 
@@ -86,9 +92,10 @@ class UnitController extends Controller
     public function edit($id)
     {
         $config['title'] = "Alterar Unidade";
-        $dados = $this->repository->find($id);
+        $dados = $this->repository->findWhere(['id'=>$id, 'condominium_id' => $this->condominium_id]);
+        $dados = $dados[0];
         $block = $this->blockRepository->findWhere(['condominium_id' => $this->condominium_id]);
-        $type = $this->unitTypeRepository->listUnitType();
+        $type = $this->unitTypeRepository->findWhere(['active' => 'y', ['id','!=','3']]);
 
         return view('portal.condominium.unit.edit', compact('config', 'dados', 'block', 'type'));
     }
@@ -120,7 +127,6 @@ class UnitController extends Controller
     public function garage()
     {
         $config['title'] = "Garagem";
-
         $dados = $this->repository->with(['block'])->findWhere([
             'condominium_id' => $this->condominium_id,
             'unit_type_id' => 3

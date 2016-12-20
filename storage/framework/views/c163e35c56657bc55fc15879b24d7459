@@ -1,5 +1,4 @@
 
-
 <?php $__env->startSection('content'); ?>
     <div class="page animsition">
         <div class="page-header">
@@ -24,8 +23,6 @@
                 <div class="panel-body">
                     <?php echo $__env->make('success._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                     <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-
-                    <?php $block_id = 0; ?>
 
                     <?php echo Form::open(['route'=>'portal.condominium.unit.garage.store']); ?>
 

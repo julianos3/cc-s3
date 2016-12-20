@@ -2,6 +2,7 @@
 
 namespace CentralCondo\Http\Controllers\Portal\Condominium;
 
+use CentralCondo\Events\Portal\Auth\SendMail;
 use CentralCondo\Repositories\Portal\Condominium\Block\BlockNomemclatureRepository;
 use CentralCondo\Repositories\Portal\Condominium\Block\BlockRepository;
 use CentralCondo\Repositories\Portal\Condominium\FinalityRepository;
@@ -24,7 +25,7 @@ use CentralCondo\Validators\Portal\Condominium\CondominiumValidator;
 use CentralCondo\Http\Controllers\Controller;
 use CentralCondo\Http\Requests\Portal\Condominium\CondominiumRequest;
 use Illuminate\Support\Facades\Auth;
-
+use Event;
 
 class CondominiumController extends Controller
 {
@@ -179,6 +180,10 @@ class CondominiumController extends Controller
     public function create()
     {
         $config['title'] = "Novo condomínio";
+        $config['menu'] = 'off';
+        $config['notification'] = 'off';
+        $config['message'] = 'off';
+
         $finality = $this->finalityRepository->listFinality();
         $state = $this->stateRepository->all();
 
@@ -193,6 +198,9 @@ class CondominiumController extends Controller
     public function createInfo()
     {
         $config['title'] = "Informação do condomínio";
+        $config['menu'] = 'off';
+        $config['notification'] = 'off';
+        $config['message'] = 'off';
         $dados = $this->repository->find($this->condominium_id);
         $finality = $this->finalityRepository->findWhere(['active' => 'y']);
 
@@ -202,20 +210,24 @@ class CondominiumController extends Controller
     public function createConfig()
     {
         $config['title'] = "Condiguração do condomínio";
+        $config['menu'] = 'off';
+        $config['notification'] = 'off';
+        $config['message'] = 'off';
         $dados = $this->repository->find($this->condominium_id);
         $unitType = $this->unitTypeRepository->findWhere(['active' => 'y']);
         $blockNomemclature = $this->blockNomemclatureRepository->findWhere(['active' => 'y']);
-        $unit = $this->unitRepository->findWhere([
-            'condominium_id' => $this->condominium_id
-        ]);
+        $unit = $this->unitRepository
+            ->with(['unitType', 'block'])
+            ->findWhere([
+                'condominium_id' => $this->condominium_id
+            ]);
 
         return view('portal.condominium.create_config', compact('config', 'dados', 'unitType', 'unit', 'blockNomemclature'));
     }
 
     public function createUnit(CondominiumRequest $request)
     {
-        $id = $this->condominium_id;
-        return $this->service->createUnits($request->all(), $id);
+        return $this->service->createUnits($request->all());
     }
 
     public function edit()
@@ -241,6 +253,9 @@ class CondominiumController extends Controller
     public function finish()
     {
         $config['title'] = "Conclusão cadastro do condomínio";
+        $config['menu'] = 'off';
+        $config['notification'] = 'off';
+        $config['message'] = 'off';
 
         $userRole = $this->usersRoleCondominiumRepository->findWhere(['active' => 'y']);
         $block = $this->blockRepository->findWhere([
@@ -265,7 +280,10 @@ class CondominiumController extends Controller
         $user['user_id'] = Auth::user()->id;
         $user['user_role_condominium'] = $data['user_role_condominium'];
         $user['condominium_id'] = $this->condominium_id;
+        
         $this->usersCondominiumService->update($user, $userCondominiumId[0]->id);
+
+        Event::fire(new SendMail($userCondominiumId[0]->id));
 
         $unit['user_condominium_id'] = $userCondominiumId[0]->id;
         $unit['unit_id'] = $data['unit_id'];

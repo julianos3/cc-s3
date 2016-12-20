@@ -1,7 +1,5 @@
 @extends('portal')
-
 @section('content')
-
     <div class="page animsition page-profile">
         <div class="page-header">
             <h1 class="page-title">{{ $config['title'] }}</h1>
@@ -27,13 +25,14 @@
                         <div class="widget-header">
                             <div class="widget-header-content">
                                 @if($dados->user->imagem)
-                                    <a class="avatar avatar-lg" href="javascript:void(0)">
+                                    <a class="avatar avatar-lg" href="javascript:void(0);">
                                         <img src="{{ route('portal.condominium.user.image', ['id' => $dados->user->id, 'image' => $dados->user->imagem]) }}"
-                                             alt="...">
+                                             alt="{{ $dados->user->name }}" title="{{ $dados->user->name }}">
                                     </a>
                                 @else
-                                    <a class="avatar avatar-lg" href="javascript:void(0)">
-                                        <img src="../../../global/portraits/5.jpg" alt="...">
+                                    <a class="avatar avatar-lg" href="javascript:void(0);">
+                                        <img src="{{ asset('portal/global/portraits/5.jpg') }}"
+                                             alt="{{ $dados->user->name }}" title="{{ $dados->user->name }}">
                                     </a>
                                 @endif
                                 <h4 class="profile-user">{{$dados->user->name}}</h4>
@@ -47,10 +46,32 @@
                                         Celular: {{$dados->user->cell_phone}}<br/>
                                     @endif
                                 </p>
-                                <div class="profile-social">
-                                    <a class="icon bd-twitter" href="javascript:void(0)"></a>
-                                    <a class="icon bd-facebook" href="javascript:void(0)"></a>
-                                </div>
+
+                                @if($dados->user->twitter != '' || $dados->user->facebook != '' ||
+                                    $dados->user->instagram != '' || $dados->user->google_plus != '' || $dados->user->linkedin != '')
+                                    <div class="profile-social">
+                                        @if($dados->user->twitter != '')
+                                            <a class="icon bd-twitter" href="javascript:void(0)" target="_blank"
+                                               title="Twitter"></a>
+                                        @endif
+                                        @if($dados->user->facebook != '')
+                                            <a class="icon bd-facebook" href="javascript:void(0)" target="_blank"
+                                               title="Facebook"></a>
+                                        @endif
+                                        @if($dados->user->instagram != '')
+                                            <a class="icon bd-instagram" href="javascript:void(0)" target="_blank"
+                                               title="Instagram"></a>
+                                        @endif
+                                        @if($dados->user->google_plus != '')
+                                            <a class="icon bd-google-plus" href="javascript:void(0)" target="_blank"
+                                               title="Google Plus"></a>
+                                        @endif
+                                        @if($dados->user->linkedin != '')
+                                            <a class="icon bd-linkedin" href="javascript:void(0)" target="_blank"
+                                               title="Linkedin"></a>
+                                        @endif
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -65,22 +86,51 @@
                                     <p>{{ $dados->user->description }}</p>
                                 </section>
                                 @endif
-                                @if($usersUnit->toArray())
+
+                                @if($dados->user->formation != '' && $dados->user->institution && $dados->user->conclusion)
                                 <section>
-                                    <h4 id="section-2">Unidades:</h4>
+                                    <h5 id="section-2">Escolaridade</h5>
                                     <p>
-                                        <?php
-                                        $cont = 0;
-                                        foreach ($usersUnit as $unit) {
-                                            $cont++;
-                                            if ($cont > 1) {
-                                                echo '<br />';
-                                            }
-                                            echo $unit->unit->name . ' - ' . $unit->unit->block->name;
-                                        }
-                                        ?>
+                                        Formação: {{ $dados->user->formation }}<br />
+                                        Instituição: {{ $dados->user->institution }}<br />
+                                        Conclusão: {{ $dados->user->conclusion }}
                                     </p>
                                 </section>
+                                @endif
+
+                                @if($dados->user->profession && $dados->user->company)
+                                <section>
+                                    <h5 id="section-2">Profissional</h5>
+                                    <p>
+                                        Profissão: {{ $dados->user->profession }}<br />
+                                        Empresa: {{ $dados->user->company }}
+                                    </p>
+                                </section>
+                                @endif
+
+                                @if($dados->usersUnit->toArray())
+                                    <section>
+                                        <h5 id="section-2">Unidades</h5>
+                                        <p>
+                                            <?php
+                                            $cont = 0;
+                                            foreach ($dados->usersUnit as $unit) {
+                                                $cont++;
+                                                if ($cont > 1) {
+                                                    echo '<br />';
+                                                }
+                                                echo $unit->unit->name . ' - ' . $unit->unit->block->name;
+                                            }
+                                            ?>
+                                        </p>
+                                    </section>
+                                @endif
+
+                                @if($dados->user->site)
+                                <p>
+                                    <strong>Website ou blog:</strong><br />
+                                    <a href="{{ $dados->user->site }}" target="_blank" title="{{ $dados->user->site }}">{{ $dados->user->site }}</a>
+                                </p>
                                 @endif
                             </div>
                         </div>
@@ -89,5 +139,4 @@
             </div>
         </div>
     </div>
-
 @endsection

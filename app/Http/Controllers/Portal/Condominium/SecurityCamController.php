@@ -4,16 +4,12 @@ namespace CentralCondo\Http\Controllers\Portal\Condominium;
 
 use CentralCondo\Repositories\Portal\Condominium\CondominiumRepository;
 use CentralCondo\Services\Portal\Condominium\SecurityCamService;
-
 use CentralCondo\Http\Requests;
 use CentralCondo\Http\Requests\Portal\Condominium\SecurityCamRequest;
 use CentralCondo\Repositories\Portal\Condominium\SecurityCamRepository;
 use CentralCondo\Services\Util\UtilObjeto;
 use CentralCondo\Validators\Portal\Condominium\SecurityCamValidator;
 use CentralCondo\Http\Controllers\Controller;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
-
 
 class SecurityCamController extends Controller
 {
@@ -37,6 +33,9 @@ class SecurityCamController extends Controller
      */
     private $condominiumRepository;
 
+    /**
+     * @var UtilObjeto
+     */
     private $utilObjeto;
 
     /**
@@ -45,11 +44,13 @@ class SecurityCamController extends Controller
      * @param SecurityCamValidator $validator
      * @param SecurityCamService $service
      * @param CondominiumRepository $condominiumRepository
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(SecurityCamRepository $repository,
                                 SecurityCamValidator $validator,
                                 SecurityCamService $service,
-                                CondominiumRepository $condominiumRepository, UtilObjeto $utilObjeto)
+                                CondominiumRepository $condominiumRepository,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->validator = $validator;
@@ -63,7 +64,6 @@ class SecurityCamController extends Controller
     {
         $config['title'] = "Câmeras de Segurança";
         $dados = $this->repository->findWhere(['condominium_id' => $this->condominium_id]);
-
         $dados = $this->utilObjeto->paginate($dados);
 
         return view('portal.condominium.security-cam.index', compact('config', 'dados'));
@@ -114,4 +114,5 @@ class SecurityCamController extends Controller
     {
         return $this->service->destroy($id);
     }
+
 }

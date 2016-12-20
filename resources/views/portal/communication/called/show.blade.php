@@ -41,8 +41,8 @@
     </div>
     @endif
 </div>
-<hr>
-@if($dados['calledHistoric'])
+@if(!$dados['calledHistoric']->isEmpty())
+    <hr>
     <h4>Andamento</h4>
     <?php
         $total = $dados['calledHistoric']->count();

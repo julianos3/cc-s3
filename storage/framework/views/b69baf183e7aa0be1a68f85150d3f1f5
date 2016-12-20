@@ -1,7 +1,5 @@
 
-
 <?php $__env->startSection('content'); ?>
-
     <div class="page animsition page-profile">
         <div class="page-header">
             <h1 class="page-title"><?php echo e($config['title']); ?></h1>
@@ -27,13 +25,14 @@
                         <div class="widget-header">
                             <div class="widget-header-content">
                                 <?php if($dados->user->imagem): ?>
-                                    <a class="avatar avatar-lg" href="javascript:void(0)">
+                                    <a class="avatar avatar-lg" href="javascript:void(0);">
                                         <img src="<?php echo e(route('portal.condominium.user.image', ['id' => $dados->user->id, 'image' => $dados->user->imagem])); ?>"
-                                             alt="...">
+                                             alt="<?php echo e($dados->user->name); ?>" title="<?php echo e($dados->user->name); ?>">
                                     </a>
                                 <?php else: ?>
-                                    <a class="avatar avatar-lg" href="javascript:void(0)">
-                                        <img src="../../../global/portraits/5.jpg" alt="...">
+                                    <a class="avatar avatar-lg" href="javascript:void(0);">
+                                        <img src="<?php echo e(asset('portal/global/portraits/5.jpg')); ?>"
+                                             alt="<?php echo e($dados->user->name); ?>" title="<?php echo e($dados->user->name); ?>">
                                     </a>
                                 <?php endif; ?>
                                 <h4 class="profile-user"><?php echo e($dados->user->name); ?></h4>
@@ -47,10 +46,32 @@
                                         Celular: <?php echo e($dados->user->cell_phone); ?><br/>
                                     <?php endif; ?>
                                 </p>
-                                <div class="profile-social">
-                                    <a class="icon bd-twitter" href="javascript:void(0)"></a>
-                                    <a class="icon bd-facebook" href="javascript:void(0)"></a>
-                                </div>
+
+                                <?php if($dados->user->twitter != '' || $dados->user->facebook != '' ||
+                                    $dados->user->instagram != '' || $dados->user->google_plus != '' || $dados->user->linkedin != ''): ?>
+                                    <div class="profile-social">
+                                        <?php if($dados->user->twitter != ''): ?>
+                                            <a class="icon bd-twitter" href="javascript:void(0)" target="_blank"
+                                               title="Twitter"></a>
+                                        <?php endif; ?>
+                                        <?php if($dados->user->facebook != ''): ?>
+                                            <a class="icon bd-facebook" href="javascript:void(0)" target="_blank"
+                                               title="Facebook"></a>
+                                        <?php endif; ?>
+                                        <?php if($dados->user->instagram != ''): ?>
+                                            <a class="icon bd-instagram" href="javascript:void(0)" target="_blank"
+                                               title="Instagram"></a>
+                                        <?php endif; ?>
+                                        <?php if($dados->user->google_plus != ''): ?>
+                                            <a class="icon bd-google-plus" href="javascript:void(0)" target="_blank"
+                                               title="Google Plus"></a>
+                                        <?php endif; ?>
+                                        <?php if($dados->user->linkedin != ''): ?>
+                                            <a class="icon bd-linkedin" href="javascript:void(0)" target="_blank"
+                                               title="Linkedin"></a>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -65,22 +86,53 @@
                                     <p><?php echo e($dados->user->description); ?></p>
                                 </section>
                                 <?php endif; ?>
-                                <?php if($usersUnit->toArray()): ?>
+
+                                <?php if($dados->user->formation != '' && $dados->user->institution && $dados->user->conclusion): ?>
                                 <section>
-                                    <h4 id="section-2">Unidades:</h4>
+                                    <h5 id="section-2">Escolaridade</h5>
                                     <p>
-                                        <?php
-                                        $cont = 0;
-                                        foreach ($usersUnit as $unit) {
-                                            $cont++;
-                                            if ($cont > 1) {
-                                                echo '<br />';
-                                            }
-                                            echo $unit->unit->name . ' - ' . $unit->unit->block->name;
-                                        }
-                                        ?>
+                                        Formação: <?php echo e($dados->user->formation); ?><br />
+                                        Instituição: <?php echo e($dados->user->institution); ?><br />
+                                        Conclusão: <?php echo e($dados->user->conclusion); ?>
+
                                     </p>
                                 </section>
+                                <?php endif; ?>
+
+                                <?php if($dados->user->profession && $dados->user->company): ?>
+                                <section>
+                                    <h5 id="section-2">Profissional</h5>
+                                    <p>
+                                        Profissão: <?php echo e($dados->user->profession); ?><br />
+                                        Empresa: <?php echo e($dados->user->company); ?>
+
+                                    </p>
+                                </section>
+                                <?php endif; ?>
+
+                                <?php if($dados->usersUnit->toArray()): ?>
+                                    <section>
+                                        <h5 id="section-2">Unidades</h5>
+                                        <p>
+                                            <?php
+                                            $cont = 0;
+                                            foreach ($dados->usersUnit as $unit) {
+                                                $cont++;
+                                                if ($cont > 1) {
+                                                    echo '<br />';
+                                                }
+                                                echo $unit->unit->name . ' - ' . $unit->unit->block->name;
+                                            }
+                                            ?>
+                                        </p>
+                                    </section>
+                                <?php endif; ?>
+
+                                <?php if($dados->user->site): ?>
+                                <p>
+                                    <strong>Website ou blog:</strong><br />
+                                    <a href="<?php echo e($dados->user->site); ?>" target="_blank" title="<?php echo e($dados->user->site); ?>"><?php echo e($dados->user->site); ?></a>
+                                </p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -89,6 +141,5 @@
             </div>
         </div>
     </div>
-
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

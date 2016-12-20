@@ -32,7 +32,7 @@
                         <div class="nav-tabs-horizontal">
                             <ul class="nav nav-tabs nav-tabs-line" data-plugin="nav-tabs" role="tablist">
                                 <li class="active" role="presentation">
-                                    <a data-toggle="tab" href="#exampleTabsLineOne" aria-controls="tabDadosPessoais" role="tab">
+                                    <a data-toggle="tab" href="javascript:void(0);" aria-controls="tabDadosPessoais" role="tab">
                                         Dados Pessoais
                                     </a>
                                 </li>

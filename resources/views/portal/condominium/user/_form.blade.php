@@ -1,16 +1,38 @@
-<div class="form-group">
-    {!! Form::label('Name', 'Nome:') !!}
-    {!! Form::text('name', null, ['class'=>'form-control', 'required' => 'required']) !!}
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {!! Form::label('Name', 'Nome: *') !!}
+            {!! Form::text('name', null, ['class'=>'form-control', 'required' => 'required']) !!}
+        </div>
+    </div>
 </div>
-
-<div class="form-group">
-    {!! Form::label('Email', 'E-mail:') !!}
-    {!! Form::text('email', null, ['class'=>'form-control']) !!}
-    <p class="help-block alert alert-info">
-        É muito importante informar um e-mail válido, pois através dele é que o
-        integrante irá acessar o Central Condo, além de ser avisado sobre os acontecimentos
-        do condomínio.
-    </p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('Email', 'E-mail: *') !!}
+            {!! Form::text('email', null, ['class'=>'form-control', 'required' => 'required']) !!}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label" for="user_role_condominium">Tipo de relação com o condoḿinio: *</label>
+            <select class="form-control" name="user_role_condominium" id="user_role_condominium" required="required">
+                <option value="">Selecione</option>
+                @foreach($role as $row)
+                    <option value="{{ $row->id }}" >{{ $row->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p class="alert alert-info">
+            É muito importante informar um e-mail válido, pois através dele é que o
+            integrante irá acessar o Central Condo, além de ser avisado sobre os acontecimentos
+            do condomínio.
+        </p>
+    </div>
 </div>
 
 <div class="row">
@@ -23,7 +45,7 @@
     <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('phone', 'Telefone:') !!}
-            {!! Form::text('phone', null, ['class'=>'form-control']) !!}
+            {!! Form::text('phone', null, ['class'=>'form-control', 'data-plugin' => 'formatter', 'data-pattern' => '([[99]]) [[9999]]-[[99999]]', 'placeholder' => '(99) 9999-99999']) !!}
         </div>
     </div>
 </div>
@@ -56,7 +78,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label class="control-label" for="user_unit_role">Tipo de vinculo com a Unidade</label>
-            <select class="form-control" name="user_unit_role" id="user_unit_role" required="required">
+            <select class="form-control" name="user_unit_role" id="user_unit_role">
                 <option value="">Selecione</option>
                 @foreach($userRole as $row)
                     <option value="{{ $row->id }}">{{ $row->name }}</option>

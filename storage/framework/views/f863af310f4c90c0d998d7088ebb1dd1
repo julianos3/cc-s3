@@ -1,7 +1,5 @@
 
-
 <?php $__env->startSection('content'); ?>
-
     <div class="page animsition">
         <div class="page-header">
             <h1 class="page-title"><?php echo e($config['title']); ?></h1>
@@ -56,7 +54,7 @@
                                             <td><?php echo e($row->calledCategory->name); ?></td>
                                             <td><?php echo e(date('d/m/Y h:i', strtotime($row->created_at))); ?></td>
                                             <td class="text-center">
-                                                <button title="Excluir"
+                                                <button title="Visualizar"
                                                         class="btn btn-icon bg-success waves-effect waves-light btnShowCalled"
                                                         data-target="#modalCalled" data-toggle="modal"
                                                         data-id="<?php echo e($row->id); ?>">
@@ -69,16 +67,8 @@
                                                    class="btn btn-icon bg-warning waves-effect waves-light">
                                                     <i class="icon wb-edit" aria-hidden="true"></i>
                                                 </a>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
-                                                <?php endif; ?>
-                                                <!--
-                                                <button title="Excluir"
-                                                        class="btn btn-icon bg-danger waves-effect waves-light btnDelete"
-                                                        data-target="#modalDelete" data-toggle="modal"
-                                                        data-route="<?php echo e(route('portal.communication.called.destroy', ['id' => $row->id])); ?>">
-                                                    <i class="icon wb-trash" aria-hidden="true"></i>
-                                                </button>
-                                                -->
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -111,6 +101,5 @@
        class="site-action site-floataction btn-raised btn btn-success btn-floating">
         <i class="icon md-plus" aria-hidden="true"></i>
     </a>
-
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

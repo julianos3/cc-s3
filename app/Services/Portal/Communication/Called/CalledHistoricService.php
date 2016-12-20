@@ -3,27 +3,26 @@
 namespace CentralCondo\Services\Portal\Communication\Called;
 
 use CentralCondo\Repositories\Portal\Communication\Called\CalledHistoricRepository;
+use CentralCondo\Services\Portal\Notification\NotificationService;
 use CentralCondo\Validators\Portal\Communication\Called\CalledHistoricValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class CalledHistoricService
 {
 
-    /**
-     * @var CalledHistoricRepository
-     */
     protected $repository;
 
-    /**
-     * @var CalledHistoricValidator
-     */
     protected $validator;
 
+    protected $notificationService;
+
     public function __construct(CalledHistoricRepository $repository,
-                                CalledHistoricValidator $validator)
+                                CalledHistoricValidator $validator,
+                                NotificationService $notificationService)
     {
         $this->repository = $repository;
         $this->validator = $validator;
+        $this->notificationService = $notificationService;
     }
 
     public function create(array $data)
@@ -50,5 +49,6 @@ class CalledHistoricService
             return redirect()->back()->withErrors($response)->withInput();
         }
     }
+
 
 }

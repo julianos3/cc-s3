@@ -11,13 +11,12 @@
             <select class="form-control" name="unit_id" id="unit_id">
                 <option value="">Selecione</option>
                 @foreach($unit as $row)
-                    <option value="{{ $row->id }}" @if($row->id == $unitId) selected @endif>{{ $row->name }}</option>
+                    <option value="{{ $row->id }}" @if(isset($dados['unit_id']) && $dados['unit_id'] == $row->id) selected @endif>{{ $row->name }}</option>
                 @endforeach
             </select>
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">

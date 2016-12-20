@@ -1,5 +1,4 @@
 @extends('portal')
-
 @section('content')
 
     <div class="page animsition">

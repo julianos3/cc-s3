@@ -90,18 +90,18 @@ class RepositoryServiceProvider extends ServiceProvider
 
         //diary
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\DiaryRepository::class,
-            \CentralCondo\Repositories\Portal\DiaryRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Condominium\Diary\DiaryRepository::class,
+            \CentralCondo\Repositories\Portal\Condominium\Diary\DiaryRepositoryEloquent::class
         );
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\UsersDiaryRepository::class,
-            \CentralCondo\Repositories\Portal\UsersDiaryRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Condominium\Diary\UsersDiaryRepository::class,
+            \CentralCondo\Repositories\Portal\Condominium\Diary\UsersDiaryRepositoryEloquent::class
         );
 
         //MANAGE
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\Manage\ReserveAreasRepository::class,
-            \CentralCondo\Repositories\Portal\Manage\ReserveAreasRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Manage\ReserveAreas\ReserveAreasRepository::class,
+            \CentralCondo\Repositories\Portal\Manage\ReserveAreas\ReserveAreasRepositoryEloquent::class
         );
         $this->app->bind(
             \CentralCondo\Repositories\Portal\Manage\Contract\ContractRepository::class,
@@ -198,6 +198,10 @@ class RepositoryServiceProvider extends ServiceProvider
             \CentralCondo\Repositories\Portal\Communication\Message\MessageReplyRepository::class,
             \CentralCondo\Repositories\Portal\Communication\Message\MessageReplyRepositoryEloquent::class
         );
+        $this->app->bind(
+            \CentralCondo\Repositories\Portal\Communication\Message\MessageGroupRepository::class,
+            \CentralCondo\Repositories\Portal\Communication\Message\MessageGroupRepositoryEloquent::class
+        );
 
         //communication
         $this->app->bind(
@@ -234,11 +238,14 @@ class RepositoryServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            \CentralCondo\Repositories\Portal\NotificationRepository::class,
-            \CentralCondo\Repositories\Portal\NotificationRepositoryEloquent::class
+            \CentralCondo\Repositories\Portal\Notification\NotificationRepository::class,
+            \CentralCondo\Repositories\Portal\Notification\NotificationRepositoryEloquent::class
         );
         
 
+        $this->app->bind(\CentralCondo\Repositories\SecurityCamRepository::class, \CentralCondo\Repositories\SecurityCamRepositoryEloquent::class);
+        $this->app->bind(\CentralCondo\Repositories\DiaryRepository::class, \CentralCondo\Repositories\DiaryRepositoryEloquent::class);
+        $this->app->bind(\CentralCondo\Repositories\UserMessageRepository::class, \CentralCondo\Repositories\UserMessageRepositoryEloquent::class);
         //:end-bindings:
     }
 }

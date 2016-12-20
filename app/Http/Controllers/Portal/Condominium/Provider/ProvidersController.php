@@ -11,7 +11,6 @@ use CentralCondo\Http\Requests\Portal\Condominium\Provider\ProvidersRequest;
 use CentralCondo\Http\Controllers\Controller;
 use CentralCondo\Services\Util\UtilObjeto;
 
-
 class ProvidersController extends Controller
 {
     /**
@@ -29,18 +28,22 @@ class ProvidersController extends Controller
      */
     private $providerCategoryRepository;
 
+    /**
+     * @var UtilObjeto
+     */
     private $utilObjeto;
 
     /**
      * ProvidersController constructor.
      * @param ProvidersRepository $repository
      * @param ProvidersService $service
-     * @param CondominiumRepository $condominiumRepository
      * @param ProviderCategoryRepository $providerCategoryRepository
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(ProvidersRepository $repository,
                                 ProvidersService $service,
-                                ProviderCategoryRepository $providerCategoryRepository, UtilObjeto $utilObjeto)
+                                ProviderCategoryRepository $providerCategoryRepository,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -53,6 +56,7 @@ class ProvidersController extends Controller
     {
         $config['title'] = "Fornecedores";
         $dados = $this->repository
+            ->orderBy('name', 'asc')
             ->with(['providerCategory'])
             ->findWhere([
                 'condominium_id' => $this->condominium_id
@@ -78,10 +82,11 @@ class ProvidersController extends Controller
     public function edit($id)
     {
         $config['title'] = "Alterar Fornecedor";
-        $dados = $this->repository->findWhere([
-            'id' => $id,
-            'condominium_id' => $this->condominium_id
-        ]);
+        $dados = $this->repository
+            ->findWhere([
+                'id' => $id,
+                'condominium_id' => $this->condominium_id
+            ]);
         $dados = $dados[0];
         $providerCategory = $this->providerCategoryRepository->listCondominium($this->condominium_id);
 

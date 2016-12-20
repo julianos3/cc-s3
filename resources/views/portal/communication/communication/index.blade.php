@@ -57,17 +57,21 @@
                                                    class="btn btn-icon bg-success waves-effect waves-light">
                                                     <i class="icon wb-zoom-in" aria-hidden="true"></i>
                                                 </a>
+                                                @if($row->user_condominium_id == $user_role_condominium || $userAdm == 'y')
                                                 <a href="{{ route('portal.communication.communication.edit', ['id' => $row->id]) }}"
                                                    title="Editar"
                                                    class="btn btn-icon bg-warning waves-effect waves-light">
                                                     <i class="icon wb-edit" aria-hidden="true"></i>
                                                 </a>
+                                                @endif
+                                                @if($userAdm == 'y')
                                                 <button title="Excluir"
                                                         class="btn btn-icon bg-danger waves-effect waves-light btnDelete"
                                                         data-target="#modalDelete" data-toggle="modal"
                                                         data-route="{{ route('portal.communication.communication.destroy', ['id' => $row->id]) }}">
                                                     <i class="icon wb-trash" aria-hidden="true"></i>
                                                 </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

@@ -4,6 +4,8 @@ namespace CentralCondo\Services\Portal\Communication\Called;
 
 use CentralCondo\Repositories\Portal\Communication\Called\CalledHistoricRepository;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledRepository;
+use CentralCondo\Repositories\Portal\Condominium\UsersCondominiumRepository;
+use CentralCondo\Services\Portal\Notification\NotificationService;
 use CentralCondo\Validators\Portal\Communication\Called\CalledValidator;
 use Illuminate\Support\Facades\Auth;
 use Prettus\Validator\Contracts\ValidatorInterface;
@@ -12,38 +14,31 @@ use Prettus\Validator\Exceptions\ValidatorException;
 class CalledService //regras de negocios
 {
 
-    /**
-     * @var CalledRepository
-     */
     protected $repository;
 
-    /**
-     * @var CalledValidator
-     */
     protected $validator;
 
-    /**
-     * @var CalledHistoricService
-     */
     protected $calledHistoricService;
 
     protected $calledHistoricRepository;
 
-    /**
-     * CalledService constructor.
-     * @param CalledRepository $repository
-     * @param CalledValidator $validator
-     * @param CalledHistoricService $calledHistoricService
-     */
+    protected $usersCodominiumRepository;
+
+    protected $notificationService;
+
     public function __construct(CalledRepository $repository,
                                 CalledValidator $validator,
                                 CalledHistoricService $calledHistoricService,
-                                CalledHistoricRepository $calledHistoricRepository)
+                                CalledHistoricRepository $calledHistoricRepository,
+                                UsersCondominiumRepository $usersCodominiumRepository,
+                                NotificationService $notificationService)
     {
         $this->repository = $repository;
         $this->validator = $validator;
         $this->calledHistoricService = $calledHistoricService;
         $this->calledHistoricRepository = $calledHistoricRepository;
+        $this->usersCodominiumRepository = $usersCodominiumRepository;
+        $this->notificationService = $notificationService;
         $this->condominium_id = session()->get('condominium_id');
         $this->user_condominium_id = session()->get('user_condominium_id');
         $this->user_role_condominium = session()->get('user_role_condominium');
@@ -51,14 +46,15 @@ class CalledService //regras de negocios
 
     public function getList()
     {
-        if($this->user_role_condominium == 1 || $this->user_role_condominium == 2 ||
-            $this->user_role_condominium == 3  || $this->user_role_condominium == 7 ||
-            $this->user_role_condominium == 9){
+        if ($this->user_role_condominium == 1 || $this->user_role_condominium == 2 ||
+            $this->user_role_condominium == 3 || $this->user_role_condominium == 7 ||
+            $this->user_role_condominium == 9
+        ) {
             $dados = $this->repository
                 ->orderBy('created_at', 'desc')
                 ->with(['usersCondominium', 'calledCategory', 'calledStatus'])
                 ->findWhere(['condominium_id' => $this->condominium_id]);
-        }else{
+        } else {
             $dados = $this->repository
                 ->orderBy('created_at', 'desc')
                 ->with(['usersCondominium', 'calledCategory', 'calledStatus'])
@@ -90,6 +86,9 @@ class CalledService //regras de negocios
                 $historic['description'] = $dados['description'];
 
                 $this->calledHistoricService->create($historic);
+
+                //cadastra notificação aos usuarios
+                $this->registerNotification($dados['id']);
 
                 $response = [
                     'message' => 'Chamado enviado com sucesso!',
@@ -133,6 +132,7 @@ class CalledService //regras de negocios
                 $historic['description'] = $data['description_historic'];
 
                 $this->calledHistoricService->create($historic);
+                $this->registerNotificationUpdate($dados['id'], $dados['user_condominium_id']);
 
                 $response = [
                     'message' => 'Chamado alterado com sucesso!',
@@ -170,6 +170,43 @@ class CalledService //regras de negocios
             $response = trans("Erro ao remover Chamado!");
             return redirect()->back()->withErrors($response)->withInput();
         }
+    }
+
+    public function registerNotification($calledId)
+    {
+        if (isset($calledId)) {
+
+            $users = $this->usersCodominiumRepository->getAdm($this->condominium_id);
+            if($users->toArray()){
+
+                $communication['name'] = 'Novo chamado #' . $calledId;
+                $communication['route'] = route('portal.communication.called.view', ['id' => $calledId]);
+                foreach($users as $row){
+
+                    $communication['condominium_id'] = $this->condominium_id;
+                    $communication['user_condominium_id'] = $row->id;
+
+                    $this->notificationService->create($communication);
+                }
+
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public function registerNotificationUpdate($calledId, $userCondominiumId)
+    {
+        if(isset($calledId) && isset($userCondominiumId)){
+            $communication['name'] = 'Nova interação no chamado #' . $calledId;
+            $communication['route'] = route('portal.communication.called.view', ['id' => $calledId]);
+            $communication['condominium_id'] = $this->condominium_id;
+            $communication['user_condominium_id'] = $userCondominiumId;
+
+            $this->notificationService->create($communication);
+        }
+        return false;
     }
 
 }

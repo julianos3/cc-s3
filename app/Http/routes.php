@@ -1,7 +1,8 @@
 <?php
 
 $route_partials = [
-    'authenticate'
+    'Portal/authenticate',
+    'Portal/email'
 ];
 
 foreach ($route_partials as $partial) {
@@ -52,17 +53,23 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.', 'middleware' => 'auth'], 
     Route::get('city/list/{id}', ['as' => 'city.list', 'uses' => 'Portal\CityController@getCity']);
     Route::get('state/getUfId/{uf}', ['as' => 'city.list', 'uses' => 'Portal\StateController@getUfId']);
 
+    Route::group(['prefix' => 'notification', 'as' => 'notification.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Portal\Notification\NotificationController@index']);
+        Route::get('show', ['as' => 'show', 'uses' => 'Portal\Notification\NotificationController@show']);
+        Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Portal\Notification\NotificationController@destroy']);
+        Route::get('click', ['as' => 'click', 'uses' => 'Portal\Notification\NotificationController@click']);
+    });
     //MANAGE
     Route::group(['prefix' => 'manage', 'as' => 'manage.'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'Portal\Condominium\CondominiumController@index']);
 
         //reserve_areas
-        Route::get('reserve-areas', ['as' => 'reserve-areas.index', 'uses' => 'Portal\Manage\ReserveAreasController@index']);
-        Route::get('reserve-areas/create', ['as' => 'reserve-areas.create', 'uses' => 'Portal\Manage\ReserveAreasController@create']);
-        Route::post('reserve-areas/store', ['as' => 'reserve-areas.store', 'uses' => 'Portal\Manage\ReserveAreasController@store']);
-        Route::get('reserve-areas/edit/{id}', ['as' => 'reserve-areas.edit', 'uses' => 'Portal\Manage\ReserveAreasController@edit']);
-        Route::post('reserve-areas/update/{id}', ['as' => 'reserve-areas.update', 'uses' => 'Portal\Manage\ReserveAreasController@update']);
-        Route::get('reserve-areas/destroy/{id}', ['as' => 'reserve-areas.destroy', 'uses' => 'Portal\Manage\ReserveAreasController@destroy']);
+        Route::get('reserve-areas', ['as' => 'reserve-areas.index', 'uses' => 'Portal\Manage\ReserveAreas\ReserveAreasController@index']);
+        Route::get('reserve-areas/create', ['as' => 'reserve-areas.create', 'uses' => 'Portal\Manage\ReserveAreas\ReserveAreasController@create']);
+        Route::post('reserve-areas/store', ['as' => 'reserve-areas.store', 'uses' => 'Portal\Manage\ReserveAreas\ReserveAreasController@store']);
+        Route::get('reserve-areas/edit/{id}', ['as' => 'reserve-areas.edit', 'uses' => 'Portal\Manage\ReserveAreas\ReserveAreasController@edit']);
+        Route::post('reserve-areas/update/{id}', ['as' => 'reserve-areas.update', 'uses' => 'Portal\Manage\ReserveAreas\ReserveAreasController@update']);
+        Route::get('reserve-areas/destroy/{id}', ['as' => 'reserve-areas.destroy', 'uses' => 'Portal\Manage\ReserveAreas\ReserveAreasController@destroy']);
 
         //contract
         Route::get('contracts', ['as' => 'contracts.index', 'uses' => 'Portal\Manage\Contract\ContractController@index']);
@@ -313,6 +320,17 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.', 'middleware' => 'auth'], 
                 Route::post('reply.store', ['as' => 'reply.store', 'uses' => 'Portal\Communication\Message\MessageReplyController@store']);
                 Route::get('reply.destroy/{id}', ['as' => 'reply.destroy', 'uses' => 'Portal\Communication\Message\MessageReplyController@destroy']);
             });
+
+            //private
+            Route::group(['prefix' => 'private', 'as' => 'private.'], function () {
+                Route::get('', ['as' => 'index', 'uses' => 'Portal\Communication\Message\MessagePrivateController@index']);
+                Route::get('create', ['as' => 'create', 'uses' => 'Portal\Communication\Message\MessagePrivateController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'Portal\Communication\Message\MessagePrivateController@store']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Portal\Communication\Message\MessagePrivateController@destroy']);
+
+                Route::post('reply.store', ['as' => 'reply.store', 'uses' => 'Portal\Communication\Message\MessageReplyController@store']);
+                Route::get('reply.destroy/{id}', ['as' => 'reply.destroy', 'uses' => 'Portal\Communication\Message\MessageReplyController@destroy']);
+            });
         });
 
         //MESSAGE RESPOSTA
@@ -334,6 +352,7 @@ Route::group(['prefix' => 'portal', 'as' => 'portal.', 'middleware' => 'auth'], 
             Route::post('update/{id}', ['as' => 'update', 'uses' => 'Portal\Communication\Called\CalledController@update']);
             Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Portal\Communication\Called\CalledController@destroy']);
             Route::get('show/{id}', ['as' => 'show', 'uses' => 'Portal\Communication\Called\CalledController@show']);
+            Route::get('view/{id}', ['as' => 'view', 'uses' => 'Portal\Communication\Called\CalledController@view']);
 
             //CALLED HISTORIC
             Route::get('{calledId}/historic/', ['as' => 'historic.index', 'uses' => 'Portal\Communication\Called\CalledHistoricController@index']);

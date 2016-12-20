@@ -62,7 +62,7 @@ class UserService
                     //cria o auth do usuário cadastrado
                     Auth::login($dados);
 
-                    //enviar e-mail
+                    //enviar e-mail de bem vindo somente após o cadastro do condominio
 
                     //cria session do id do condominio
                     $this->userSessionCondominion();
@@ -136,13 +136,40 @@ class UserService
         //se possui 1 irá salvar na session o id do condominio
         //se não possui nenhum condominio vai para a tela de cadastro de condominio
 
-        $usersCondominium = $this->usersCondominiumRepository->findWhere([
-            'user_id' => Auth::user()->id
-        ]);
+        $usersCondominium = $this->usersCondominiumRepository
+            ->with(['user', 'condominium'])
+            ->findWhere([
+                'user_id' => Auth::user()->id
+            ]);
 
         if (count($usersCondominium) > 1) {
             //multiplos condominios
             //salva todos os condominios na session
+            $cont = 0;
+            foreach($usersCondominium as $row){
+                $cont++;
+                if($cont == 1){
+                    //dd($row);
+                    if ($this->storage->exists($this->path . $row->user->image)) {
+                        $image = $row->user->imagem;
+                    } else {
+                        $image = 'avatar.jpg';
+                    }
+
+                    session([
+                        'user_id' => $row->user->id,
+                        'user_condominium_id' => $row->id,
+                        'user_role_condominium' => $row->user_role_condominium,
+                        'condominium_id' => $row->condominium_id,
+                        'name' => $row->condominium->name,
+                        'image' => route('portal.condominium.user.image', [
+                            'id' => Auth::user()->id,
+                            'image' => $image
+                        ]),
+                    ]);
+                }
+            }
+
         } elseif (count($usersCondominium) == 1) {
 
             $usersCondominium = $usersCondominium[0];

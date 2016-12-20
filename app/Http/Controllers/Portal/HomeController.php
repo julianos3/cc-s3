@@ -29,6 +29,8 @@ class HomeController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
+        //Event::fire(new SendMail(1));
+
         if (!$dados->isEmpty()) {
             return view('portal.home.index', compact('config'));
         } else {

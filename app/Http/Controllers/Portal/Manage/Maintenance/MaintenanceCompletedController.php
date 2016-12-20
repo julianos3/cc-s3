@@ -2,15 +2,12 @@
 
 namespace CentralCondo\Http\Controllers\Portal\Manage\Maintenance;
 
-use CentralCondo\Repositories\Portal\Manage\PeriodicityRepository;
 use CentralCondo\Repositories\Portal\Condominium\Provider\ProvidersRepository;
 use CentralCondo\Services\Portal\Manage\Maintenance\MaintenanceCompletedService;
-
 use CentralCondo\Http\Requests;
 use CentralCondo\Http\Requests\Portal\Manage\Maintenance\MaintenanceCompletedRequest;
 use CentralCondo\Repositories\Portal\Manage\Maintenance\MaintenanceCompletedRepository;
 use CentralCondo\Http\Controllers\Controller;
-
 
 class MaintenanceCompletedController extends Controller
 {
@@ -33,6 +30,7 @@ class MaintenanceCompletedController extends Controller
      * MaintenanceCompletedController constructor.
      * @param MaintenanceCompletedRepository $repository
      * @param MaintenanceCompletedService $service
+     * @param ProvidersRepository $providersRepository
      */
     public function __construct(MaintenanceCompletedRepository $repository,
                                 MaintenanceCompletedService $service,
@@ -47,9 +45,12 @@ class MaintenanceCompletedController extends Controller
     public function index($id)
     {
         $config['title'] = "Manutenções Realizadas";
-        $dados = $this->repository->with(['provider'])->orderBy('date', 'desc')->findWhere([
-            'maintenance_id' => $id
-        ]);
+        $dados = $this->repository
+            ->with(['provider'])
+            ->orderBy('date', 'desc')
+            ->findWhere([
+                'maintenance_id' => $id
+            ]);
 
         return view('portal.manage.maintenance.completed.index', compact('config', 'dados'));
     }

@@ -3,6 +3,7 @@
 namespace CentralCondo\Entities\Portal\Condominium\Group;
 
 use CentralCondo\Entities\Portal\Communication\Communication\CommunicationGroup;
+use CentralCondo\Entities\Portal\Communication\Message\MessageGroup;
 use CentralCondo\Entities\Portal\Condominium\Condominium;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
@@ -32,6 +33,11 @@ class GroupCondominium extends Model implements Transformable
     public function communicationGroup()
     {
         return $this->belongsTo(CommunicationGroup::class);
+    }
+
+    public function messageGroup()
+    {
+        return $this->belongsTo(MessageGroup::class);
     }
 
 }

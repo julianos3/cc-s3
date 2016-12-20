@@ -29,14 +29,14 @@ $factory->define(CentralCondo\Entities\Portal\Condominium\Unit\UnitType::class, 
     ];
 });
 
-$factory->define(CentralCondo\Entities\Portal\Condominium\Block\BlockNomemclature::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->name,
-        'label' => $faker->name,
-        'active' => 's',
-        'type' => 'l'
-    ];
-});
+    $factory->define(CentralCondo\Entities\Portal\Condominium\Block\BlockNomemclature::class, function (Faker\Generator $faker) {
+        return [
+            'name' => $faker->name,
+            'label' => $faker->name,
+            'active' => 's',
+            'type' => 'l'
+        ];
+    });
 
 $factory->define(CentralCondo\Entities\Portal\Condominium\Finality::class, function (Faker\Generator $faker) {
     return [

@@ -1,3 +1,4 @@
+@if(!isset($config['menu']))
 <div class="site-menubar">
     <div class="site-menubar-body">
         <div>
@@ -5,7 +6,7 @@
                 <ul class="site-menu">
                     <li class="site-menu-category">General</li>
                     <li class="site-menu-item">
-                        <a class="animsition-link" href="">
+                        <a class="animsition-link" href="{{ route('portal.home.index') }}">
                             <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                             <span class="site-menu-title">Dashboard</span>
                         </a>
@@ -135,8 +136,8 @@
                                     <span class="site-menu-title">Mensagens Públicas</span>
                                 </a>
                             </li>
-                            <li class="site-menu-item">
-                                <a class="animsition-link" href="">
+                            <li class="site-menu-item none">
+                                <a class="animsition-link" href="{{ route('portal.communication.message.private.index') }}">
                                     <span class="site-menu-title">Mensagens Privadas</span>
                                 </a>
                             </li>
@@ -676,3 +677,4 @@
         </div>
     </div>
 </div>
+    @endif

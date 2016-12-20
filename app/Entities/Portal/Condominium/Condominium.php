@@ -18,7 +18,7 @@ use CentralCondo\Entities\Portal\Condominium\Provider\ProviderCategory;
 use CentralCondo\Entities\Portal\Condominium\Provider\Providers;
 use CentralCondo\Entities\Portal\Manage\ReserveAreas;
 use CentralCondo\Entities\Portal\Condominium\SecurityCam;
-use CentralCondo\Entities\Portal\Notification;
+use CentralCondo\Entities\Portal\Notification\Notification;
 use CentralCondo\Entities\Portal\State;
 use CentralCondo\Entities\Portal\UsefulPhones;
 use CentralCondo\Entities\Portal\Condominium\UsersCondominium;

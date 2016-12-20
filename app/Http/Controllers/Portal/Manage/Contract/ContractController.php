@@ -12,7 +12,6 @@ use CentralCondo\Repositories\Portal\Manage\Contract\ContractStatusRepository;
 use CentralCondo\Services\Portal\Manage\Contract\ContractService;
 use CentralCondo\Services\Util\UtilObjeto;
 
-
 class ContractController extends Controller
 {
     /**
@@ -40,6 +39,9 @@ class ContractController extends Controller
      */
     private $contractFileRepository;
 
+    /**
+     * @var UtilObjeto
+     */
     private $utilObjeto;
 
     /**
@@ -49,12 +51,14 @@ class ContractController extends Controller
      * @param ContractStatusRepository $contractStatusRepository
      * @param ProvidersRepository $providersRepository
      * @param ContractFileRepository $contractFileRepository
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(ContractRepository $repository,
                                 ContractService $service,
                                 ContractStatusRepository $contractStatusRepository,
                                 ProvidersRepository $providersRepository,
-                                ContractFileRepository $contractFileRepository, UtilObjeto $utilObjeto)
+                                ContractFileRepository $contractFileRepository,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -68,7 +72,9 @@ class ContractController extends Controller
     public function index()
     {
         $config['title'] = "Contratos";
-        $dados = $this->repository->with(['contractStatus', 'providers'])
+        $dados = $this->repository
+            ->orderBy('end_date','asc')
+            ->with(['contractStatus', 'providers'])
             ->findWhere([
                 'condominium_id' => $this->condominium_id
             ]);

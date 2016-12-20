@@ -7,7 +7,7 @@ use CentralCondo\Validators\Portal\Condominium\Group\UsersGroupCondominiumValida
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 
-class UsersGroupCondominiumService //regras de negocios
+class UsersGroupCondominiumService
 {
 
     /**
@@ -20,7 +20,8 @@ class UsersGroupCondominiumService //regras de negocios
      */
     protected $validator;
 
-    public function __construct(UsersGroupCondominiumRepository $repository, UsersGroupCondominiumValidator $validator)
+    public function __construct(UsersGroupCondominiumRepository $repository,
+                                UsersGroupCondominiumValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;
@@ -29,7 +30,6 @@ class UsersGroupCondominiumService //regras de negocios
 
     public function create(array $data)
     {
-
         //verifica se integrante ja esta cadastrado no grupo
         $verifica = $this->repository->findWhere([
             'user_condominium_id' => $data['user_condominium_id'],

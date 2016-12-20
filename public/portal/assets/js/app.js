@@ -236,6 +236,7 @@
             $(".garagem input, .garagem select").removeAttr("required");
 
             $('.garagem').hide();
+            $('.casa').fadeIn();
             $(".casa input, .casa select").prop('required', true);
 
 
@@ -285,15 +286,15 @@
         var id = $(this).attr("data-id");
         $('#maintenanceId').val(id);
     });
-    
-    $('.btnMaintenanceViewCompleted').bind('click', function (){
+
+    $('.btnMaintenanceViewCompleted').bind('click', function () {
         var id = $(this).attr('data-id');
         $.get('/portal/manage/maintenance/completed/' + id, function (result) {
             $('.showMaintenanceCompleted').html(result);
         });
     });
 
-    $('.btnShowCam').bind('click', function (){
+    $('.btnShowCam').bind('click', function () {
         var id = $(this).attr('data-id');
         $.get('/portal/condominium/security-cam/show/' + id, function (result) {
             $('.showCam').html(result);
@@ -307,11 +308,41 @@
         });
     });
 
-    $('.btnShowCalled').bind('click', function (){
+    $('.btnShowCalled').bind('click', function () {
         var id = $(this).attr('data-id');
         $.get('/portal/communication/called/show/' + id, function (result) {
             $('.showCalled').html(result);
         });
+    });
+
+    $('.communicationDestination').bind('click', function () {
+        var value = $(this).val();
+        if (value == 'group') {
+            $('.groupsCommunication').fadeIn();
+            $('.selectGroup').attr('required', 'required');
+            $('.usersCommunication').hide();
+            $('.selectUsers').removeAttr('required');
+        } else if (value == 'users') {
+            $('.usersCommunication').fadeIn();
+            $('.selectUsers').attr('required', 'required');
+            $('.groupsCommunication').hide();
+            $('.selectGroup').removeAttr('required');
+        } else {
+            $('.groupsCommunication').hide();
+            $('.selectGroup').removeAttr('required');
+            $('.usersCommunication').hide();
+            $('.selectUsers').removeAttr('required');
+        }
+    });
+
+    $(window).load(function () {
+        $.get('/portal/notification/show', function (result) {
+            $('.showNotification').html(result);
+        });
+    });
+
+    $('.showNotification').bind('click', function () {
+        $.get('/portal/notification/click', function () {});
     });
 
 })(document, window, jQuery);

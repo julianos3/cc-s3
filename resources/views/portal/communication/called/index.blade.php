@@ -1,7 +1,5 @@
 @extends('portal')
-
 @section('content')
-
     <div class="page animsition">
         <div class="page-header">
             <h1 class="page-title">{{ $config['title'] }}</h1>
@@ -56,7 +54,7 @@
                                             <td>{{ $row->calledCategory->name }}</td>
                                             <td>{{ date('d/m/Y h:i', strtotime($row->created_at)) }}</td>
                                             <td class="text-center">
-                                                <button title="Excluir"
+                                                <button title="Visualizar"
                                                         class="btn btn-icon bg-success waves-effect waves-light btnShowCalled"
                                                         data-target="#modalCalled" data-toggle="modal"
                                                         data-id="{{ $row->id }}">
@@ -69,16 +67,8 @@
                                                    class="btn btn-icon bg-warning waves-effect waves-light">
                                                     <i class="icon wb-edit" aria-hidden="true"></i>
                                                 </a>
+                                                    @endif
                                                 @endif
-                                                @endif
-                                                <!--
-                                                <button title="Excluir"
-                                                        class="btn btn-icon bg-danger waves-effect waves-light btnDelete"
-                                                        data-target="#modalDelete" data-toggle="modal"
-                                                        data-route="{{ route('portal.communication.called.destroy', ['id' => $row->id]) }}">
-                                                    <i class="icon wb-trash" aria-hidden="true"></i>
-                                                </button>
-                                                -->
                                             </td>
                                         </tr>
                                     @endforeach
@@ -110,5 +100,4 @@
        class="site-action site-floataction btn-raised btn btn-success btn-floating">
         <i class="icon md-plus" aria-hidden="true"></i>
     </a>
-
 @endsection

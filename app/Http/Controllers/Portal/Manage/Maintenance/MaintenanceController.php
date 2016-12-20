@@ -5,14 +5,11 @@ namespace CentralCondo\Http\Controllers\Portal\Manage\Maintenance;
 use CentralCondo\Repositories\Portal\Manage\PeriodicityRepository;
 use CentralCondo\Repositories\Portal\Condominium\Provider\ProvidersRepository;
 use CentralCondo\Services\Portal\Manage\Maintenance\MaintenanceService;
-
 use CentralCondo\Http\Requests;
 use CentralCondo\Http\Requests\Portal\Manage\Maintenance\MaintenanceRequest;
 use CentralCondo\Repositories\Portal\Manage\Maintenance\MaintenanceRepository;
 use CentralCondo\Http\Controllers\Controller;
 use CentralCondo\Services\Util\UtilObjeto;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class MaintenanceController extends Controller
 {
@@ -36,6 +33,9 @@ class MaintenanceController extends Controller
      */
     private $providersRepository;
 
+    /**
+     * @var UtilObjeto
+     */
     private $utilObjeto;
 
     /**
@@ -44,11 +44,13 @@ class MaintenanceController extends Controller
      * @param MaintenanceService $service
      * @param PeriodicityRepository $periodicityRepository
      * @param ProvidersRepository $providersRepository
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(MaintenanceRepository $repository,
                                 MaintenanceService $service,
                                 PeriodicityRepository $periodicityRepository,
-                                ProvidersRepository $providersRepository, UtilObjeto $utilObjeto)
+                                ProvidersRepository $providersRepository,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -61,9 +63,12 @@ class MaintenanceController extends Controller
     public function index()
     {
         $config['title'] = "Manutenções Preventivas";
-        $dados = $this->repository->with('periodicity')->findWhere([
-            'condominium_id' => $this->condominium_id
-        ]);
+        $dados = $this->repository
+            ->orderBy('name', 'asc')
+            ->with('periodicity')
+            ->findWhere([
+                'condominium_id' => $this->condominium_id
+            ]);
 
         $dados = $this->utilObjeto->paginate($dados);
         $providers = $this->providersRepository->listCondominium($this->condominium_id);

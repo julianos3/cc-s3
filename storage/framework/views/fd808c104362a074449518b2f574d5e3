@@ -1,0 +1,105 @@
+<?php $notification = app('CentralCondo\Http\Controllers\Portal\Notification\NotificationController'); ?>
+<li class="dropdown">
+    <a data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false"
+       data-animation="scale-up" role="button">
+        <i class="icon md-notifications" aria-hidden="true"></i>
+        <?php if(count($notification) >= 1): ?>
+        <span class="badge badge-danger up"><?php echo e(count($notification)); ?></span>
+        <?php endif; ?>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+        <li class="dropdown-menu-header" role="presentation">
+            <h5>NOTIFICAÇÕES</h5>
+            <?php if(count($notification) >= 1): ?>
+            <span class="label label-round label-danger">Novas <?php echo e(count($notification)); ?></span>
+            <?php endif; ?>
+        </li>
+       <li class="list-group" role="presentation">
+            <div data-role="container">
+                <div data-role="content">
+                    <?php if(count($notification) >= 1): ?>
+                    <?php foreach($notification as $row): ?>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                            <div class="media-left padding-right-10">
+                                <i class="icon md-order bg-red-600 white icon-circle"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6 class="media-heading"><?php echo e($row['name']); ?></h6>
+                                <time class="media-meta" datetime="2016-06-12T20:50:48+08:00">5 hours
+                                    ago
+                                </time>
+                            </div>
+                        </div>
+                    </a>
+                    <?php endforeach; ?>
+                    <?php else: ?>
+                        <?php endif; ?>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                            <div class="media-left padding-right-10">
+                                <i class="icon md-user bg-green-600 white icon-circle"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6 class="media-heading">Completed the task</h6>
+                                <time class="media-meta" datetime="2016-06-11T18:29:20+08:00">2 days
+                                    ago
+                                </time>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                            <div class="media-left padding-right-10">
+                                <i class="icon md-settings bg-red-600 white icon-circle"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6 class="media-heading">Settings updated</h6>
+                                <time class="media-meta" datetime="2016-06-11T14:05:00+08:00">2 days
+                                    ago
+                                </time>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                            <div class="media-left padding-right-10">
+                                <i class="icon md-calendar bg-blue-600 white icon-circle"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6 class="media-heading">Event started</h6>
+                                <time class="media-meta" datetime="2016-06-10T13:50:18+08:00">3 days
+                                    ago
+                                </time>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                            <div class="media-left padding-right-10">
+                                <i class="icon md-chat bg-orange-600 white icon-circle"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6 class="media-heading">Message received</h6>
+                                <time class="media-meta" datetime="2016-06-10T12:34:48+08:00">3 days
+                                    ago
+                                </time>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </li>
+        <li class="dropdown-menu-footer" role="presentation">
+            <a href="<?php echo e(route('portal.notification.index')); ?>" role="menuitem">
+                Todas as notificações
+            </a>
+        </li>
+    </ul>
+</li>
+<?php dd($notification); ?>

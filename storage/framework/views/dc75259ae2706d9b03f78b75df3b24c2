@@ -1,0 +1,73 @@
+
+<?php $__env->startSection('content'); ?>
+
+    <div class="page animsition">
+        <div class="page-header">
+            <h1 class="page-title"><?php echo e($config['title']); ?></h1>
+            <ol class="breadcrumb" data-plugin="breadcrumb">
+                <li><a href="<?php echo e(route('portal.home.index')); ?>">Home</a></li>
+                <li class="active">Notificações</li>
+            </ol>
+        </div>
+        <div class="page-content">
+            <div class="panel">
+                <div class="panel-body">
+                    <?php echo $__env->make('success._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <?php echo $__env->make('portal.delete', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+                    <?php if(!$dados->isEmpty()): ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="tablesaw table-striped table-bordered table-hover"
+                                       data-tablesaw-mode="swipe"
+                                       data-tablesaw-sortable data-tablesaw-minimap>
+                                    <thead>
+                                    <tr>
+                                        <th data-tablesaw-sortable-col data-tablesaw-sortable-default-col
+                                            data-tablesaw-priority="persist">Chamado
+                                        </th>
+                                        <th data-tablesaw-sortable-col data-tablesaw-priority="1">Data</th>
+                                        <th class="text-center col-md-2">
+                                            Ação
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach($dados  as $row): ?>
+                                        <tr>
+                                            <td><?php echo e($row->name); ?></td>
+                                            <td><?php echo e(date('d/m/Y H:i', strtotime($row->created_at))); ?></td>
+                                            <td class="text-center">
+                                                <a href="<?php echo e($row->route); ?>" title="Visualizar"
+                                                        class="btn btn-icon bg-success waves-effect waves-light btnMaintenanceViewCompleted"
+                                                        data-id="<?php echo e($row->id); ?>">
+                                                    <i class="icon wb-zoom-in" aria-hidden="true"></i>
+                                                </a>
+                                                <button title="Excluir"
+                                                        class="btn btn-icon bg-danger waves-effect waves-light btnDelete"
+                                                        data-target="#modalDelete" data-toggle="modal"
+                                                        data-route="<?php echo e(route('portal.notification.destroy', ['id' => $row->id])); ?>">
+                                                    <i class="icon wb-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <?php echo $dados->setPath('')->appends(Request::except('page'))->render(); ?>
+
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('portal', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

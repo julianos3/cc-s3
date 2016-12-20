@@ -21,6 +21,7 @@
         <!-- Navbar Collapse -->
         <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
             <!-- Navbar Toolbar -->
+            <?php if(!isset($config['menu'])): ?>
             <ul class="nav navbar-toolbar">
                 <li class="hidden-float" id="toggleMenubar">
                     <a data-toggle="menubar" href="#" role="button">
@@ -42,6 +43,7 @@
                     </a>
                 </li>
             </ul>
+            <?php endif; ?>
             <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
                 <li class="dropdown">
                     <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"
@@ -53,7 +55,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li role="presentation">
-                            <a href="<?php echo e(route('portal.condominium.user.show', ['id' => Auth::user()->id])); ?>" role="menuitem">
+                            <a href="<?php echo e(route('portal.condominium.user.edit', ['id' => session()->get('user_condominium_id')])); ?>" role="menuitem">
                                 <i class="icon wb-user" aria-hidden="true"></i>
                                 Perfil
                             </a>
@@ -79,103 +81,15 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <?php if(!isset($config['notification'])): ?>
+                <li class="dropdown showNotification">
                     <a data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false"
                        data-animation="scale-up" role="button">
                         <i class="icon md-notifications" aria-hidden="true"></i>
-                        <span class="badge badge-danger up">5</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
-                        <li class="dropdown-menu-header" role="presentation">
-                            <h5>NOTIFICATIONS</h5>
-                            <span class="label label-round label-danger">New 5</span>
-                        </li>
-                        <li class="list-group" role="presentation">
-                            <div data-role="container">
-                                <div data-role="content">
-                                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
-                                        <div class="media">
-                                            <div class="media-left padding-right-10">
-                                                <i class="icon md-order bg-red-600 white icon-circle"
-                                                   aria-hidden="true"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading">A new order has been placed</h6>
-                                                <time class="media-meta" datetime="2016-06-12T20:50:48+08:00">5 hours
-                                                    ago
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
-                                        <div class="media">
-                                            <div class="media-left padding-right-10">
-                                                <i class="icon md-user bg-green-600 white icon-circle"
-                                                   aria-hidden="true"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading">Completed the task</h6>
-                                                <time class="media-meta" datetime="2016-06-11T18:29:20+08:00">2 days
-                                                    ago
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
-                                        <div class="media">
-                                            <div class="media-left padding-right-10">
-                                                <i class="icon md-settings bg-red-600 white icon-circle"
-                                                   aria-hidden="true"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading">Settings updated</h6>
-                                                <time class="media-meta" datetime="2016-06-11T14:05:00+08:00">2 days
-                                                    ago
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
-                                        <div class="media">
-                                            <div class="media-left padding-right-10">
-                                                <i class="icon md-calendar bg-blue-600 white icon-circle"
-                                                   aria-hidden="true"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading">Event started</h6>
-                                                <time class="media-meta" datetime="2016-06-10T13:50:18+08:00">3 days
-                                                    ago
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
-                                        <div class="media">
-                                            <div class="media-left padding-right-10">
-                                                <i class="icon md-chat bg-orange-600 white icon-circle"
-                                                   aria-hidden="true"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading">Message received</h6>
-                                                <time class="media-meta" datetime="2016-06-10T12:34:48+08:00">3 days
-                                                    ago
-                                                </time>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown-menu-footer" role="presentation">
-                            <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
-                                <i class="icon md-settings" aria-hidden="true"></i>
-                            </a>
-                            <a href="javascript:void(0)" role="menuitem">
-                                All notifications
-                            </a>
-                        </li>
-                    </ul>
                 </li>
+                <?php endif; ?>
+                <?php if(!isset($config['message'])): ?>
                 <li class="dropdown">
                     <a data-toggle="dropdown" href="javascript:void(0)" title="Messages" aria-expanded="false"
                        data-animation="scale-up" role="button">
@@ -273,11 +187,12 @@
                         </li>
                     </ul>
                 </li>
+                <?php endif; ?>
             </ul>
             <!-- End Navbar Toolbar Right -->
         </div>
         <!-- End Navbar Collapse -->
-        <!-- Site Navbar Seach -->
+        <!-- Site Navbar Seach
         <div class="collapse navbar-search-overlap" id="site-navbar-search">
             <form role="search">
                 <div class="form-group">
@@ -289,7 +204,7 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div>-->
         <!-- End Site Navbar Seach -->
     </div>
 </nav>

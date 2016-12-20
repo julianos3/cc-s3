@@ -7,7 +7,7 @@
             <ol class="breadcrumb" data-plugin="breadcrumb">
                 <li><a href="<?php echo e(route('portal.home.index')); ?>">Home</a></li>
                 <li><a href="<?php echo e(route('portal.communication.index')); ?>">Comunicação</a></li>
-                <li><a href="<?php echo e(route('portal.communication.communication.index')); ?>">Chamados</a></li>
+                <li><a href="<?php echo e(route('portal.communication.communication.index')); ?>">Comunicados</a></li>
                 <li class="active">Visualizar</li>
             </ol>
             <div class="page-header-actions">

@@ -8,6 +8,7 @@ use CentralCondo\Http\Requests\Portal\Communication\Called\CalledRequest;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledCategoryRepository;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledRepository;
 use CentralCondo\Repositories\Portal\Communication\Called\CalledStatusRepository;
+use CentralCondo\Repositories\Portal\Condominium\UsersCondominiumRepository;
 use CentralCondo\Services\Portal\Communication\Called\CalledService;
 use CentralCondo\Services\Util\UtilObjeto;
 
@@ -38,6 +39,8 @@ class CalledController extends Controller
      */
     private $utilObjeto;
 
+    private $usersCodominiumRepository;
+
     /**
      * CalledController constructor.
      * @param CalledRepository $repository
@@ -50,13 +53,14 @@ class CalledController extends Controller
                                 CalledService $service,
                                 CalledCategoryRepository $calledCategoryRepository,
                                 CalledStatusRepository $calledStatusRepository,
-                                UtilObjeto $utilObjeto)
+                                UtilObjeto $utilObjeto, UsersCondominiumRepository $usersCodominiumRepository)
     {
         $this->repository = $repository;
         $this->service = $service;
         $this->calledCategoryRepository = $calledCategoryRepository;
         $this->calledStatusCategory = $calledStatusRepository;
         $this->utilObjeto = $utilObjeto;
+        $this->usersCodominiumRepository = $usersCodominiumRepository;
         $this->condominium_id = session()->get('condominium_id');
         $this->user_role_condominium = session()->get('user_role_condominium');
     }
@@ -86,7 +90,7 @@ class CalledController extends Controller
 
     public function edit($id)
     {
-        $config['title'] = 'Alterar Chamao';
+        $config['title'] = 'Alterar Chamado';
         $dados = $this->repository->with(['calledCategory', 'calledStatus', 'calledHistoric', 'usersCondominium'])->findWhere(['id' => $id, 'condominium_id' => $this->condominium_id]);
         $dados = $dados[0];
         $calledCategory = $this->calledCategoryRepository->listCondominium($this->condominium_id);
@@ -100,6 +104,15 @@ class CalledController extends Controller
         $dados = $this->repository->with(['calledCategory', 'calledStatus', 'calledHistoric', 'usersCondominium'])->findWhere(['id' => $id, 'condominium_id' => $this->condominium_id]);
         $dados = $dados[0];
         return view('portal.communication.called.show', compact('dados'));
+    }
+
+    public function view($id)
+    {
+        $config['title'] = 'Visualizar Chamado';
+        $dados = $this->repository->with(['calledCategory', 'calledStatus', 'calledHistoric', 'usersCondominium'])->findWhere(['id' => $id, 'condominium_id' => $this->condominium_id]);
+        $dados = $dados[0];
+
+        return view('portal.communication.called.view', compact('dados', 'config'));
     }
 
     public function update(CalledRequest $request, $id)

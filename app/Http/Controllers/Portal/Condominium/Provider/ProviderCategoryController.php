@@ -21,15 +21,20 @@ class ProviderCategoryController extends Controller
      */
     private $service;
 
+    /**
+     * @var UtilObjeto
+     */
     private $utilObjeto;
 
     /**
      * ProviderCategoryController constructor.
      * @param ProviderCategoryRepository $repository
      * @param ProviderCategoryService $service
+     * @param UtilObjeto $utilObjeto
      */
     public function __construct(ProviderCategoryRepository $repository,
-                                ProviderCategoryService $service, UtilObjeto $utilObjeto)
+                                ProviderCategoryService $service,
+                                UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -45,7 +50,6 @@ class ProviderCategoryController extends Controller
             ->findWhere([
                 'condominium_id' => $this->condominium_id
             ]);
-
         $dados = $this->utilObjeto->paginate($dados);
 
         return view('portal.condominium.provider.category.index', compact('config','dados'));

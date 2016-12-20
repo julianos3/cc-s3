@@ -48,20 +48,16 @@
 
                                                 <?php echo $__env->make('errors._check', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label class="control-label" for="cep">CEP</label>
-                                                            <input type="text" class="form-control" data-plugin="formatter" data-pattern="[[99999]]-[[999]]" placeholder="99999-999" id="cep" name="zip_code" required="required">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" id="btnCep" target="_blank"
-                                                               class="btn btn-icon btn-warning waves-effect waves-light waves-round" data-toggle="tooltip"
-                                                               data-original-title="Não sei meu CEP">
-                                                                <i class="icon wb-search" aria-hidden="true"></i>
-                                                                Não sei meu CEP
-                                                            </a>
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" for="cep">CEP</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" data-plugin="formatter" data-pattern="[[99999]]-[[999]]" placeholder="CEP" id="cep" name="zip_code" required="required">
+                                                            <span class="input-group-btn">
+                                                                <button type="button" formtarget="_blank" onclick="window.open('http://www.buscacep.correios.com.br/sistemas/buscacep/')" data-toggle="tooltip" data-original-title="Não sei meu CEP" class="btn btn-warning waves-effect waves-light" id="exampleTimeButton">
+                                                                    <i class="icon wb-search" aria-hidden="true"></i>
+                                                                    Não sei meu CEP
+                                                                </button>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -93,7 +93,7 @@ trait ResetsPasswords
 
         switch ($response) {
             case Password::PASSWORD_RESET:
-                return redirect(route('auth.login'))->with('status', trans($response));
+                return redirect($this->redirectPath())->with('status', trans($response));
             default:
                 return redirect()->back()
                             ->withInput($request->only('email'))

@@ -13,7 +13,6 @@
     <meta name="rating" content="general" />
     <meta name="distribution" content="local"/>
     <meta name="Robots" content="All"/> 
-    <meta name="revisit" content="7 day" />
     <meta name="url" content="http://www.centralcondo.com.br" />
     <link rel="Shortcut Icon" type="image/x-icon" href="{{ asset('site/images/favicon.ico') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

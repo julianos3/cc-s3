@@ -51,7 +51,7 @@
                                     <h4>Minhas Unidades</h4>
 
                                     <div class="row lisUnit">
-                                        <?php if(!$units->isEmpty()): ?>
+                                        <?php if(!$dados->usersUnit->isEmpty()): ?>
                                             <div class="col-md-12">
                                                 <table class="tablesaw table-striped table-bordered table-hover"
                                                        data-tablesaw-mode="swipe"
@@ -70,7 +70,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <?php foreach($units  as $row): ?>
+                                                    <?php foreach($dados->usersUnit  as $row): ?>
                                                         <tr>
                                                             <td><?php echo e($row->unit->name); ?></td>
                                                             <td><?php echo e($row->unit->floor); ?></td>

@@ -49,7 +49,7 @@ class PasswordController extends Controller
             if(isset($dados[0])){
                 //dd($dados[0]);
                 $response = Password::sendResetLink($request->only('email'), function (Message $message) {
-                    $message->subject('Link de recuperação de sua senha');
+                    $message->subject('Link de recuperação de sua senha - Central Condo');
                 });
 
                 $response = 'Link para redefinição de senha foi enviado para seu e-mail';

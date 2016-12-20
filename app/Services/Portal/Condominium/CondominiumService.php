@@ -66,6 +66,7 @@ class CondominiumService //regras de negocios
         $this->unitTypeRepository = $unitTypeRepository;
         $this->userService = $userService;
         $this->usersCondominiumRepository = $usersCondominiumRepository;
+        $this->condominium_id = session()->get('condominium_id');
     }
 
     public function create(array $data)
@@ -80,7 +81,6 @@ class CondominiumService //regras de negocios
                 'city_id' => $data['city_id']
             ]);
 
-                   //dd($condominium);
             if ($condominium->toArray()) {
                 //cadastra usuario no condominio
                 //dd($condominium[0]->id);
@@ -211,9 +211,10 @@ class CondominiumService //regras de negocios
         }
     }
 
-    public function createUnits(array $data, $id)
+    public function createUnits(array $data)
     {
         try {
+            $id = $this->condominium_id;
 
             if ($data['unit_type_id'] == 1 || $data['unit_type_id'] == 4 || $data['unit_type_id'] == 5) { //apartamento
                 $this->createApartamentos($data, $id);
@@ -264,9 +265,17 @@ class CondominiumService //regras de negocios
             $block['condominium_id'] = $id;
             $dadosBlock = $this->blockRepository->create($block);
             if ($dadosBlock) {
-                $numeroInit = $data['number_init'];
-                for ($andar = 1; $andar <= $data['unidade_andar']; $andar++) {
-                    for ($unidade = 1; $unidade <= $data['number_andar']; $unidade++) {
+
+                $numeroInit = $data['number_init']; //10
+/*
+                print_r($data['unidade_andar']);
+                print_r('-');
+                print_r($data['number_andar']);
+                die;
+*/
+
+                for ($andar = 1; $andar <= $data['number_andar']; $andar++) {
+                    for ($unidade = 1; $unidade <= $data['unidade_andar']; $unidade++) {
 
                         $nomeAP = '';
                         if ($multiplicador == 1) {
@@ -280,7 +289,12 @@ class CondominiumService //regras de negocios
                                 $nomeAP = $numeroInit;
                             } else {
                                 if ($andar > 1 && $unidade == 1) {
-                                    $numeroInit = ($data['number_init'] * $andar) - ($andar - 1);
+                                    if($data['number_init'] % 2 == 0) {
+                                        $numeroInit = ($data['number_init'] * $andar);
+                                    }else{
+                                        $numeroInit = ($data['number_init'] * $andar) - ($andar - 1);
+                                    }
+                                    //$numeroInit = ($data['number_init'] * $andar) - ($andar - 1);
                                     $nomeAP = $numeroInit;
                                 } else {
                                     $nomeAP = $numeroInit + 1;
@@ -293,11 +307,10 @@ class CondominiumService //regras de negocios
                         $unit['floor'] = $andar;
                         $unit['block_id'] = $dadosBlock['id'];
                         $unit['unit_type_id'] = $data['unit_type_id'];
-                        $unit['condominium_id'] = $id;
+                        $unit['condominium_id'] = $this->condominium_id;
 
                         $dadosUnit = $this->unitRepository->create($unit);
-                        if ($dadosUnit) {
-                        }
+                        if ($dadosUnit) {}
 
                     }
                 }

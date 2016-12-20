@@ -13,13 +13,12 @@
             <select class="form-control" name="unit_id" id="unit_id">
                 <option value="">Selecione</option>
                 <?php foreach($unit as $row): ?>
-                    <option value="<?php echo e($row->id); ?>" <?php if($row->id == $unitId): ?> selected <?php endif; ?>><?php echo e($row->name); ?></option>
+                    <option value="<?php echo e($row->id); ?>" <?php if(isset($dados['unit_id']) && $dados['unit_id'] == $row->id): ?> selected <?php endif; ?>><?php echo e($row->name); ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">

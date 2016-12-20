@@ -8,6 +8,7 @@ use CentralCondo\Repositories\Portal\Communication\Communication\CommunicationGr
 use CentralCondo\Repositories\Portal\Communication\Communication\CommunicationRepository;
 use CentralCondo\Repositories\Portal\Communication\Communication\UsersCommunicationRepository;
 use CentralCondo\Repositories\Portal\Condominium\Group\GroupCondominiumRepository;
+use CentralCondo\Repositories\Portal\Condominium\UsersCondominiumRepository;
 use CentralCondo\Services\Portal\Communication\Communication\CommunicationService;
 use CentralCondo\Services\Util\UtilObjeto;
 
@@ -44,6 +45,8 @@ class CommunicationController extends Controller
      */
     private $utilObjeto;
 
+    private $usersCondominiumRepository;
+
     /**
      * CommunicationController constructor.
      * @param CommunicationRepository $repository
@@ -58,6 +61,7 @@ class CommunicationController extends Controller
                                 GroupCondominiumRepository $groupCondominiumRepository,
                                 CommunicationGroupRepository $communicationGroupRepository,
                                 UsersCommunicationRepository $usersCommunicationRepository,
+                                UsersCondominiumRepository $usersCondominiumRepository,
                                 UtilObjeto $utilObjeto)
     {
         $this->repository = $repository;
@@ -65,21 +69,38 @@ class CommunicationController extends Controller
         $this->groupCondominiumRepository = $groupCondominiumRepository;
         $this->communicationGroupRepository = $communicationGroupRepository;
         $this->usersCommunicationRepository = $usersCommunicationRepository;
+        $this->usersCondominiumRepository = $usersCondominiumRepository;
         $this->utilObjeto = $utilObjeto;
+        $this->user_role_condominium = session()->get('user_role_condominium');
         $this->condominium_id = session()->get('condominium_id');
     }
 
     public function index()
     {
         $config['title'] = 'Comunicados';
-        $dados = $this->repository->orderBy('created_at', 'desc')
-            ->with(['usersCondominium'])
-            ->findWhere([
-                'condominium_id' => $this->condominium_id
-            ]);
+
+        if($this->usersCondominiumRepository->verificaAdm($this->user_role_condominium)){
+            $dados = $this->repository->orderBy('created_at', 'desc')
+                ->with(['usersCondominium'])
+                ->findWhere([
+                    'condominium_id' => $this->condominium_id,
+                    ['date_display', '>=', date('yyyy/mm/dd')]
+                ]);
+            $userAdm = 'y';
+        }else{
+            $dados = $this->repository->orderBy('created_at', 'desc')
+                ->with(['usersCondominium'])
+                ->findWhere([
+                    'condominium_id' => $this->condominium_id,
+                    'all_user' => 'y',
+                    ['date_display', '>=', date('yyyy/mm/dd')]
+                ]);
+            $userAdm = 'n';
+        }
+        $user_role_condominium = $this->user_role_condominium;
         $dados = $this->utilObjeto->paginate($dados);
 
-        return view('portal.communication.communication.index', compact('config', 'dados'));
+        return view('portal.communication.communication.index', compact('config', 'dados', 'userAdm', 'user_role_condominium'));
     }
 
     public function create()

@@ -11,19 +11,10 @@ use Prettus\Validator\Exceptions\ValidatorException;
 class ProviderCategoryService
 {
 
-    /**
-     * @var ProviderCategoryRepository
-     */
     protected $repository;
 
-    /**
-     * @var ProviderCategoryValidator
-     */
     protected $validator;
 
-    /**
-     * @var ProvidersRepository
-     */
     protected $providersRepository;
 
     public function __construct(ProviderCategoryRepository $repository,
@@ -94,9 +85,8 @@ class ProviderCategoryService
     public function destroy($id)
     {
         $verifica = $this->providersRepository->findWhere(['provider_category_id' => $id]);
-
         if ($verifica->toArray()) {
-            $response = trans("Fornecedor vinculado a esta categoria");
+            $response = trans("Não é possível exluir esta categoria, existe fornecedores vinculados a mesma!");
             return redirect()->back()->withErrors($response)->withInput();
         } else {
             $deleted = $this->repository->delete($id);
